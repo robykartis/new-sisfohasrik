@@ -36,6 +36,7 @@
         </div>
     </section>
     <script src="{{ asset('auth/assets/js/login.js') }}"></script>
+    @stack('js')
 </body>
 
 </html>

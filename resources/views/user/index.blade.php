@@ -19,8 +19,8 @@
                         <div class="card-header">
                             <h3 class="card-title">Daftar List User</h3>
                             <div align="right">
-                                <button type="button" name="create_record" id="create_record" class="btn btn-success">
-                                    <i class="fa fa-plus-square"></i> Tambah</button>
+                                <button type="button" name="create_record" id="create_record" class="btn btn-success"> <i
+                                        class="fas fa-user-plus"></i> Add</button>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -51,89 +51,79 @@
 @section('modal')
     <section class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <form method="post" id="sample_form" class="form-horizontal">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title" id="ModalLabel">Add New Record</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label>Name : </label>
-                                            <input type="text" name="name" id="name" class="form-control" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Email : </label>
-                                            <input type="email" name="email" id="email" class="form-control" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Level</label>
-                                            <select class="form-control" name="level">
-                                                <option selected disabled>Select Level Account</option>
-                                                <option value="admin">Admin</option>
-                                                <option value="operator">Operator</option>
-                                                <option value="readonly">ReadOnly</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group editpass">
-                                            <label>Password : </label>
-                                            <input type="password" name="password" id="password" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <input type="submit" name="action_button" id="action_button" value="Add"
-                                            class="btn btn-info" />
-                                    </div>
-                                </form>
+            <div class="modal fade" id="formModal" aria-labelledby="ModalLabel">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form method="post" id="sample_form" class="form-horizontal">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="ModalLabel">Large Modal</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
+                            <div class="modal-body">
+                                <span id="form_result"></span>
+                                <div class="form-group">
+                                    <label>Name : </label>
+                                    <input type="text" name="name" id="name" class="form-control" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Email : </label>
+                                    <input type="email" name="email" id="email" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Level</label>
+                                    <select class="form-control" name="level" id="level">
+                                        <option selected disabled>Select Level Account</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="operator">Operator</option>
+                                        <option value="readonly">ReadOnly</option>
+                                    </select>
+                                </div>
+                                <div class="form-group editpass">
+                                    <label>Password : </label>
+                                    <input type="password" name="password" id="password" class="form-control" />
+                                </div>
+                                <input type="hidden" name="action" id="action" value="Add" />
+                                <input type="hidden" name="hidden_id" id="hidden_id" />
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary" name="action_button" id="action_button"
+                                    value="Add">Save</button>
+                            </div>
+                        </form>
                     </div>
+                    <!-- /.modal-content -->
                 </div>
+                <!-- /.modal-dialog -->
             </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-    </section>
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="ModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form method="post" id="sample_form" class="form-horizontal">
-                                    @csrf
-                                    @method('POST')
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="ModalLabel">Confirmation</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h4 align="center" style="margin:0;">Are you sure you want to remove this data?
-                                        </h4>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="button" name="ok_button" id="ok_button"
-                                            class="btn btn-danger">OK</button>
-                                    </div>
-                                </form>
+
+
+            <div class="modal fade"id="confirmModal" aria-labelledby="ModalLabel">
+                <div class="modal-dialog modal-sm ">
+                    <div class="modal-content">
+                        <form method="post" id="sample_form" class="form-horizontal">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="ModalLabel">Konfirmasi</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                        </div>
+                            <div class="modal-body">
+                                <p>Klik Oke untuk lanjutkan&hellip;</p>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" name="ok_button"
+                                    id="ok_button">Oke</button>
+                            </div>
+                        </form>
                     </div>
+                    <!-- /.modal-content -->
                 </div>
+                <!-- /.modal-dialog -->
             </div>
             <!-- /.row -->
         </div>
@@ -155,24 +145,16 @@
 <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+
 <script type="text/javascript">
     $(document).ready(function() {
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-
-
         var table = $('.user_datatable').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ route('users.index') }}",
             columns: [{
-                    data: 'id',
-                    name: 'id'
+                    data: 'DT_RowIndex',
+                    name: 'DT_RowIndex'
                 },
                 {
                     data: 'name',
@@ -195,88 +177,7 @@
             ]
         });
 
-        $('#create_record').click(function() {
-            $('.modal-title').text('Add New Record');
-            $('#action_button').val('Add');
-            $('#action').val('Add');
-            $('#form_result').html('');
 
-            $('#formModal').modal('show');
-        });
-
-        $('#sample_form').on('submit', function(event) {
-            event.preventDefault();
-            var action_url = '';
-
-            if ($('#action').val() == 'Add') {
-                action_url = "{{ route('users.store') }}";
-            }
-
-            if ($('#action').val() == 'Edit') {
-                action_url = "{{ route('users.update') }}";
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: action_url,
-                data: $(this).serialize(),
-                dataType: 'json',
-                success: function(data) {
-                    console.log('success: ' + data);
-                    var html = '';
-                    if (data.errors) {
-                        html = '<div class="alert alert-danger">';
-                        for (var count = 0; count < data.errors.length; count++) {
-                            html += '<p>' + data.errors[count] + '</p>';
-                        }
-                        html += '</div>';
-                    }
-                    if (data.success) {
-                        html = '<div class="alert alert-success">' + data.success +
-                            '</div>';
-                        $('#sample_form')[0].reset();
-                        $('#user_table').DataTable().ajax.reload();
-                    }
-                    $('#form_result').html(html);
-                },
-                error: function(data) {
-                    var errors = data.responseJSON;
-                    console.log(errors);
-                }
-            });
-        });
-
-        $(document).on('click', '.edit', function(event) {
-            event.preventDefault();
-            var id = $(this).attr('id');
-            alert(id);
-            $('#form_result').html('');
-
-
-
-            $.ajax({
-                url: "/users/edit/" + id + "/",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                dataType: "json",
-                success: function(data) {
-                    console.log('success: ' + data);
-                    $('#name').val(data.result.name);
-                    $('#email').val(data.result.email);
-                    $('#hidden_id').val(id);
-                    $('.modal-title').text('Edit Record');
-                    $('#action_button').val('Update');
-                    $('#action').val('Edit');
-                    $('.editpass').hide();
-                    $('#formModal').modal('show');
-                },
-                error: function(data) {
-                    var errors = data.responseJSON;
-                    console.log(errors);
-                }
-            })
-        });
 
         var user_id;
 
@@ -294,7 +195,7 @@
                 success: function(data) {
                     setTimeout(function() {
                         $('#confirmModal').modal('hide');
-                        $('#user_table').DataTable().ajax.reload();
+                        $('#user_datatable').DataTable().ajax.reload();
                         alert('Data Deleted');
                     }, 2000);
                 }

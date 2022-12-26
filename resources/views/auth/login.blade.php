@@ -11,15 +11,13 @@
                 novalidate="" autocomplete="off">
                 @csrf
                 <div class="mb-3">
-                    <label class="mb-2 text-muted" for="email">User Name</label>
+                    <label class="mb-2 text-muted" for="email">Email</label>
                     <div class="input-group input-group-join mb-3">
-                        <input id="email" type="text" placeholder="Masukan Username"
-                            class="form-control  @error('username') is-invalid @enderror" name="username"
-                            value="{{ old('username') }}" required autofocus>
-
+                        <input id="email" type="email" placeholder="Masukan Email"
+                            class="form-control  @error('email') is-invalid @enderror" name="email"
+                            value="{{ old('email') }}" required autofocus>
                         <span class="input-group-text rounded-end">&nbsp<i class="fa fa-user"></i>&nbsp</span>
-
-                        @error('username')
+                        @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -59,3 +57,26 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script>
+        // success message popup notification
+        @if (Session::has('success'))
+            toastr.success("{{ Session::get('success') }}");
+        @endif
+
+        // info message popup notification
+        @if (Session::has('info'))
+            toastr.info("{{ Session::get('info') }}");
+        @endif
+
+        // warning message popup notification
+        @if (Session::has('warning'))
+            toastr.warning("{{ Session::get('warning') }}");
+        @endif
+
+        // error message popup notification
+        @if (Session::has('error'))
+            toastr.error("{{ Session::get('error') }}");
+        @endif
+    </script>
+@endpush

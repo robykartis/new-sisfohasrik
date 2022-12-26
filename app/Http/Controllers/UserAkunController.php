@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use DataTables;
 use Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserAkunController extends Controller
 {
@@ -20,13 +21,16 @@ class UserAkunController extends Controller
         // $users = DB::table('users')->paginate(2);
 
         if ($request->ajax()) {
-            $data = User::select('id', 'name', 'email', 'level')->get();
-            return Datatables::of($data)->addIndexColumn()
+            $data = User::select('id', 'name', 'level', 'email')->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
                 ->addColumn('action', function ($data) {
-                    $button = '<button type="button" name="edit" id="' . $data->id . '" class="edit btn btn-primary btn-sm"> <i class="bi bi-pencil-square"></i>Edit</button>';
+                    $button = '<a type="button" href="' . route('users.index', $data->id) . '"  class="edit btn btn-primary btn-sm"> <i class="bi bi-pencil-square"></i>Edit</a>';
+                    $button .= '   <a type="button" href="' . route('users.index') . '" class="delete btn btn-danger btn-sm"> <i class="bi bi-backspace-reverse-fill"></i> Users</a>';
                     $button .= '   <button type="button" name="edit" id="' . $data->id . '" class="delete btn btn-danger btn-sm"> <i class="bi bi-backspace-reverse-fill"></i> Delete</button>';
                     return $button;
                 })
+                ->rawColumns(['action'])
                 ->make(true);
         }
         return view('user.index');
@@ -148,6 +152,7 @@ class UserAkunController extends Controller
      */
     public function destroy($id)
     {
-        //
+        User::find($id)->delete();
+        return back()->with('delete', 'success');
     }
 }

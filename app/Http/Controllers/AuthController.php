@@ -26,12 +26,12 @@ class AuthController extends Controller
     {
         request()->validate(
             [
-                'username' => 'required',
+                'email' => 'required',
                 'password' => 'required',
             ]
         );
 
-        $kredensil = $request->only('username', 'password');
+        $kredensil = $request->only('email', 'password');
 
         if (Auth::attempt($kredensil)) {
             $user = Auth::user();
@@ -43,9 +43,8 @@ class AuthController extends Controller
             return redirect()->intended('/');
         }
 
-        return redirect('login')
-            ->withInput()
-            ->withErrors(['login_gagal' => 'These credentials do not match our records.']);
+        return redirect('/')
+            ->with('error', 'Email-Address And Password Are Wrong.');
     }
 
     public function logout(Request $request)
