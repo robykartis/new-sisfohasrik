@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use DataTables;
+use Validator;
+use Illuminate\Support\Facades\DB;
 
 class UserAkunController extends Controller
 {
@@ -11,12 +15,26 @@ class UserAkunController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $route = route('user');
-        return view('user.index', [
-            'route' => $route
-        ]);
+        // $users = DB::table('users')->paginate(2);
+
+        if ($request->ajax()) {
+            $data = User::select('id', 'name', 'email', 'level')->get();
+            return Datatables::of($data)->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    $button = '<button type="button" name="edit" id="' . $data->id . '" class="edit btn btn-primary btn-sm"> <i class="bi bi-pencil-square"></i>Edit</button>';
+                    $button .= '   <button type="button" name="edit" id="' . $data->id . '" class="delete btn btn-danger btn-sm"> <i class="bi bi-backspace-reverse-fill"></i> Delete</button>';
+                    return $button;
+                })
+                ->make(true);
+        }
+        return view('user.index');
+    }
+    public function user_data()
+    {
+        $users = User::select(['id', 'name', 'email', 'level']);
+        return DataTables::of($users)->make();
     }
 
     /**
@@ -37,7 +55,32 @@ class UserAkunController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = array(
+            'name'    =>  'required',
+            'email'     =>  'required',
+            'level'     =>  'required',
+            'password'     =>  'required'
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if ($error->fails()) {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $pass = $request->password;
+        $postpass = Hash::make($pass);
+
+        $form_data = array(
+            'name'        =>  $request->name,
+            'email'         =>  $request->email,
+            'level'         =>  $request->level,
+            'password'         =>  $postpass
+        );
+
+        User::create($form_data);
+
+        return response()->json(['success' => 'Data Added successfully.']);
     }
 
     /**
@@ -59,7 +102,10 @@ class UserAkunController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (request()->ajax()) {
+            $data = User::findOrFail($id);
+            return response()->json(['result' => $data]);
+        }
     }
 
     /**
@@ -71,7 +117,27 @@ class UserAkunController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = array(
+            'name' =>  'required',
+            'email' =>  'required',
+            'level' => 'required'
+        );
+
+        $error = Validator::make($request->all(), $rules);
+
+        if ($error->fails()) {
+            return response()->json(['errors' => $error->errors()->all()]);
+        }
+
+        $form_data = array(
+            'name'    =>  $request->name,
+            'email'     =>  $request->email,
+            'level'     =>  $request->level
+        );
+
+        User::whereId($request->hidden_id)->update($form_data);
+
+        return response()->json(['success' => 'Data is successfully updated']);
     }
 
     /**

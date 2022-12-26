@@ -11,29 +11,26 @@ use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
 
 
-// Dashboard Super Admin
-Breadcrumbs::for('dashboard_su', function (BreadcrumbTrail $trail) {
-    $trail->push('Dashboard', route('superadmin.index'));
-});
-// Dashboard  Admin
+// Dashboard Admin
 Breadcrumbs::for('dashboard_ad', function (BreadcrumbTrail $trail) {
-    $trail->push('Dashboard', route('admin.index'));
+    $trail->push('Dashboard', route('admin'));
 });
+
 // Dashboard  Operator
 Breadcrumbs::for('dashboard_op', function (BreadcrumbTrail $trail) {
-    $trail->push('Dashboard', route('operator.index'));
+    $trail->push('Dashboard', route('operator'));
 });
 // Dashboard  Read Only
 Breadcrumbs::for('dashboard_re', function (BreadcrumbTrail $trail) {
-    $trail->push('Dashboard', route('readonly.index'));
+    $trail->push('Dashboard', route('readonly'));
 });
 
 
 
-// Akun 
-Breadcrumbs::for('user', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard');
-    $trail->push('User', route('user.index'));
+// User
+Breadcrumbs::for('users', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard_ad');
+    $trail->push('Users', route('users.index'));
 });
 
 // Home > Blog

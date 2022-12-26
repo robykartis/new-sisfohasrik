@@ -22,7 +22,15 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['cek_login:admin']], function () {
         Route::get('admin', [AdminController::class, 'index'])->name('admin');
-        Route::get('user', [UserAkunController::class, 'index'])->name('user');
+
+
+
+        Route::get('users/data', [UserAkunController::class, 'user_data'])->name('users.data');
+        Route::get('users', [UserAkunController::class, 'index'])->name('users.index');
+        Route::post('users/store', [UserAkunController::class, 'store'])->name('users.store');
+        Route::get('users/edit/{id}/', [UserAkunController::class, 'edit']);
+        Route::post('users/update', [UserAkunController::class, 'update'])->name('users.update');
+        Route::get('users/destroy/{id}/', [UserAkunController::class, 'destroy']);
     });
 
 

@@ -13,7 +13,7 @@
                 <div class="mb-3">
                     <label class="mb-2 text-muted" for="email">User Name</label>
                     <div class="input-group input-group-join mb-3">
-                        <input id="email" type="text" placeholder="Enter Email"
+                        <input id="email" type="text" placeholder="Masukan Username"
                             class="form-control  @error('username') is-invalid @enderror" name="username"
                             value="{{ old('username') }}" required autofocus>
 

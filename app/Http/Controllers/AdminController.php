@@ -13,8 +13,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-
-        return view('dashboard');
+        $route = route('admin');
+        return view('dashboard', [
+            'route' => $route
+        ]);
     }
 
     /**

@@ -1,3 +1,13 @@
+<li class="nav-item">
+    <a href="{{ route('readonly') }}" class="nav-link
+        {{ set_active(['readonly']) }}
+     ">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>
+            Dashboard
+        </p>
+    </a>
+</li>
 <li class="nav-header">
     <hr class="mt-1 mb-1 color-white">
 </li>

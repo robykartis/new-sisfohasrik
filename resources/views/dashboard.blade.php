@@ -3,7 +3,13 @@
     Dashboard
 @endsection
 @section('breadcrumbs')
-    {{-- {{ Breadcrumbs::render('dashboard_su') }} --}}
+    @if (Auth::user()->level == 'admin')
+        {{ Breadcrumbs::render('dashboard_ad') }}
+    @elseif(Auth::user()->level == 'operator')
+        {{ Breadcrumbs::render('dashboard_op') }}
+    @else
+        {{ Breadcrumbs::render('dashboard_re') }}
+    @endif
 @endsection
 
 @section('content')

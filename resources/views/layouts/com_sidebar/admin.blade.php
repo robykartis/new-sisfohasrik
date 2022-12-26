@@ -1,9 +1,20 @@
+<li class="nav-item">
+    <a href="{{ route('admin') }}" class="nav-link
+        {{ set_active(['admin']) }}
+     ">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>
+            Dashboard
+        </p>
+    </a>
+</li>
+
 <li class="nav-header">
     <hr class="mt-1 mb-1 color-white">
 </li>
 <li class="nav-header">ADMIN</li>
 <li class="nav-item">
-    <a href="{{ route('user') }}" class="nav-link  {{ set_active(['user']) }}">
+    <a href="{{ route('users.index') }}" class="nav-link  {{ set_active(['users.index']) }}">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
             Pendaftaran User

@@ -19,23 +19,23 @@ class AkunSeeder extends Seeder
             [
                 'username' => 'admin',
                 'name' => 'Admin',
-                'email' => 'admin@example.com',
+                'email' => 'admin@email.com',
                 'level' => 'admin',
-                'password' => bcrypt('123456'),
+                'password' => bcrypt('12341234'),
             ],
             [
                 'username' => 'operator',
                 'name' => 'Operator',
-                'email' => 'operator@example.com',
+                'email' => 'operator@email.com',
                 'level' => 'operator',
-                'password' => bcrypt('123456'),
+                'password' => bcrypt('12341234'),
             ],
             [
                 'username' => 'readonly',
                 'name' => 'Read Only',
-                'email' => 'readonly@example.com',
+                'email' => 'readonly@email.com',
                 'level' => 'readonly',
-                'password' => bcrypt('123456'),
+                'password' => bcrypt('12341234'),
             ],
         ];
 
