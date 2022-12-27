@@ -2,7 +2,9 @@
 @section('title')
     User Edit
 @endsection
-
+@section('breadcrumbs')
+    {{ Breadcrumbs::render() }}
+@endsection
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
 @endpush

@@ -3,7 +3,7 @@
     User Create
 @endsection
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('users_create') }}
+    {{ Breadcrumbs::render() }}
 @endsection
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">

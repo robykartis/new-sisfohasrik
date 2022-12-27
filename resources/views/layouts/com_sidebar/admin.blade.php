@@ -12,7 +12,7 @@
 
 <li class="nav-header">ADMIN</li>
 <li class="nav-item">
-    <a href="{{ route('users.index') }}" class="nav-link  {{ set_active(['users.index', 'users.create']) }}">
+    <a href="{{ route('users.index') }}" class="nav-link  {{ set_active(['users.index', 'users.create', 'users.edit']) }}">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
             Pendaftaran User

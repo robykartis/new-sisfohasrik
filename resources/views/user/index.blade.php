@@ -3,7 +3,7 @@
     User
 @endsection
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('users') }}
+    {{ Breadcrumbs::render() }}
 @endsection
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">

@@ -8,11 +8,33 @@ use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
 
 
-
+// =======================HALAMAN ADMIN========================//
 // Dashboard Admin
-Breadcrumbs::for('dashboard_ad', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('admin', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('admin'));
 });
+
+// =======================HALAMAN ADMIN USERS========================//
+// User
+Breadcrumbs::for('users.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Users', route('users.index'));
+});
+// User > create
+Breadcrumbs::for('users.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('users.index');
+    $trail->push('Create', route('users.create'));
+});
+// User > edit
+Breadcrumbs::for('users.edit', function (BreadcrumbTrail $trail, User $user): void {
+    $trail->parent('users.index');
+    $trail->push('Edit', route('users.edit', $user));
+});
+// =======================END HALAMAN ADMIN USERS========================//
+
+// =======================END HALAMAN ADMIN========================//
+
+
 
 // Dashboard  Operator
 Breadcrumbs::for('dashboard_op', function (BreadcrumbTrail $trail) {
@@ -22,30 +44,3 @@ Breadcrumbs::for('dashboard_op', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('dashboard_re', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('readonly'));
 });
-
-
-
-// User
-Breadcrumbs::for('users', function (BreadcrumbTrail $trail) {
-    $trail->parent('dashboard_ad');
-    $trail->push('Users', route('users.index'));
-});
-// User > create
-Breadcrumbs::for('users_create', function (BreadcrumbTrail $trail) {
-    $trail->parent('users');
-    $trail->push('Create', route('users.create'));
-});
-
-
-
-// Home > Blog
-// Breadcrumbs::for('blog', function (BreadcrumbTrail $trail) {
-//     $trail->parent('home');
-//     $trail->push('Blog', route('blog'));
-// });
-
-// Home > Blog > [Category]
-// Breadcrumbs::for('category', function (BreadcrumbTrail $trail, $category) {
-//     $trail->parent('blog');
-//     $trail->push($category->title, route('category', $category));
-// });
