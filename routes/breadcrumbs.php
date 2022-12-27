@@ -1,9 +1,7 @@
 <?php
 
-
+use App\Models\User;
 use Diglactic\Breadcrumbs\Breadcrumbs;
-
-
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
 
@@ -32,6 +30,13 @@ Breadcrumbs::for('users', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard_ad');
     $trail->push('Users', route('users.index'));
 });
+// User > create
+Breadcrumbs::for('users_create', function (BreadcrumbTrail $trail) {
+    $trail->parent('users');
+    $trail->push('Create', route('users.create'));
+});
+
+
 
 // Home > Blog
 // Breadcrumbs::for('blog', function (BreadcrumbTrail $trail) {

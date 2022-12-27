@@ -25,15 +25,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-        Route::get('users/data', [UserAkunController::class, 'user_data'])->name('users.data');
-        Route::resource('users', UserAkunController::class);
 
-        // Route::get('users', [UserAkunController::class, 'index'])->name('users.index');
-        // Route::post('users/store', [UserAkunController::class, 'store'])->name('users.store');
-        // Route::post('users/ashow/{id}', [UserAkunController::class, 'show'])->name('users.show');
-        // Route::get('users/edit/{id}/', [UserAkunController::class, 'edit'])->name('users.edit');
-        // Route::post('users/update', [UserAkunController::class, 'update'])->name('users.update');
-        // Route::get('users/destroy/{id}/', [UserAkunController::class, 'destroy']);
+        Route::resource('users', UserAkunController::class);
+        Route::get('users/hapus/{id}', [UserAkunController::class, 'deleteuser'])->name('deleteuser');
     });
 
 

@@ -51,9 +51,4 @@ class User extends Authenticatable
             get: fn ($value) =>  ["admin", "operator", "readonly"][$value],
         );
     }
-
-    public function allowsConfig()
-    {
-        return $this->type == 'admin' || $this->type == 'operator';
-    }
 }

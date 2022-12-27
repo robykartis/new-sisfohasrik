@@ -22,7 +22,7 @@
                                   document.getElementById('logout-form').submit();">
                 <i class="fas fa-sign-out-alt"></i>
             </a> --}}
-            <a class="nav-link btn btn-warning" role="button" href="{{ route('logout') }}">
+            <a class="nav-link " role="button" href="{{ route('logout') }}">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
             {{-- <form id="logout-form" action="{{ route('logout') }}" method="POST">

@@ -24,135 +24,91 @@ class UserAkunController extends Controller
             $data = User::select('id', 'name', 'level', 'email')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function ($data) {
-                    $button = '<a type="button" href="' . route('users.index', $data->id) . '"  class="edit btn btn-primary btn-sm"> <i class="bi bi-pencil-square"></i>Edit</a>';
-                    $button .= '   <a type="button" href="' . route('users.index') . '" class="delete btn btn-danger btn-sm"> <i class="bi bi-backspace-reverse-fill"></i> Users</a>';
-                    $button .= '   <button type="button" name="edit" id="' . $data->id . '" class="delete btn btn-danger btn-sm"> <i class="bi bi-backspace-reverse-fill"></i> Delete</button>';
-                    return $button;
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="' . route('users.edit', $row->id) . '" class="edit btn btn-info btn-sm mx-auto"><i class="fas fa-user-edit"></i></a> | ';
+                    $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm"><i class="fas fa-eye"></i></a> | ';
+                    $btn = $btn . '<a href="' . url('users/hapus', $row->id) . '" class="edit btn btn-danger btn-sm"><i class="fas fa-user-times"></i></a>';
+                    return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('user.index');
-    }
-    public function user_data()
-    {
-        $users = User::select(['id', 'name', 'email', 'level']);
-        return DataTables::of($users)->make();
+
+        $title = 'List Pengguna';
+        return view(
+            'user.index',
+            [
+                'title' => $title,
+                'user' => User::all()
+            ]
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+        $title = 'Tambah Pengguna Baru';
+        return view('user.create')->with([
+            'title' => $title
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        $rules = array(
-            'name'    =>  'required',
-            'email'     =>  'required',
-            'level'     =>  'required',
-            'password'     =>  'required'
-        );
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'level' => 'required',
+        ]);
 
-        $error = Validator::make($request->all(), $rules);
-
-        if ($error->fails()) {
-            return response()->json(['errors' => $error->errors()->all()]);
-        }
-
-        $pass = $request->password;
-        $postpass = Hash::make($pass);
-
-        $form_data = array(
-            'name'        =>  $request->name,
-            'email'         =>  $request->email,
-            'level'         =>  $request->level,
-            'password'         =>  $postpass
-        );
-
-        User::create($form_data);
-
-        return response()->json(['success' => 'Data Added successfully.']);
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->level = $request->level;
+        $user->save();
+        return redirect('users')->with('success', 'Tambah Data Berhasil');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+
+    public function edit(User $user)
     {
-        if (request()->ajax()) {
-            $data = User::findOrFail($id);
-            return response()->json(['result' => $data]);
-        }
+        $title = 'User Edit';
+        $data = ['admin' => 'Admin', 'operator' => 'Operator', 'readonly' => 'Read Only'];
+        return view('user.edit')->with(['user' => $user, 'title' => $title, 'data' => $data]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+
+
+    public function update(Request $request, User $user)
     {
-        $rules = array(
-            'name' =>  'required',
-            'email' =>  'required',
-            'level' => 'required'
-        );
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'level' => 'required',
+        ]);
 
-        $error = Validator::make($request->all(), $rules);
-
-        if ($error->fails()) {
-            return response()->json(['errors' => $error->errors()->all()]);
-        }
-
-        $form_data = array(
-            'name'    =>  $request->name,
-            'email'     =>  $request->email,
-            'level'     =>  $request->level
-        );
-
-        User::whereId($request->hidden_id)->update($form_data);
-
-        return response()->json(['success' => 'Data is successfully updated']);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($request->password)
+            $user->password = Hash::make($request->password);
+        $user->level = $request->level;
+        $user->save();
+        return redirect('users')->with('success', 'Ubah Data Berhasil');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function deleteuser($id)
     {
         User::find($id)->delete();
-        return back()->with('delete', 'success');
+        return redirect('users')
+            ->with('success', 'Data Berhasil Dihapus');
     }
 }

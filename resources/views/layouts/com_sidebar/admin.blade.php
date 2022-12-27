@@ -9,12 +9,10 @@
     </a>
 </li>
 
-<li class="nav-header">
-    <hr class="mt-1 mb-1 color-white">
-</li>
+
 <li class="nav-header">ADMIN</li>
 <li class="nav-item">
-    <a href="{{ route('users.index') }}" class="nav-link  {{ set_active(['users.index']) }}">
+    <a href="{{ route('users.index') }}" class="nav-link  {{ set_active(['users.index', 'users.create']) }}">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
             Pendaftaran User
