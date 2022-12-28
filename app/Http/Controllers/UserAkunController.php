@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use DataTables;
 use Validator;
-use Image;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,7 +17,7 @@ class UserAkunController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, User $user)
     {
         // $users = DB::table('users')->paginate(2);
 
@@ -41,7 +41,8 @@ class UserAkunController extends Controller
             'user.index',
             [
                 'title' => $title,
-                'user' => User::all()
+                'user' => User::all(),
+                'user' => $user,
             ]
         );
     }
@@ -67,24 +68,26 @@ class UserAkunController extends Controller
             'level' => 'required',
         ]);
 
+        $image = $request->file('image');
+        $file_name = rand(1000, 9999) . $image->getClientOriginalName();
 
-        $originalImage = $request->file('image');
-        $thumbnailImage = Image::make($originalImage);
-        $thumbnailPath = public_path() . '/images/akun/thumbnail/';
-        $originalPath = public_path() . '/images/akun/original/';
-        $thumbnailImage->save($originalPath . time() . $originalImage->getClientOriginalName());
-        $thumbnailImage->resize(150, 150);
-        $thumbnailImage->save($thumbnailPath . time() . $originalImage->getClientOriginalName());
+        $img = Image::make($image->path());
+        $img->resize('180', '120')
+            ->save(public_path('images/akun/smal') . '/small_' . $file_name);
+        $image->move('images/akun', $file_name);
+
         $user = new User();
-        $user->image = time() . $originalImage->getClientOriginalName();
-
-
         $user->name = $request->name;
         $user->email = $request->email;
         $user->nip = $request->nip;
-        $user->password = Hash::make($request->password);
         $user->level = $request->level;
+        $user->password = Hash::make($request->password);
+        $user->image = $file_name;
         $user->save();
+
+
+
+
         return redirect('users')->with('success', 'Tambah Data Berhasil');
     }
 
@@ -92,6 +95,7 @@ class UserAkunController extends Controller
     public function show(User $user)
     {
         $title = 'User Show';
+        $user['user'] = $user;
         $data = ['admin' => 'Admin', 'operator' => 'Operator', 'readonly' => 'Read Only'];
         return view('user.show')->with(['user' => $user, 'title' => $title, 'data' => $data]);
     }
@@ -115,6 +119,16 @@ class UserAkunController extends Controller
             'level' => 'required',
         ]);
 
+        if ($request->hasFile('image')) {
+            $user->delete_image();
+            $image = $request->file('image');
+            $file_name = rand(1000, 9999) . $image->getClientOriginalName();
+            $img = Image::make($image->path());
+            $img->resize('180', '120')
+                ->save(public_path('images/akun/smal') . '/small_' . $file_name);
+            $image->move('images/akun', $file_name);
+            $user->image = $file_name;
+        }
         $user->name = $request->name;
         $user->email = $request->email;
         $user->nip = $request->nip;
@@ -125,9 +139,11 @@ class UserAkunController extends Controller
         return redirect('users')->with('success', 'Ubah Data Berhasil');
     }
 
-    public function deleteuser($id)
+    public function deleteuser(User $user, $id)
     {
-        User::find($id)->delete();
+        $user->delete_image();
+        $user = User::find($id);
+        $user->delete();
         return redirect('users')
             ->with('success', 'Data Berhasil Dihapus');
     }

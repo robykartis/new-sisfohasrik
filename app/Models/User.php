@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Intervention\Image\Facades\Image;
 
 class User extends Authenticatable
 {
@@ -26,11 +27,23 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    // function image($real_size = false)
+    // {
+    //     $thumbnail = $real_size ? '' : 'small_';
+
+    //     if ($this->image && file_exists(public_path('images/akun/' . $thumbnail . $this->image)))
+    //         return asset('images/akun/' . $thumbnail  . $this->image);
+    //     else
+    //         return asset('images/no_image.png');
+    // }
+
+    function delete_image()
+    {
+        if ($this->image && file_exists(public_path('images/akun/' . $this->image)))
+            unlink(public_path('images/akun/' . $this->image));
+        if ($this->image && file_exists(public_path('images/akun/smal/small_' . $this->image)))
+            unlink(public_path('images/akun/smal/small_' . $this->image));
+    }
     protected $hidden = [
         'password',
         'remember_token',

@@ -12,8 +12,11 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
+
+
+
                 <!-- left column -->
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <!-- jquery validation -->
                     <div class="card card-warning">
                         <div class="card-header">
@@ -21,7 +24,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('users.update', $user) }}" method="POST">
+                        <form action="{{ route('users.update', $user) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
@@ -30,6 +33,7 @@
                                     <input type="text" value="{{ old('name', $user->name) }}" name="name"
                                         class="form-control">
                                 </div>
+
                                 <div class="form-group">
                                     <label>Email Address <span class="text-danger">*</span></label>
                                     <input type="email" value="{{ old('name', $user->email) }}" name="email"
@@ -39,6 +43,10 @@
                                     <label>Nip <span class="text-danger">*</span></label>
                                     <input type="number" value="{{ old('nip', $user->nip) }}" name="nip"
                                         class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Image <span class="text-danger">*</span></label>
+                                    <input type="file" name="image" class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label>Level <span class="text-danger">*</span></label>
@@ -65,11 +73,22 @@
                     </div>
                     <!-- /.card -->
                 </div>
-                <!--/.col (left) -->
-                <!-- right column -->
-                <div class="col-md-6">
 
+
+                <div class="col-md-6">
+                    <!-- Box Comment -->
+                    <div class="card card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title">Images</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <img class="img-fluid pad" src="{{ asset('images/akun/smal/small_' . $user->image) }}"
+                                alt="Photo">
+                        </div>
+                    </div>
                 </div>
+
                 <!--/.col (right) -->
             </div>
             <!-- /.row -->
