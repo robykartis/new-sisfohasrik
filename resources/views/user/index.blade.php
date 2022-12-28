@@ -36,6 +36,7 @@
                                             <th>Name</th>
                                             <th>Level</th>
                                             <th>Email</th>
+                                            <th>Nip</th>
                                             <th width="180px">Action</th>
                                         </tr>
                                     </thead>
@@ -54,24 +55,26 @@
 @section('modal')
     <section class="content">
         <div class="container-fluid">
-            <div class="modal fade"id="confirmModal" aria-labelledby="ModalLabel">
+            <div class="modal fade"id="modal-delete" aria-labelledby="ModalLabel">
                 <div class="modal-dialog modal-sm ">
                     <div class="modal-content">
-                        <form method="post" id="sample_form" class="form-horizontal">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="ModalLabel">Konfirmasi</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Klik Oke untuk lanjutkan&hellip;</p>
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" name="ok_button" id="ok_button">Oke</button>
-                            </div>
-                        </form>
+
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="ModalLabel">Konfirmasi</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Klik Oke untuk lanjutkan&hellip;</p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+                            <button type="submit" class="btn btn-danger">Ya</button>
+
+                        </div>
+
                     </div>
                     <!-- /.modal-content -->
                 </div>
@@ -101,6 +104,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 
+
+    <script type="text/javascript">
+        function confirmDelete() {
+            if (!confirm("Are You Sure to delete this"))
+                event.preventDefault();
+        }
+    </script>
     <script type="text/javascript">
         $(function() {
 
@@ -123,6 +133,10 @@
                     {
                         data: 'email',
                         name: 'email'
+                    },
+                    {
+                        data: 'nip',
+                        name: 'nip'
                     },
                     {
                         data: 'action',

@@ -21,7 +21,7 @@
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form action="{{ route('users.store') }}" method="POST">
+                        <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
@@ -29,9 +29,17 @@
                                     <input type="text" required name="name" class="form-control" placeholder="Name">
                                 </div>
                                 <div class="form-group">
+                                    <label>Image <span class="text-danger">*</span></label>
+                                    <input type="file" name="image" class="form-control">
+                                </div>
+                                <div class="form-group">
                                     <label>Email Address <span class="text-danger">*</span></label>
                                     <input type="email" required name="email" class="form-control"
                                         placeholder="Email Address">
+                                </div>
+                                <div class="form-group">
+                                    <label>Nip <span class="text-danger">*</span></label>
+                                    <input type="number" required name="nip" class="form-control" placeholder="Nip">
                                 </div>
                                 <div class="form-group">
                                     <label>Level <span class="text-danger">*</span></label>

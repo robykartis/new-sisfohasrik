@@ -30,6 +30,11 @@ Breadcrumbs::for('users.edit', function (BreadcrumbTrail $trail, User $user): vo
     $trail->parent('users.index');
     $trail->push('Edit', route('users.edit', $user));
 });
+// User > show
+Breadcrumbs::for('users.show', function (BreadcrumbTrail $trail, User $user): void {
+    $trail->parent('users.index');
+    $trail->push('Show', route('users.show', $user));
+});
 // =======================END HALAMAN ADMIN USERS========================//
 
 // =======================END HALAMAN ADMIN========================//
@@ -37,10 +42,10 @@ Breadcrumbs::for('users.edit', function (BreadcrumbTrail $trail, User $user): vo
 
 
 // Dashboard  Operator
-Breadcrumbs::for('dashboard_op', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('operator', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('operator'));
 });
 // Dashboard  Read Only
-Breadcrumbs::for('dashboard_re', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('readonly', function (BreadcrumbTrail $trail) {
     $trail->push('Dashboard', route('readonly'));
 });

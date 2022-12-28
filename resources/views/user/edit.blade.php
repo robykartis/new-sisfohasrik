@@ -36,6 +36,11 @@
                                         class="form-control">
                                 </div>
                                 <div class="form-group">
+                                    <label>Nip <span class="text-danger">*</span></label>
+                                    <input type="number" value="{{ old('nip', $user->nip) }}" name="nip"
+                                        class="form-control">
+                                </div>
+                                <div class="form-group">
                                     <label>Level <span class="text-danger">*</span></label>
                                     <select class="custom-select" name="level" required>
                                         @foreach ($data as $key => $val)
@@ -48,8 +53,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Password <span class="text-danger">*</span></label>
-                                    <input type="password" name="password" class="form-control" required
-                                        placeholder="Password">
+                                    <input type="password" name="password" class="form-control" placeholder="Password">
                                 </div>
                             </div>
                             <!-- /.card-body -->

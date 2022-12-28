@@ -4,11 +4,11 @@
 @endsection
 @section('breadcrumbs')
     @if (Auth::user()->level == 'admin')
-        {{ Breadcrumbs::render('dashboard_ad') }}
+        {{ Breadcrumbs::render('admin') }}
     @elseif(Auth::user()->level == 'operator')
-        {{ Breadcrumbs::render('dashboard_op') }}
+        {{ Breadcrumbs::render('operator') }}
     @else
-        {{ Breadcrumbs::render('dashboard_re') }}
+        {{ Breadcrumbs::render('radonly') }}
     @endif
 @endsection
 
