@@ -8,7 +8,7 @@
     @elseif(Auth::user()->level == 'operator')
         {{ Breadcrumbs::render('operator') }}
     @else
-        {{ Breadcrumbs::render('radonly') }}
+        {{ Breadcrumbs::render('readonly') }}
     @endif
 @endsection
 

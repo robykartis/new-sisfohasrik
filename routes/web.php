@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KodeTemuanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\ReadonlyController;
@@ -23,11 +24,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['cek_login:admin']], function () {
         Route::get('admin', [AdminController::class, 'index'])->name('admin');
 
-
-
-
+        // User Management
         Route::resource('users', UserAkunController::class);
         Route::get('users/hapus/{id}', [UserAkunController::class, 'deleteuser'])->name('deleteuser');
+
+        // Kode Temuan
+        Route::resource('kode/temuan', KodeTemuanController::class);
     });
 
 

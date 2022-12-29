@@ -30,7 +30,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="" class="nav-link">
+    <a href="{{ route('temuan.index') }}" class="nav-link {{ set_active(['temuan.index']) }}">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
             Kode Temuan

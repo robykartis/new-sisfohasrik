@@ -37,6 +37,13 @@ Breadcrumbs::for('users.show', function (BreadcrumbTrail $trail, User $user): vo
 });
 // =======================END HALAMAN ADMIN USERS========================//
 
+
+// Kode Temuan
+Breadcrumbs::for('temuan.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Kode Temuan', route('temuan.index'));
+});
+
 // =======================END HALAMAN ADMIN========================//
 
 
