@@ -205,7 +205,7 @@
                 $('#saveBtn').val("Save");
                 $('#kode_id').val('');
                 $('#kodeTemuanForm').trigger("reset");
-                $('#modelHeading').html("Create New Kode Temuan");
+                $('#modelHeading').html("Tambah Kode Temuan");
                 $('#ajaxModel').modal('show');
             });
 
@@ -223,7 +223,11 @@
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);
                     $('#name').val(data.name);
-                    $('#detail').val(data.detail);
+                    $('#kode').val(data.kode);
+
+                })
+                toastr.success('We do have the Kapua suite available.', 'Success Alert', {
+                    timeOut: 5000
                 })
             });
 

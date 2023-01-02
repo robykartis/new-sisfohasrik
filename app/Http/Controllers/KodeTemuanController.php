@@ -40,13 +40,13 @@ class KodeTemuanController extends Controller
 
         $title = 'Kode Temuan';
         return view(
-            'kode_temuan.index',
-            [
-                'title' => $title,
-                'temuan' => KodeTemuan::all(),
-                'temuan' => $temuan,
-            ]
-        );
+            'kode_temuan.index'
+        )->with([
+            'success',
+            'title' => $title,
+            'temuan' => KodeTemuan::all(),
+            'temuan' => $temuan,
+        ]);
     }
 
 
