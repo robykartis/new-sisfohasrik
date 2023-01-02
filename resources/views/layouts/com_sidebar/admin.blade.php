@@ -30,6 +30,14 @@
     </a>
 </li>
 <li class="nav-item">
+    <a href="{{ route('bidangtemuan.index') }}" class="nav-link {{ set_active(['bidangtemuan.index']) }}">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>
+            Bidang Temuan
+        </p>
+    </a>
+</li>
+<li class="nav-item">
     <a href="{{ route('temuan.index') }}" class="nav-link {{ set_active(['temuan.index']) }}">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>

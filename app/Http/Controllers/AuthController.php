@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Log;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +14,13 @@ use Illuminate\Validation\ValidationException;
 class AuthController extends Controller
 {
     use AuthenticatesUsers;
-
+    protected function authenticated(Request $request, $user)
+    {
+        $user->forceFill([
+            'last_login_at' => Carbon::now()->toDateTimeString(),
+            'last_login_ip' => $request->getClientIp()
+        ])->save();
+    }
     public function index()
     {
         if ($user = Auth::user()) {
@@ -37,20 +46,11 @@ class AuthController extends Controller
             'password' => 'required',
         ], $messages);
 
-        if (
-            method_exists($this, 'hasTooManyLoginAttempts') &&
-            $this->hasTooManyLoginAttempts($request)
-        ) {
-            $this->fireLockoutEvent($request);
-
-            return $this->sendLockoutResponse($request);
-        }
-
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            $user = $this->guard()->user();
             $user = Auth::user();
+            $this->authenticated($request, $user); // <-- tambahkan baris ini
             if ($user->level == 'admin') {
                 return redirect()->intended('admin');
             } elseif ($user->level == 'operator') {
@@ -60,13 +60,8 @@ class AuthController extends Controller
             }
         }
 
-        // If the login attempt was unsuccessful we will increment the number of attempts
-        // to login and redirect the user back to the login form. Of course, when this
-        // user surpasses their maximum number of attempts they will get locked out.
-        $this->incrementLoginAttempts($request);
-
         return $this->sendFailedLoginResponse($request)->withErrors([
-            'email' => 'sdasas credentials do not match our records.',
+            'email' => 'Credentials do not match our records.',
         ]);
     }
 

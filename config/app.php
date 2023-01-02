@@ -213,6 +213,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'Image' => Intervention\Image\Facades\Image::class,
         Yoeunes\Toastr\ToastrServiceProvider::class,
+        'LogActivity' => App\Helpers\LogActivity::class,
     ])->toArray(),
 
 ];

@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\KodeTemuan;
+use App\Models\BidangTemuan;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class KodeTemuanSeeder extends Seeder
+class BidangTemuanSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,28 +15,27 @@ class KodeTemuanSeeder extends Seeder
      */
     public function run()
     {
-
         $data = [
             [
-                'kode' => 'A',
-                'name' => 'PEMERIKSA SEKOLAH',
+                'kode_bidang' => 'A',
+                'name_bidang' => 'PEMERIKSA SEKOLAH',
 
             ],
             [
-                'kode' => 'B',
-                'name' => 'PEMERIKSA RUMAH SAKIT',
+                'kode_bidang' => 'B',
+                'name_bidang' => 'PEMERIKSA RUMAH SAKIT',
 
             ],
             [
-                'kode' => 'C',
-                'name' => 'PEMERIKSA PEMBANGUAN',
+                'kode_bidang' => 'C',
+                'name_bidang' => 'PEMERIKSA PEMBANGUAN',
 
             ],
 
         ];
 
         foreach ($data as $key => $value) {
-            KodeTemuan::create($value);
+            BidangTemuan::create($value);
         }
     }
 }

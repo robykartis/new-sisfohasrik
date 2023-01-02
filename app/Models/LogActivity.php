@@ -5,12 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class KodeTemuan extends Model
+class LogActivity extends Model
 {
-    use HasFactory;
-    // protected $table = ['kode_temuans'];
     protected $fillable = [
-        'kode',
-        'name',
+        'subject', 'url', 'method', 'ip', 'agent', 'user_id'
     ];
 }

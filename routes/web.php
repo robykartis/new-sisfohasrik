@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BidangTemuanController;
 use App\Http\Controllers\KodeTemuanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\OperatorController;
@@ -30,6 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         // Kode Temuan
         Route::resource('kode/temuan', KodeTemuanController::class);
+        Route::resource('bidangtemuan', BidangTemuanController::class);
     });
 
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Kode Temuan
+    Bidang Temuan
 @endsection
 
 @push('css')
@@ -18,7 +18,7 @@
                         <div class="card-header">
                             <h3 class="card-title">{{ $title }}</h3>
                             <div align="right">
-                                <button id="createKodeTemuan" type="button" class="btn btn-success btn-sm"> <i
+                                <button id="createBidangTemuan" type="button" class="btn btn-success btn-sm"> <i
                                         class="fas fa-plus"></i>
                                 </button>
                             </div>
@@ -81,12 +81,12 @@
                             <h4 class="modal-title" id="modelHeading"></h4>
                         </div>
                         <div class="modal-body">
-                            <form id="kodeTemuanForm" name="kodeTemuanForm" class="form-horizontal">
+                            <form id="bidangTemuanForm" name="bidangTemuanForm" class="form-horizontal">
                                 <input type="hidden" name="kode_id" id="kode_id">
                                 <div class="form-group">
                                     <label for="kode" class="col-sm-2 control-label">Kode</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="kode" name="kode"
+                                        <input type="text" class="form-control" id="kode_bidang" name="kode_bidang"
                                             placeholder="Enter Kode" value="" maxlength="50" required="">
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Name</label>
                                     <div class="col-sm-12">
-                                        <textarea id="name" name="name" required="" placeholder="Enter Details" class="form-control"></textarea>
+                                        <textarea id="name_bidang" name="name_bidang" required="" placeholder="Enter Details" class="form-control"></textarea>
                                     </div>
                                 </div>
 
@@ -174,18 +174,18 @@
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('temuan.index') }}",
+                ajax: "{{ route('bidangtemuan.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'kode',
-                        name: 'kode'
+                        data: 'kode_bidang',
+                        name: 'kode_bidang'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'name_bidang',
+                        name: 'name_bidang'
                     },
                     {
                         data: 'action',
@@ -201,11 +201,11 @@
             Click to Button
             --------------------------------------------
             --------------------------------------------*/
-            $('#createKodeTemuan').click(function() {
+            $('#createBidangTemuan').click(function() {
                 $('#saveBtn').val("Save");
                 $('#kode_id').val('');
-                $('#kodeTemuanForm').trigger("reset");
-                $('#modelHeading').html("Tambah Kode Temuan");
+                $('#bidangTemuanForm').trigger("reset");
+                $('#modelHeading').html("Tambah Bidang Temuan");
                 $('#ajaxModel').modal('show');
             });
 
@@ -214,16 +214,16 @@
             Click to Edit Button
             --------------------------------------------
             --------------------------------------------*/
-            $('body').on('click', '.editKodeTemuan', function() {
+            $('body').on('click', '.editBidangTemuan', function() {
                 var kode_id = $(this).data('id');
-                $.get("{{ route('temuan.index') }}" + '/' + kode_id + '/edit', function(
+                $.get("{{ route('bidangtemuan.index') }}" + '/' + kode_id + '/edit', function(
                     data) {
-                    $('#modelHeading').html("Edit Kode Temuan");
+                    $('#modelHeading').html("Edit Bidang Temuan");
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);
-                    $('#name').val(data.name);
-                    $('#kode').val(data.kode);
+                    $('#name_bidang').val(data.name_bidang);
+                    $('#kode_bidang').val(data.kode_bidang);
 
                 })
 
@@ -239,8 +239,8 @@
                 $(this).html('Sending..');
 
                 $.ajax({
-                    data: $('#kodeTemuanForm').serialize(),
-                    url: "{{ route('temuan.store') }}",
+                    data: $('#bidangTemuanForm').serialize(),
+                    url: "{{ route('bidangtemuan.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function(data) {
@@ -254,7 +254,7 @@
                                 timeOut: 5000
                             });
                         }
-                        $('#kodeTemuanForm').trigger("reset");
+                        $('#bidangTemuanForm').trigger("reset");
                         $('#ajaxModel').modal('hide');
                         table.draw();
 
@@ -271,7 +271,7 @@
             Delete Product Code
             --------------------------------------------
             --------------------------------------------*/
-            $('body').on('click', '.deleteKodeTemuan', function() {
+            $('body').on('click', '.deleteBidangTemuan', function() {
 
                 var kode_id = $(this).data("id");
                 confirm("Are You sure want to delete !");
