@@ -61,9 +61,8 @@
         </p>
     </a>
 </li>
-
 <li class="nav-item">
-    <a href="" class="nav-link">
+    <a href="{{ route('kodetlhp.index') }}" class="nav-link {{ set_active(['kodetlhp.index']) }}">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
             Kode TLHP
@@ -71,13 +70,22 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="" class="nav-link">
+    <a href="{{ route('klarifikasiobrik.index') }}" class="nav-link {{ set_active(['klarifikasiobrik.index']) }}">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
             Klarifikasi Obrik
         </p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('pendaftaranobrik.index') }}" class="nav-link {{ set_active(['pendaftaranobrik.index']) }}">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>
+            Pendaftaran Obrik
+        </p>
+    </a>
+</li>
+
 <li class="nav-item">
     <a href="" class="nav-link">
         <i class="nav-icon fas fa-tachometer-alt"></i>

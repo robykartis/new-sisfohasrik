@@ -58,6 +58,16 @@ Breadcrumbs::for('kodepenyebab.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
     $trail->push('Kode Penyebab', route('kodepenyebab.index'));
 });
+// Kode Tlhp
+Breadcrumbs::for('kodetlhp.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Kode TLHP', route('kodetlhp.index'));
+});
+// Klarifikasi Obrik
+Breadcrumbs::for('klarifikasiobrik.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Klarifikasi Obrik', route('klarifikasiobrik.index'));
+});
 
 // =======================END HALAMAN ADMIN========================//
 

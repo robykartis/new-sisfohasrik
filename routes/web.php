@@ -3,11 +3,14 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BidangTemuanController;
+use App\Http\Controllers\KlarifikasiObrikController;
 use App\Http\Controllers\KodePenyebabController;
 use App\Http\Controllers\KodeRekomendasiController;
 use App\Http\Controllers\KodeTemuanController;
+use App\Http\Controllers\KodeTlhpController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\PendaftaranObrikController;
 use App\Http\Controllers\ReadonlyController;
 use App\Http\Controllers\UserAkunController;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +42,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('koderekomendasi', KodeRekomendasiController::class);
         // Kode Penyebab
         Route::resource('kodepenyebab', KodePenyebabController::class);
+        // Kode Penyebab
+        Route::resource('kodetlhp', KodeTlhpController::class);
+        // Klarifikasi Obrik
+        Route::resource('klarifikasiobrik', KlarifikasiObrikController::class);
+        // Klarifikasi Obrik
+        Route::resource('pendaftaranobrik', PendaftaranObrikController::class);
     });
 
 
