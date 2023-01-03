@@ -3,6 +3,8 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BidangTemuanController;
+use App\Http\Controllers\KodePenyebabController;
+use App\Http\Controllers\KodeRekomendasiController;
 use App\Http\Controllers\KodeTemuanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\OperatorController;
@@ -29,9 +31,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('users', UserAkunController::class);
         Route::get('users/hapus/{id}', [UserAkunController::class, 'deleteuser'])->name('deleteuser');
 
+        // Kode Bidang Temuan
+        Route::resource('bidangtemuan', BidangTemuanController::class);
         // Kode Temuan
         Route::resource('kode/temuan', KodeTemuanController::class);
-        Route::resource('bidangtemuan', BidangTemuanController::class);
+        // Kode Rekomendasi
+        Route::resource('koderekomendasi', KodeRekomendasiController::class);
+        // Kode Penyebab
+        Route::resource('kodepenyebab', KodePenyebabController::class);
     });
 
 

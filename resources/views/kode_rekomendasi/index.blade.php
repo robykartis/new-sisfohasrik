@@ -1,11 +1,10 @@
 @extends('layouts.app')
 @section('title')
-    Kode Temuan
+    Kode Rekomendasi
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
 @endsection
-
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -21,7 +20,7 @@
                         <div class="card-header">
                             <h3 class="card-title">{{ $title }}</h3>
                             <div align="right">
-                                <button id="createKodeTemuan" type="button" class="btn btn-success btn-sm"> <i
+                                <button id="createData" type="button" class="btn btn-success btn-sm"> <i
                                         class="fas fa-plus"></i>
                                 </button>
                             </div>
@@ -46,30 +45,6 @@
                         </div>
                     </div>
                 </div>
-
-
-                {{-- <div class="col-6">
-                    <div class="card card-danger">
-                        <div class="card-header">
-                            <h3 class="card-title">Different Width</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-5">
-                                    <input type="text" class="form-control" placeholder=".col-3">
-                                </div>
-                                <div class="col-5">
-                                    <input type="text" class="form-control" placeholder=".col-4">
-                                </div>
-                                <div class="col-2">
-                                    <a href="" class="btn btn-primary ">Add</a>
-                                    <a href="" class="btn btn-primary ">Add</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                </div> --}}
             </div>
             <!-- /.container-fluid -->
     </section>
@@ -84,20 +59,21 @@
                             <h4 class="modal-title" id="modelHeading"></h4>
                         </div>
                         <div class="modal-body">
-                            <form id="kodeTemuanForm" name="kodeTemuanForm" class="form-horizontal">
+                            <form id="dataForm" name="dataForm" class="form-horizontal">
                                 <input type="hidden" name="kode_id" id="kode_id">
                                 <div class="form-group">
                                     <label for="kode" class="col-sm-2 control-label">Kode</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="kode" name="kode"
-                                            placeholder="Enter Kode" value="" maxlength="50" required="">
+                                        <input type="text" class="form-control" id="kode_rekomendasi"
+                                            name="kode_rekomendasi" placeholder="Enter Kode" value="" maxlength="50"
+                                            required="">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Name</label>
                                     <div class="col-sm-12">
-                                        <textarea id="name" name="name" required="" placeholder="Enter Details" class="form-control"></textarea>
+                                        <textarea id="name_rekomendasi" name="name_rekomendasi" required="" placeholder="Enter Details" class="form-control"></textarea>
                                     </div>
                                 </div>
 
@@ -177,18 +153,18 @@
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('temuan.index') }}",
+                ajax: "{{ route('koderekomendasi.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'kode',
-                        name: 'kode'
+                        data: 'kode_rekomendasi',
+                        name: 'kode_rekomendasi'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'name_rekomendasi',
+                        name: 'name_rekomendasi'
                     },
                     {
                         data: 'action',
@@ -204,11 +180,11 @@
             Click to Button
             --------------------------------------------
             --------------------------------------------*/
-            $('#createKodeTemuan').click(function() {
+            $('#createData').click(function() {
                 $('#saveBtn').val("Save");
                 $('#kode_id').val('');
-                $('#kodeTemuanForm').trigger("reset");
-                $('#modelHeading').html("Tambah Kode Temuan");
+                $('#dataForm').trigger("reset");
+                $('#modelHeading').html("Tambah Data");
                 $('#ajaxModel').modal('show');
             });
 
@@ -217,16 +193,16 @@
             Click to Edit Button
             --------------------------------------------
             --------------------------------------------*/
-            $('body').on('click', '.editKodeTemuan', function() {
+            $('body').on('click', '.editData', function() {
                 var kode_id = $(this).data('id');
-                $.get("{{ route('temuan.index') }}" + '/' + kode_id + '/edit', function(
+                $.get("{{ route('koderekomendasi.index') }}" + '/' + kode_id + '/edit', function(
                     data) {
-                    $('#modelHeading').html("Edit Kode Temuan");
+                    $('#modelHeading').html("Edit Data");
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);
-                    $('#name').val(data.name);
-                    $('#kode').val(data.kode);
+                    $('#name_rekomendasi').val(data.name_rekomendasi);
+                    $('#kode_rekomendasi').val(data.kode_rekomendasi);
 
                 })
 
@@ -242,8 +218,8 @@
                 $(this).html('Sending..');
 
                 $.ajax({
-                    data: $('#kodeTemuanForm').serialize(),
-                    url: "{{ route('temuan.store') }}",
+                    data: $('#dataForm').serialize(),
+                    url: "{{ route('koderekomendasi.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function(data) {
@@ -257,7 +233,7 @@
                                 timeOut: 5000
                             });
                         }
-                        $('#kodeTemuanForm').trigger("reset");
+                        $('#dataForm').trigger("reset");
                         $('#ajaxModel').modal('hide');
                         table.draw();
 
@@ -274,14 +250,14 @@
             Delete Product Code
             --------------------------------------------
             --------------------------------------------*/
-            $('body').on('click', '.deleteKodeTemuan', function() {
+            $('body').on('click', '.deleteData', function() {
 
                 var kode_id = $(this).data("id");
                 confirm("Are You sure want to delete !");
 
                 $.ajax({
                     type: "DELETE",
-                    url: "{{ route('temuan.store') }}" + '/' + kode_id,
+                    url: "{{ route('koderekomendasi.store') }}" + '/' + kode_id,
                     success: function(data) {
                         // Tambahkan toastr untuk menampilkan pesan sukses
                         toastr.success('Data berhasil dihapus.', 'Sukses', {

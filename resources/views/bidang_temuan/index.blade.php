@@ -2,7 +2,9 @@
 @section('title')
     Bidang Temuan
 @endsection
-
+@section('breadcrumbs')
+    {{ Breadcrumbs::render() }}
+@endsection
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -43,30 +45,6 @@
                         </div>
                     </div>
                 </div>
-
-
-                {{-- <div class="col-6">
-                    <div class="card card-danger">
-                        <div class="card-header">
-                            <h3 class="card-title">Different Width</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-5">
-                                    <input type="text" class="form-control" placeholder=".col-3">
-                                </div>
-                                <div class="col-5">
-                                    <input type="text" class="form-control" placeholder=".col-4">
-                                </div>
-                                <div class="col-2">
-                                    <a href="" class="btn btn-primary ">Add</a>
-                                    <a href="" class="btn btn-primary ">Add</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                </div> --}}
             </div>
             <!-- /.container-fluid -->
     </section>
@@ -278,7 +256,7 @@
 
                 $.ajax({
                     type: "DELETE",
-                    url: "{{ route('temuan.store') }}" + '/' + kode_id,
+                    url: "{{ route('bidangtemuan.store') }}" + '/' + kode_id,
                     success: function(data) {
                         // Tambahkan toastr untuk menampilkan pesan sukses
                         toastr.success('Data berhasil dihapus.', 'Sukses', {

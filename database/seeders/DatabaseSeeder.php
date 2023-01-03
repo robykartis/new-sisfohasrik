@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\KodeRekomendasi;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,5 +22,11 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        $this->call(AkunSeeder::class);
+        $this->call(BidangTemuanSeeder::class);
+        $this->call(KodeTemuanSeeder::class);
+        $this->call(KodeRecomendasiSeeder::class);
+        $this->call(KodePenyebabSeeder::class);
     }
 }

@@ -18,19 +18,16 @@ class KodeTemuanSeeder extends Seeder
 
         $data = [
             [
-                'kode' => 'A',
-                'name' => 'PEMERIKSA SEKOLAH',
-
+                'kode' => 'KODE TEMUAN A',
+                'name' => 'KODE TEMUAN PEMERIKSA SEKOLAH',
             ],
             [
-                'kode' => 'B',
-                'name' => 'PEMERIKSA RUMAH SAKIT',
-
+                'kode' => 'KODE TEMUAN B',
+                'name' => 'KODE TEMUAN PEMERIKSA RUMAH SAKIT',
             ],
             [
-                'kode' => 'C',
-                'name' => 'PEMERIKSA PEMBANGUAN',
-
+                'kode' => 'KODE TEMUAN C',
+                'name' => 'KODE TEMUAN PEMERIKSA PEMBANGUAN',
             ],
 
         ];

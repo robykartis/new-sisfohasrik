@@ -38,10 +38,25 @@ Breadcrumbs::for('users.show', function (BreadcrumbTrail $trail, User $user): vo
 // =======================END HALAMAN ADMIN USERS========================//
 
 
+// Bidang Temuan
+Breadcrumbs::for('bidangtemuan.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Bidang Temuan', route('bidangtemuan.index'));
+});
 // Kode Temuan
 Breadcrumbs::for('temuan.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
     $trail->push('Kode Temuan', route('temuan.index'));
+});
+// Kode Rekomendasi
+Breadcrumbs::for('koderekomendasi.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Kode Rekomendasi', route('koderekomendasi.index'));
+});
+// Kode Penyebab
+Breadcrumbs::for('kodepenyebab.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Kode Penyebab', route('kodepenyebab.index'));
 });
 
 // =======================END HALAMAN ADMIN========================//

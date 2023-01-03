@@ -2,31 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BidangTemuan;
+use App\Models\KodeRekomendasi;
 use Illuminate\Http\Request;
 use DataTables;
 
-class BidangTemuanController extends Controller
+class KodeRekomendasiController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, BidangTemuan $temuan)
+    public function index(Request $request, KodeRekomendasi $rekomendasi)
     {
 
         if ($request->ajax()) {
 
-            $data = BidangTemuan::select('id', 'kode_bidang',  'name_bidang')->get();
+            $data = KodeRekomendasi::select('id', 'kode_rekomendasi',  'name_rekomendasi')->get();
 
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
 
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editBidangTemuan">Edit</a>';
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editData">Edit</a>';
 
-                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteBidangTemuan">Delete</a>';
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteData">Delete</a>';
 
                     return $btn;
                 })
@@ -35,14 +35,14 @@ class BidangTemuanController extends Controller
         }
 
 
-        $title = 'Bidang Temuan';
+        $title = 'Kode Rekomendasi';
         return view(
-            'bidang_temuan.index'
+            'kode_rekomendasi.index'
         )->with([
             'success',
             'title' => $title,
-            'temuan' => BidangTemuan::all(),
-            'temuan' => $temuan,
+            'rekomendasi' => KodeRekomendasi::all(),
+            'rekomendasi' => $rekomendasi,
         ]);
     }
 
@@ -64,26 +64,26 @@ class BidangTemuanController extends Controller
      */
     public function store(Request $request)
     {
-        BidangTemuan::updateOrCreate(
+        KodeRekomendasi::updateOrCreate(
             [
                 'id' => $request->kode_id
             ],
             [
-                'kode_bidang' => $request->kode_bidang,
-                'name_bidang' => $request->name_bidang
+                'kode_rekomendasi' => $request->kode_rekomendasi,
+                'name_rekomendasi' => $request->name_rekomendasi
             ]
         );
 
-        return response()->json(['success' => 'Kode temuan saved successfully.']);
+        return response()->json(['success' => ' saved successfully.']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\KodeRekomendasi  $kodeRekomendasi
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(KodeRekomendasi $kodeRekomendasi)
     {
         //
     }
@@ -91,23 +91,23 @@ class BidangTemuanController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\KodeRekomendasi  $kodeRekomendasi
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $temuan = BidangTemuan::find($id);
-        return response()->json($temuan);
+        $rekomendasi = KodeRekomendasi::find($id);
+        return response()->json($rekomendasi);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\KodeRekomendasi  $kodeRekomendasi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, KodeRekomendasi $kodeRekomendasi)
     {
         //
     }
@@ -115,13 +115,13 @@ class BidangTemuanController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\KodeRekomendasi  $kodeRekomendasi
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        BidangTemuan::find($id)->delete();
+        KodeRekomendasi::find($id)->delete();
 
-        return response()->json(['success' => 'Kode temuan deleted successfully.']);
+        return response()->json(['success' => ' deleted successfully.']);
     }
 }

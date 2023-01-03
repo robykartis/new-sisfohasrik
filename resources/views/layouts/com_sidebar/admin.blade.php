@@ -46,7 +46,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="" class="nav-link">
+    <a href="{{ route('koderekomendasi.index') }}" class="nav-link {{ set_active(['koderekomendasi.index']) }}">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
             Kode Rekomendasi
@@ -54,13 +54,14 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="" class="nav-link">
+    <a href="{{ route('kodepenyebab.index') }}" class="nav-link {{ set_active(['kodepenyebab.index']) }}">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
             Kode Penyebab
         </p>
     </a>
 </li>
+
 <li class="nav-item">
     <a href="" class="nav-link">
         <i class="nav-icon fas fa-tachometer-alt"></i>
