@@ -78,7 +78,8 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('pendaftaranobrik.index') }}" class="nav-link {{ set_active(['pendaftaranobrik.index']) }}">
+    <a href="{{ route('pendaftaranobrik.index') }}"
+        class="nav-link {{ set_active(['pendaftaranobrik.index', 'pendaftaranobrik.create']) }}">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
             Pendaftaran Obrik

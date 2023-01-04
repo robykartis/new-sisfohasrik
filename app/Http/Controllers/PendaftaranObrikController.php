@@ -10,11 +10,7 @@ use DataTables;
 
 class PendaftaranObrikController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $klarifikasis = DB::table('klarifikasi_obriks')->get();
@@ -36,21 +32,17 @@ class PendaftaranObrikController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editData">Edit</a>';
-                    $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteData">Delete</a>';
+                    $btn =  '<a href="' . route('pendaftaranobrik.edit', $row->id) . '" class="btn btn-info btn-sm"> <i class="fas fa-pencil-alt"></i></a> | ';
+                    $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteData"><i class="fas fa-trash"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
 
-        return view('pendaftaran_obrik.index', compact('klarifikasis'));
+        return view('pendaftaran_obrik.index', compact('klarifikasis', 'request'));
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         $klarifikasi_obriks = KlarifikasiObrik::all();
@@ -58,75 +50,78 @@ class PendaftaranObrikController extends Controller
         return view('pendaftaran_obrik.create', compact('klarifikasi_obriks'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
+        // validate the form input
         $request->validate([
             'tahun' => 'required',
-            'kode' => 'required',
             'klarifikasi' => 'required',
-            'nama' => 'required',
+            'kode' => 'required',
             'induk' => 'required',
+            'nama' => 'required',
         ]);
 
-        PendaftaranObrik::create([
-            'tahun' => $request->tahun,
-            'kode' => $request->kode,
-            'klarifikasi' => $request->klarifikasi,
-            'nama' => $request->nama,
-            'induk' => $request->induk,
-        ]);
+        // create a new data item
+        $data = new PendaftaranObrik;
+        $data->tahun = $request->tahun;
+        $data->klarifikasi = $request->klarifikasi;
+        $data->kode = $request->kode;
+        $data->induk = $request->induk;
+        $data->nama = $request->nama;
+        $data->save();
 
-        return redirect()->route('pendaftaran_obrik.index')->with('success', 'Data berhasil ditambahkan');
+        // redirect to a confirmation page
+        return redirect()->route('pendaftaranobrik.index')->with('success', 'Tambah Data Berhasil');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\PendaftaranObrik  $pendaftaranObrik
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(PendaftaranObrik $pendaftaranObrik)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PendaftaranObrik  $pendaftaranObrik
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PendaftaranObrik $pendaftaranObrik)
+
+    public function edit($id)
     {
-        //
+        // get the data item by id
+        $data = PendaftaranObrik::findOrFail($id);
+
+        // get all klarifikasi obrik
+        $klarifikasi_obriks = KlarifikasiObrik::all();
+
+        return view('pendaftaran_obrik.edit', compact('data', 'klarifikasi_obriks'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PendaftaranObrik  $pendaftaranObrik
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, PendaftaranObrik $pendaftaranObrik)
+
+    public function update(Request $request, $id)
     {
-        //
+        // validate the form input
+        $request->validate([
+            'tahun' => 'required',
+            'klarifikasi' => 'required',
+            'kode' => 'required',
+            'induk' => 'required',
+            'nama' => 'required',
+        ]);
+
+        // update the data item
+        $data = PendaftaranObrik::find($id);
+        $data->tahun = $request->tahun;
+        $data->klarifikasi = $request->klarifikasi;
+        $data->kode = $request->kode;
+        $data->induk = $request->induk;
+        $data->nama = $request->nama;
+        $data->save();
+
+        // redirect to a confirmation page and show a success message
+        return redirect()->route('pendaftaranobrik.index')->with('success', 'Data obrik berhasil diperbaharui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\PendaftaranObrik  $pendaftaranObrik
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(PendaftaranObrik $pendaftaranObrik)
+    public function destroy($id)
     {
-        //
+        PendaftaranObrik::find($id)->delete();
+
+        return response()->json(['success' => ' deleted successfully.']);
     }
 }

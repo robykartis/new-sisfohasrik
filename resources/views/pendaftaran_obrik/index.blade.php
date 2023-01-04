@@ -20,9 +20,9 @@
                         <div class="card-header">
                             <h3 class="card-title">dsdad</h3>
                             <div align="right">
-                                <button id="createData" type="button" class="btn btn-success btn-sm"> <i
-                                        class="fas fa-plus"></i>
-                                </button>
+                                <a href="{{ route('pendaftaranobrik.create') }}" type="button"
+                                    class="btn btn-success btn-sm"> <i class="fas fa-plus"></i>
+                                </a>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -34,9 +34,11 @@
                                         <label for="tahun">Tahun:</label>
                                         <select name="tahun" id="tahun">
                                             <option value="">Semua Tahun</option>
-                                            @for ($i = date('Y'); $i >= 1900; $i--)
-                                                <option value="{{ $i }}">{{ $i }}</option>
-                                            @endfor
+                                            @foreach (DB::table('pendaftaran_obriks')->pluck('tahun') as $i)
+                                                <option value="{{ $i }}"
+                                                    {{ $request->tahun == $i ? 'selected' : '' }}>{{ $i }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                         <label for="klarifikasi">Klarifikasi:</label>
                                         <select name="klarifikasi" id="klarifikasi">
@@ -68,48 +70,6 @@
                 </div>
             </div>
             <!-- /.container-fluid -->
-    </section>
-@endsection
-@section('modal')
-    <section class="content">
-        <div class="container-fluid">
-            <div class="modal fade" id="ajaxModel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modelHeading"></h4>
-                        </div>
-                        <div class="modal-body">
-                            <form id="dataForm" name="dataForm" class="form-horizontal">
-                                <input type="hidden" name="kode_id" id="kode_id">
-                                <div class="form-group">
-                                    <label for="kode" class="col-sm-2 control-label">Kode</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="kode_tlhp" name="kode_tlhp"
-                                            placeholder="Enter Kode" value="" maxlength="50" required="">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Name</label>
-                                    <div class="col-sm-12">
-                                        <textarea id="name_tlhp" name="name_tlhp" required="" placeholder="Enter Details" class="form-control"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-offset-2 col-sm-10">
-                                    <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save
-                                        changes
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
     </section>
 @endsection
 
@@ -154,22 +114,13 @@
     <script type="text/javascript">
         $(function() {
 
-            /*------------------------------------------
-             --------------------------------------------
-             Pass Header Token
-             --------------------------------------------
-             --------------------------------------------*/
+            // Pass Header Token
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
-            /*------------------------------------------
-            --------------------------------------------
-            Render DataTable
-            --------------------------------------------
-            --------------------------------------------*/
+            // Render Table
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
@@ -215,109 +166,25 @@
                     },
                 ]
             });
-
-            /*------------------------------------------
-              --------------------------------------------
-              Reload DataTable
-              --------------------------------------------
-              --------------------------------------------*/
+            //   Reload table
             $('#tahun, #klarifikasi').change(function() {
                 table.ajax.reload();
             });
-
-            /*------------------------------------------
-                --------------------------------------------
-                Form Submit
-                --------------------------------------------
-                --------------------------------------------*/
+            // Submit Filter
             $('form').on('submit', function(event) {
                 event.preventDefault();
                 table.draw();
             });
 
-            /*------------------------------------------
-            --------------------------------------------
-            Click to Button
-            --------------------------------------------
-            --------------------------------------------*/
-            $('#createData').click(function() {
-                $('#saveBtn').val("Save");
-                $('#kode_id').val('');
-                $('#dataForm').trigger("reset");
-                $('#modelHeading').html("Tambah Data");
-                $('#ajaxModel').modal('show');
-            });
 
-            /*------------------------------------------
-            --------------------------------------------
-            Click to Edit Button
-            --------------------------------------------
-            --------------------------------------------*/
-            $('body').on('click', '.editData', function() {
-                var kode_id = $(this).data('id');
-                $.get("{{ route('pendaftaranobrik.index') }}" + '/' + kode_id + '/edit', function(
-                    data) {
-                    $('#modelHeading').html("Edit Data");
-                    $('#saveBtn').val("edit-user");
-                    $('#ajaxModel').modal('show');
-                    $('#kode_id').val(data.id);
-                    $('#name_tlhp').val(data.name_tlhp);
-                    $('#kode_tlhp').val(data.kode_tlhp);
 
-                })
-
-            });
-
-            /*------------------------------------------
-            --------------------------------------------
-            Create Product Code
-            --------------------------------------------
-            --------------------------------------------*/
-            $('#saveBtn').click(function(e) {
-                e.preventDefault();
-                $(this).html('Sending..');
-
-                $.ajax({
-                    data: $('#dataForm').serialize(),
-                    url: "{{ route('kodetlhp.store') }}",
-                    type: "POST",
-                    dataType: 'json',
-                    success: function(data) {
-                        // Tambahkan toastr untuk menampilkan pesan sukses
-                        if ($('#saveBtn').val() == 'Save') {
-                            toastr.success('Data berhasil ditambahkan.', 'Sukses', {
-                                timeOut: 5000
-                            });
-                        } else {
-                            toastr.success('Data berhasil diupdate.', 'Sukses', {
-                                timeOut: 5000
-                            });
-                        }
-                        $('#dataForm').trigger("reset");
-                        $('#ajaxModel').modal('hide');
-                        table.draw();
-
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                        $('#saveBtn').html('Save Changes');
-                    }
-                });
-            });
-
-            /*------------------------------------------
-            --------------------------------------------
-            Delete Product Code
-            --------------------------------------------
-            --------------------------------------------*/
-            $('body').on('click', '.deleteData', function() {
-
+            $(document).on('click', '.deleteData', function() {
                 var kode_id = $(this).data("id");
                 confirm("Are You sure want to delete !");
 
                 $.ajax({
                     type: "DELETE",
-                    url: "{{ route('kodetlhp.store') }}" + '/' + kode_id,
+                    url: "{{ route('pendaftaranobrik.store') }}" + '/' + kode_id,
                     success: function(data) {
                         // Tambahkan toastr untuk menampilkan pesan sukses
                         toastr.success('Data berhasil dihapus.', 'Sukses', {
