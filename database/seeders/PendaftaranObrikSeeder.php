@@ -36,17 +36,28 @@ class PendaftaranObrikSeeder extends Seeder
 
 
 
-        $klarifikasi_obrik = KlarifikasiObrik::create([
-            'kode_obrik' => 'K003',
-            'name_obrik' => 'Obrik C',
-        ]);
 
+        $klarifikasi_obrik = KlarifikasiObrik::create([
+            'kode_obrik' => 'K004',
+            'name_obrik' => 'Obrik D',
+        ]);
+        // $klarifikasi_obrik = KlarifikasiObrik::create([
+        //     'kode_obrik' => 'K003',
+        //     'name_obrik' => 'Obrik C',
+        // ]);
+        // PendaftaranObrik::create([
+        //     'tahun' => '2020',
+        //     'kode' => 'P003',
+        //     'klarifikasi' => $klarifikasi_obrik->id,
+        //     'nama' => 'Obrik C',
+        //     'induk' => '003',
+        // ]);
         PendaftaranObrik::create([
-            'tahun' => '2020',
-            'kode' => 'P003',
+            'tahun' => '2021',
+            'kode' => 'P004',
             'klarifikasi' => $klarifikasi_obrik->id,
-            'nama' => 'Obrik C',
-            'induk' => '003',
+            'nama' => 'Obrik D',
+            'induk' => '004',
         ]);
     }
 }

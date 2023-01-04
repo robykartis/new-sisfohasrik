@@ -1,8 +1,10 @@
 @extends('layouts.app')
 @section('title')
-    Pendaftaran Obrik
+    Kode TLHP
 @endsection
-
+{{-- @section('breadcrumbs')
+    {{ Breadcrumbs::render() }}
+@endsection --}}
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -16,68 +18,49 @@
                 <div class="col-12">
                     <div class="card card-warning">
                         <div class="card-header">
-                            <h3 class="card-title">Pendaftaran Obrik</h3>
+                            <h3 class="card-title">dsdad</h3>
                             <div align="right">
                                 <button id="createData" type="button" class="btn btn-success btn-sm"> <i
                                         class="fas fa-plus"></i>
                                 </button>
                             </div>
-
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <div class="row mb-3">
-                                <div class="col-3">
-                                    <div class="form-group">
-                                        <label>Tahun</label>
-                                        <input type="date" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <label>Klarifikasi Obrik</label>
-                                        <select class="form-control">
-                                            <option selected disabled>----------</option>
-                                            @foreach ($pendaftaran_obriks as $pendaftaran_obrik)
-                                                <option>{{ $pendaftaran_obrik->name_obrik }}</option>
-                                            @endforeach
+                            <div class="col-12 table-responsive">
 
+                                <table class="table table-striped table-bordered data-table">
+                                    <form>
+                                        <label for="tahun">Tahun:</label>
+                                        <select name="tahun" id="tahun">
+                                            <option value="">Semua Tahun</option>
+                                            @for ($i = date('Y'); $i >= 1900; $i--)
+                                                <option value="{{ $i }}">{{ $i }}</option>
+                                            @endfor
                                         </select>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-12 table-responsive">
-                                    <table class="table table-striped table-bordered data-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Tahun</th>
-                                                <th>Kode</th>
-                                                <th>Klarifikasi Obrik</th>
-                                                <th>Nama</th>
-                                                <th>Induk</th>
-                                                <th width="180px">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($pendaftaran_obriks as $pendaftaran_obrik)
-                                                <tr>
-                                                    <td>{{ $pendaftaran_obrik->tahun }}</td>
-                                                    <td>{{ $pendaftaran_obrik->kode }}</td>
-                                                    <td>{{ $pendaftaran_obrik->name_obrik }}</td>
-                                                    <td>{{ $pendaftaran_obrik->nama }}</td>
-                                                    <td>{{ $pendaftaran_obrik->induk }}</td>
-                                                    <td>
-                                                        <a href="" class="btn btn-primary btn-sm">Edit</a>
-                                                        <a href="" class="btn btn-info btn-sm">Show</a>
-                                                        <a href="" class="btn btn-danger btn-sm">delete</a>
-                                                    </td>
-                                                </tr>
+                                        <label for="klarifikasi">Klarifikasi:</label>
+                                        <select name="klarifikasi" id="klarifikasi">
+                                            <option value="">Semua Klarifikasi</option>
+                                            @foreach ($klarifikasis as $klarifikasi)
+                                                <option value="{{ $klarifikasi->id }}">{{ $klarifikasi->name_obrik }}
+                                                </option>
                                             @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                                        </select>
+                                        <button type="submit">Filter</button>
+                                    </form>
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Tahun</th>
+                                            <th>Kode</th>
+                                            <th>Klarifikasi</th>
+                                            <th>Nama</th>
+                                            <th>Induk</th>
+                                            <th width="180px">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
                             </div>
 
                         </div>
@@ -102,7 +85,7 @@
                                 <div class="form-group">
                                     <label for="kode" class="col-sm-2 control-label">Kode</label>
                                     <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="kode_obrik" name="kode_obrik"
+                                        <input type="text" class="form-control" id="kode_tlhp" name="kode_tlhp"
                                             placeholder="Enter Kode" value="" maxlength="50" required="">
                                     </div>
                                 </div>
@@ -110,7 +93,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Name</label>
                                     <div class="col-sm-12">
-                                        <textarea id="name_obrik" name="name_obrik" required="" placeholder="Enter Details" class="form-control"></textarea>
+                                        <textarea id="name_tlhp" name="name_tlhp" required="" placeholder="Enter Details" class="form-control"></textarea>
                                     </div>
                                 </div>
 
@@ -167,4 +150,227 @@
         });
     </script>
     {{-- Action Tambah Data --}}
+
+    <script type="text/javascript">
+        $(function() {
+
+            /*------------------------------------------
+             --------------------------------------------
+             Pass Header Token
+             --------------------------------------------
+             --------------------------------------------*/
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            /*------------------------------------------
+            --------------------------------------------
+            Render DataTable
+            --------------------------------------------
+            --------------------------------------------*/
+            var table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: "{{ route('pendaftaranobrik.index') }}",
+                    data: function(d) {
+                        d.tahun = $('#tahun').val();
+                        d.klarifikasi = $('#klarifikasi').val();
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'tahun',
+                        name: 'tahun'
+                    },
+                    {
+                        data: 'kode',
+                        name: 'kode'
+                    },
+                    {
+                        data: 'name_obrik',
+                        name: 'name_obrik',
+                        render: function(data, type, full, meta) {
+                            return full.name_obrik;
+                        }
+                    },
+                    {
+                        data: 'nama',
+                        name: 'nama'
+                    },
+                    {
+                        data: 'induk',
+                        name: 'induk'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
+            });
+
+            /*------------------------------------------
+              --------------------------------------------
+              Reload DataTable
+              --------------------------------------------
+              --------------------------------------------*/
+            $('#tahun, #klarifikasi').change(function() {
+                table.ajax.reload();
+            });
+
+            /*------------------------------------------
+                --------------------------------------------
+                Form Submit
+                --------------------------------------------
+                --------------------------------------------*/
+            $('form').on('submit', function(event) {
+                event.preventDefault();
+                table.draw();
+            });
+
+            /*------------------------------------------
+            --------------------------------------------
+            Click to Button
+            --------------------------------------------
+            --------------------------------------------*/
+            $('#createData').click(function() {
+                $('#saveBtn').val("Save");
+                $('#kode_id').val('');
+                $('#dataForm').trigger("reset");
+                $('#modelHeading').html("Tambah Data");
+                $('#ajaxModel').modal('show');
+            });
+
+            /*------------------------------------------
+            --------------------------------------------
+            Click to Edit Button
+            --------------------------------------------
+            --------------------------------------------*/
+            $('body').on('click', '.editData', function() {
+                var kode_id = $(this).data('id');
+                $.get("{{ route('pendaftaranobrik.index') }}" + '/' + kode_id + '/edit', function(
+                    data) {
+                    $('#modelHeading').html("Edit Data");
+                    $('#saveBtn').val("edit-user");
+                    $('#ajaxModel').modal('show');
+                    $('#kode_id').val(data.id);
+                    $('#name_tlhp').val(data.name_tlhp);
+                    $('#kode_tlhp').val(data.kode_tlhp);
+
+                })
+
+            });
+
+            /*------------------------------------------
+            --------------------------------------------
+            Create Product Code
+            --------------------------------------------
+            --------------------------------------------*/
+            $('#saveBtn').click(function(e) {
+                e.preventDefault();
+                $(this).html('Sending..');
+
+                $.ajax({
+                    data: $('#dataForm').serialize(),
+                    url: "{{ route('kodetlhp.store') }}",
+                    type: "POST",
+                    dataType: 'json',
+                    success: function(data) {
+                        // Tambahkan toastr untuk menampilkan pesan sukses
+                        if ($('#saveBtn').val() == 'Save') {
+                            toastr.success('Data berhasil ditambahkan.', 'Sukses', {
+                                timeOut: 5000
+                            });
+                        } else {
+                            toastr.success('Data berhasil diupdate.', 'Sukses', {
+                                timeOut: 5000
+                            });
+                        }
+                        $('#dataForm').trigger("reset");
+                        $('#ajaxModel').modal('hide');
+                        table.draw();
+
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                        $('#saveBtn').html('Save Changes');
+                    }
+                });
+            });
+
+            /*------------------------------------------
+            --------------------------------------------
+            Delete Product Code
+            --------------------------------------------
+            --------------------------------------------*/
+            $('body').on('click', '.deleteData', function() {
+
+                var kode_id = $(this).data("id");
+                confirm("Are You sure want to delete !");
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "{{ route('kodetlhp.store') }}" + '/' + kode_id,
+                    success: function(data) {
+                        // Tambahkan toastr untuk menampilkan pesan sukses
+                        toastr.success('Data berhasil dihapus.', 'Sukses', {
+                            timeOut: 5000
+                        });
+                        table.draw();
+                    },
+                    error: function(data) {
+                        console.log('Error:', data);
+                    }
+                });
+            });
+
+        });
+    </script>
 @endpush
+
+
+
+
+
+
+
+
+
+
+
+
+{{-- <table class="table table-striped table-bordered data-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Tahun</th>
+                                                <th>Kode</th>
+                                                <th>Klarifikasi Obrik</th>
+                                                <th>Nama</th>
+                                                <th>Induk</th>
+                                                <th width="180px">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($pendaftaran_obriks as $pendaftaran_obrik)
+                                                <tr>
+                                                    <td>{{ $pendaftaran_obrik->tahun }}</td>
+                                                    <td>{{ $pendaftaran_obrik->kode }}</td>
+                                                    <td>{{ $pendaftaran_obrik->name_obrik }}</td>
+                                                    <td>{{ $pendaftaran_obrik->nama }}</td>
+                                                    <td>{{ $pendaftaran_obrik->induk }}</td>
+                                                    <td>
+                                                        <a href="" class="btn btn-primary btn-sm">Edit</a>
+                                                        <a href="" class="btn btn-info btn-sm">Show</a>
+                                                        <a href="" class="btn btn-danger btn-sm">delete</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table> --}}

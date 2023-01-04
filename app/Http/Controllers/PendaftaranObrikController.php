@@ -6,6 +6,7 @@ use App\Models\KlarifikasiObrik;
 use App\Models\PendaftaranObrik;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use DataTables;
 
 class PendaftaranObrikController extends Controller
 {
@@ -14,16 +15,37 @@ class PendaftaranObrikController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pendaftaran_obriks = DB::table('pendaftaran_obriks')
-            ->join('klarifikasi_obriks', 'pendaftaran_obriks.klarifikasi', '=', 'klarifikasi_obriks.id')
-            ->select('pendaftaran_obriks.*', 'klarifikasi_obriks.name_obrik')
-            ->get();
+        $klarifikasis = DB::table('klarifikasi_obriks')->get();
 
-        return view('pendaftaran_obrik.index', compact('pendaftaran_obriks'));
+        if ($request->ajax()) {
+            $data = DB::table('pendaftaran_obriks')
+                ->join('klarifikasi_obriks', 'pendaftaran_obriks.klarifikasi', '=', 'klarifikasi_obriks.id');
+
+            if (!empty($request->tahun)) {
+                $data->where('pendaftaran_obriks.tahun', $request->tahun);
+            }
+            if (!empty($request->klarifikasi)) {
+                $data->where('pendaftaran_obriks.klarifikasi', $request->klarifikasi);
+            }
+
+            $data = $data->select('pendaftaran_obriks.*', 'klarifikasi_obriks.name_obrik')
+                ->get();
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip" data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editData">Edit</a>';
+                    $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip" data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteData">Delete</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        return view('pendaftaran_obrik.index', compact('klarifikasis'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
