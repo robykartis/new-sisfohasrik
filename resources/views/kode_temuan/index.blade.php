@@ -275,24 +275,23 @@
             --------------------------------------------
             --------------------------------------------*/
             $('body').on('click', '.deleteKodeTemuan', function() {
-
                 var kode_id = $(this).data("id");
-                confirm("Are You sure want to delete !");
-
-                $.ajax({
-                    type: "DELETE",
-                    url: "{{ route('temuan.store') }}" + '/' + kode_id,
-                    success: function(data) {
-                        // Tambahkan toastr untuk menampilkan pesan sukses
-                        toastr.success('Data berhasil dihapus.', 'Sukses', {
-                            timeOut: 5000
-                        });
-                        table.draw();
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                    }
-                });
+                if (confirm("Are You sure want to delete !")) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('temuan.store') }}" + '/' + kode_id,
+                        success: function(data) {
+                            // Tambahkan toastr untuk menampilkan pesan sukses
+                            toastr.success('Data berhasil dihapus.', 'Sukses', {
+                                timeOut: 5000
+                            });
+                            table.draw();
+                        },
+                        error: function(data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }
             });
 
         });

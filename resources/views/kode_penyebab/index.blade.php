@@ -252,22 +252,24 @@
             $('body').on('click', '.deleteData', function() {
 
                 var kode_id = $(this).data("id");
-                confirm("Are You sure want to delete !");
+                if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+                    // Jalankan aksi untuk menghapus data
 
-                $.ajax({
-                    type: "DELETE",
-                    url: "{{ route('kodepenyebab.store') }}" + '/' + kode_id,
-                    success: function(data) {
-                        // Tambahkan toastr untuk menampilkan pesan sukses
-                        toastr.success('Data berhasil dihapus.', 'Sukses', {
-                            timeOut: 5000
-                        });
-                        table.draw();
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                    }
-                });
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('kodepenyebab.store') }}" + '/' + kode_id,
+                        success: function(data) {
+                            // Tambahkan toastr untuk menampilkan pesan sukses
+                            toastr.success('Data berhasil dihapus.', 'Sukses', {
+                                timeOut: 5000
+                            });
+                            table.draw();
+                        },
+                        error: function(data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }
             });
 
         });

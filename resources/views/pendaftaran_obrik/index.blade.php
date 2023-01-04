@@ -105,7 +105,9 @@
             @if (Session::has('error'))
                 toastr.error('{{ Session::get('error') }}');
             @elseif (Session::has('success'))
-                toastr.success('{{ Session::get('success') }}');
+                toastr.success('Data berhasil dihapus.', 'Sukses', {
+                    timeOut: 5000
+                });
             @endif
         });
     </script>
@@ -180,24 +182,24 @@
 
             $(document).on('click', '.deleteData', function() {
                 var kode_id = $(this).data("id");
-                confirm("Are You sure want to delete !");
-
-                $.ajax({
-                    type: "DELETE",
-                    url: "{{ route('pendaftaranobrik.store') }}" + '/' + kode_id,
-                    success: function(data) {
-                        // Tambahkan toastr untuk menampilkan pesan sukses
-                        toastr.success('Data berhasil dihapus.', 'Sukses', {
-                            timeOut: 5000
-                        });
-                        table.draw();
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                    }
-                });
+                if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+                    // Tambahkan kode ajax di sini
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('pendaftaranobrik.store') }}" + '/' + kode_id,
+                        success: function(data) {
+                            // Tambahkan toastr untuk menampilkan pesan sukses
+                            toastr.success('Data berhasil dihapus.', 'Sukses', {
+                                timeOut: 5000
+                            });
+                            table.draw();
+                        },
+                        error: function(data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }
             });
-
         });
     </script>
 @endpush

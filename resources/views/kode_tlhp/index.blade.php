@@ -250,24 +250,24 @@
             --------------------------------------------
             --------------------------------------------*/
             $('body').on('click', '.deleteData', function() {
-
                 var kode_id = $(this).data("id");
-                confirm("Are You sure want to delete !");
-
-                $.ajax({
-                    type: "DELETE",
-                    url: "{{ route('kodetlhp.store') }}" + '/' + kode_id,
-                    success: function(data) {
-                        // Tambahkan toastr untuk menampilkan pesan sukses
-                        toastr.success('Data berhasil dihapus.', 'Sukses', {
-                            timeOut: 5000
-                        });
-                        table.draw();
-                    },
-                    error: function(data) {
-                        console.log('Error:', data);
-                    }
-                });
+                if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+                    // Jalankan aksi untuk menghapus data
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('kodetlhp.store') }}" + '/' + kode_id,
+                        success: function(data) {
+                            // Tambahkan toastr untuk menampilkan pesan sukses
+                            toastr.success('Data berhasil dihapus.', 'Sukses', {
+                                timeOut: 5000
+                            });
+                            table.draw();
+                        },
+                        error: function(data) {
+                            console.log('Error:', data);
+                        }
+                    });
+                }
             });
 
         });
