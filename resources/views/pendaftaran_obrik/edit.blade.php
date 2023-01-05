@@ -2,9 +2,9 @@
 @section('title')
     Kode TLHP
 @endsection
-{{-- @section('breadcrumbs')
+@section('breadcrumbs')
     {{ Breadcrumbs::render() }}
-@endsection --}}
+@endsection
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -18,7 +18,7 @@
                 <div class="col-12">
                     <div class="card card-warning">
                         <div class="card-header">
-                            <h3 class="card-title">Tambah Data</h3>
+                            <h3 class="card-title">{{ $title }}</h3>
                         </div>
                         <!-- /.card-header -->
                         <form method="POST" action="{{ route('pendaftaranobrik.update', $data->id) }}">
@@ -30,11 +30,27 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label for="tahun">Tahun</label>
-                                            <input type="text" name="tahun" value="{{ $data->tahun }}"
-                                                class="form-control" placeholder="Enter ..." required>
+                                            <input type="text" disabled value="{{ $data->tahun }}" class="form-control"
+                                                required>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-2">
+                                        <!-- text input -->
+                                        <div class="form-group">
+                                            <label for="tahun" class="text text-waring"><span class="text-danger"><small>
+                                                        Rubah
+                                                        Tahun Jika Diperlukan</small></span></label>
+                                            <select name="tahun" id="tahun" class="form-control">
+                                                <option value="">Semua Tahun</option>
+                                                @for ($i = date('Y'); $i >= 1900; $i--)
+                                                    <option value="{{ $i }}"
+                                                        {{ $request->tahun == $i ? 'selected' : '' }}>
+                                                        {{ $i }}</option>
+                                                @endfor
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
                                         <div class="form-group">
                                             <label for="klarifikasi">Klarifikasi</label>
                                             <select name="klarifikasi" class="form-control">

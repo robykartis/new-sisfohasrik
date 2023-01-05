@@ -183,7 +183,7 @@
                 $('#saveBtn').val("Save");
                 $('#kode_id').val('');
                 $('#bidangTemuanForm').trigger("reset");
-                $('#modelHeading').html("Tambah Bidang Temuan");
+                $('#modelHeading').html("Input Kode Bidang Temuan");
                 $('#ajaxModel').modal('show');
             });
 
@@ -196,7 +196,7 @@
                 var kode_id = $(this).data('id');
                 $.get("{{ route('bidangtemuan.index') }}" + '/' + kode_id + '/edit', function(
                     data) {
-                    $('#modelHeading').html("Edit Bidang Temuan");
+                    $('#modelHeading').html("Edit Kode Daftar Bidang Temuan");
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);

@@ -24,9 +24,9 @@ class KodeRekomendasiController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
 
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editData">Edit</a>';
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-info btn-sm editData"><i class="fas fa-pencil-alt"></i></a> | ';
 
-                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteData">Delete</a>';
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteData"><i class="fas fa-trash"></i></a>';
 
                     return $btn;
                 })
@@ -35,7 +35,7 @@ class KodeRekomendasiController extends Controller
         }
 
 
-        $title = 'Kode Rekomendasi';
+        $title = 'Daftar Kode Rekomendasi';
         return view(
             'kode_rekomendasi.index'
         )->with([

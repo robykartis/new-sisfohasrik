@@ -21,19 +21,12 @@
     </a>
 </li>
 
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Bidang Pemeriksaan
-        </p>
-    </a>
-</li>
+
 <li class="nav-item">
     <a href="{{ route('bidangtemuan.index') }}" class="nav-link {{ set_active(['bidangtemuan.index']) }}">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
-            Bidang Temuan
+            Bidang Pemeriksaan
         </p>
     </a>
 </li>
@@ -79,7 +72,7 @@
 </li>
 <li class="nav-item">
     <a href="{{ route('pendaftaranobrik.index') }}"
-        class="nav-link {{ set_active(['pendaftaranobrik.index', 'pendaftaranobrik.create']) }}">
+        class="nav-link {{ set_active(['pendaftaranobrik.index', 'pendaftaranobrik.create', 'pendaftaranobrik.edit']) }}">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
             Pendaftaran Obrik
@@ -119,14 +112,7 @@
         </p>
     </a>
 </li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Pendaftaran Obrik
-        </p>
-    </a>
-</li>
+
 
 <li class="nav-header">FORM ISIAN</li>
 <li class="nav-item">

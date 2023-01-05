@@ -208,7 +208,7 @@
                 $('#saveBtn').val("Save");
                 $('#kode_id').val('');
                 $('#kodeTemuanForm').trigger("reset");
-                $('#modelHeading').html("Tambah Kode Temuan");
+                $('#modelHeading').html("Input Daftar Kode Temuan Pemeriksaan");
                 $('#ajaxModel').modal('show');
             });
 
@@ -221,7 +221,7 @@
                 var kode_id = $(this).data('id');
                 $.get("{{ route('temuan.index') }}" + '/' + kode_id + '/edit', function(
                     data) {
-                    $('#modelHeading').html("Edit Kode Temuan");
+                    $('#modelHeading').html("Edit Daftar Kode Temuan Pemeriksaan");
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);

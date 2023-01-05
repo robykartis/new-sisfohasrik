@@ -36,7 +36,7 @@ class UserAkunController extends Controller
                 ->make(true);
         }
 
-        $title = 'List Pengguna';
+        $title = 'Daftar Pengguna Aplikasi';
         return view(
             'user.index',
             [
@@ -50,7 +50,7 @@ class UserAkunController extends Controller
 
     public function create()
     {
-        $title = 'Tambah Pengguna Baru';
+        $title = 'Input Daftar Pengguna Apllikasi';
         return view('user.create')->with([
             'title' => $title
         ]);
@@ -94,7 +94,7 @@ class UserAkunController extends Controller
 
     public function show(User $user)
     {
-        $title = 'User Show';
+        $title = 'Detail Pengguna Aplikasi';
         $user['user'] = $user;
         $data = ['admin' => 'Admin', 'operator' => 'Operator', 'readonly' => 'Read Only'];
         return view('user.show')->with(['user' => $user, 'title' => $title, 'data' => $data]);
@@ -103,7 +103,7 @@ class UserAkunController extends Controller
 
     public function edit(User $user)
     {
-        $title = 'User Edit';
+        $title = 'Edit Daftar Pengguna Aplikasi';
         $data = ['admin' => 'Admin', 'operator' => 'Operator', 'readonly' => 'Read Only'];
         return view('user.edit')->with(['user' => $user, 'title' => $title, 'data' => $data]);
     }

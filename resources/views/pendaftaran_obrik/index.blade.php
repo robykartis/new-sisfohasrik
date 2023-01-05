@@ -2,9 +2,9 @@
 @section('title')
     Kode TLHP
 @endsection
-{{-- @section('breadcrumbs')
+@section('breadcrumbs')
     {{ Breadcrumbs::render() }}
-@endsection --}}
+@endsection
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -18,7 +18,7 @@
                 <div class="col-12">
                     <div class="card card-warning">
                         <div class="card-header">
-                            <h3 class="card-title">dsdad</h3>
+                            <h3 class="card-title">{{ $title }}</h3>
                             <div align="right">
                                 <a href="{{ route('pendaftaranobrik.create') }}" type="button"
                                     class="btn btn-success btn-sm"> <i class="fas fa-plus"></i>
@@ -31,24 +31,56 @@
 
                                 <table class="table table-striped table-bordered data-table">
                                     <form>
-                                        <label for="tahun">Tahun:</label>
-                                        <select name="tahun" id="tahun">
-                                            <option value="">Semua Tahun</option>
-                                            @foreach (DB::table('pendaftaran_obriks')->pluck('tahun') as $i)
-                                                <option value="{{ $i }}"
-                                                    {{ $request->tahun == $i ? 'selected' : '' }}>{{ $i }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <label for="klarifikasi">Klarifikasi:</label>
-                                        <select name="klarifikasi" id="klarifikasi">
-                                            <option value="">Semua Klarifikasi</option>
-                                            @foreach ($klarifikasis as $klarifikasi)
-                                                <option value="{{ $klarifikasi->id }}">{{ $klarifikasi->name_obrik }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <button type="submit">Filter</button>
+
+                                        <div class="row mb-2">
+
+                                            <div class="col-2">
+                                                <div class="input-group">
+
+                                                    {{-- <select name="tahun" id="tahun" class="form-control">
+                                                        <option value="">Semua Tahun</option>
+                                                        @foreach (DB::table('pendaftaran_obriks')->pluck('tahun') as $i)
+                                                            <option value="{{ $i }}"
+                                                                {{ $request->tahun == $i ? 'selected' : '' }}>
+                                                                {{ $i }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select> --}}
+                                                    <select name="tahun" id="tahun" class="form-control">
+                                                        <option value="">Semua Tahun</option>
+                                                        @for ($i = date('Y'); $i >= 1900; $i--)
+                                                            <option value="{{ $i }}"
+                                                                {{ $request->tahun == $i ? 'selected' : '' }}>
+                                                                {{ $i }}</option>
+                                                        @endfor
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="input-group">
+                                                    <select name="klarifikasi" id="klarifikasi" class="form-control">
+                                                        <option value="">Semua Klarifikasi</option>
+                                                        @foreach ($klarifikasis as $klarifikasi)
+                                                            <option value="{{ $klarifikasi->id }}">
+                                                                {{ $klarifikasi->name_obrik }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    {{-- <div class="input-group-append">
+                                                        <button class="btn btn-outline-secondary" type="submit"><i
+                                                                class="fas fa-filter"></i></button>
+                                                    </div> --}}
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+
+
+
+
                                     </form>
                                     <thead>
                                         <tr>

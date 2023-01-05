@@ -68,6 +68,21 @@ Breadcrumbs::for('klarifikasiobrik.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
     $trail->push('Klarifikasi Obrik', route('klarifikasiobrik.index'));
 });
+// Pendaftran Obrik
+Breadcrumbs::for('pendaftaranobrik.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Pendaftaran Obrik', route('pendaftaranobrik.index'));
+});
+// Tambah Pendaftran Obrik
+Breadcrumbs::for('pendaftaranobrik.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Tambah Pendaftaran Obrik', route('pendaftaranobrik.create'));
+});
+// Edit Pendaftran Obrik
+Breadcrumbs::for('pendaftaranobrik.edit', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Edit Pendaftaran Obrik', route('pendaftaranobrik.edit', $id));
+});
 
 // =======================END HALAMAN ADMIN========================//
 

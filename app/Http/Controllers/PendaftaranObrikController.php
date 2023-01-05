@@ -14,7 +14,7 @@ class PendaftaranObrikController extends Controller
     public function index(Request $request)
     {
         $klarifikasis = DB::table('klarifikasi_obriks')->get();
-
+        $tahun = DB::table('pendaftaran_obriks')->select('tahun')->distinct()->get();
         if ($request->ajax()) {
             $data = DB::table('pendaftaran_obriks')
                 ->join('klarifikasi_obriks', 'pendaftaran_obriks.klarifikasi', '=', 'klarifikasi_obriks.id');
@@ -39,15 +39,16 @@ class PendaftaranObrikController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
-        return view('pendaftaran_obrik.index', compact('klarifikasis', 'request'));
+        $title = 'Daftar Obyek Pemeriksaan (Obrik)';
+        return view('pendaftaran_obrik.index', compact('klarifikasis', 'request', 'tahun', 'title'));
+        // return view('pendaftaran_obrik.index', ['klarifikasis' => $klarifikasis, 'request' => $request, 'tahun' => $tahun]);
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $klarifikasi_obriks = KlarifikasiObrik::all();
-
-        return view('pendaftaran_obrik.create', compact('klarifikasi_obriks'));
+        $title = 'Input Daftar Obyek Pemeriksaan (Obrik)';
+        return view('pendaftaran_obrik.create', compact('klarifikasi_obriks', 'request', 'title'));
     }
 
 
@@ -82,15 +83,15 @@ class PendaftaranObrikController extends Controller
     }
 
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         // get the data item by id
         $data = PendaftaranObrik::findOrFail($id);
 
         // get all klarifikasi obrik
         $klarifikasi_obriks = KlarifikasiObrik::all();
-
-        return view('pendaftaran_obrik.edit', compact('data', 'klarifikasi_obriks'));
+        $title = 'Edit Daftar Obyek Pemeriksaan (Obrik)';
+        return view('pendaftaran_obrik.edit', compact('data', 'klarifikasi_obriks', 'request', 'title'));
     }
 
 

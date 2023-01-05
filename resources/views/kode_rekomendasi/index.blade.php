@@ -184,7 +184,7 @@
                 $('#saveBtn').val("Save");
                 $('#kode_id').val('');
                 $('#dataForm').trigger("reset");
-                $('#modelHeading').html("Tambah Data");
+                $('#modelHeading').html("Input Daftar Kode Rekomendasi");
                 $('#ajaxModel').modal('show');
             });
 
@@ -197,7 +197,7 @@
                 var kode_id = $(this).data('id');
                 $.get("{{ route('koderekomendasi.index') }}" + '/' + kode_id + '/edit', function(
                     data) {
-                    $('#modelHeading').html("Edit Data");
+                    $('#modelHeading').html("Edit Daftar Kode Rekomendasi");
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);

@@ -183,7 +183,7 @@
                 $('#saveBtn').val("Save");
                 $('#kode_id').val('');
                 $('#dataForm').trigger("reset");
-                $('#modelHeading').html("Tambah Data");
+                $('#modelHeading').html("Input Daftar Klarifikasi Obyek Pemeriksaan");
                 $('#ajaxModel').modal('show');
             });
 
@@ -196,7 +196,7 @@
                 var kode_id = $(this).data('id');
                 $.get("{{ route('klarifikasiobrik.index') }}" + '/' + kode_id + '/edit', function(
                     data) {
-                    $('#modelHeading').html("Edit Data");
+                    $('#modelHeading').html("Edit Daftar Klarifikasi Obyek Pemeriksaan");
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);

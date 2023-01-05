@@ -24,9 +24,9 @@ class BidangTemuanController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
 
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-primary btn-sm editBidangTemuan">Edit</a>';
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-info btn-sm editBidangTemuan"> <i class="fas fa-pencil-alt"></i></a> | ';
 
-                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteBidangTemuan">Delete</a>';
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteBidangTemuan"><i class="fas fa-trash"></i></a>';
 
                     return $btn;
                 })
@@ -35,7 +35,7 @@ class BidangTemuanController extends Controller
         }
 
 
-        $title = 'Bidang Temuan';
+        $title = 'Daftar Kode Bidang Temuan';
         return view(
             'bidang_temuan.index'
         )->with([
