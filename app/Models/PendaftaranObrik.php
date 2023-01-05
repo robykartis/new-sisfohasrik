@@ -15,4 +15,8 @@ class PendaftaranObrik extends Model
     {
         return $this->hasMany(PendaftaranObrik::class);
     }
+    public function hasil_lhps()
+    {
+        return $this->hasMany(HasilLhp::class);
+    }
 }

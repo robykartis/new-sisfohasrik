@@ -3,6 +3,8 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BidangTemuanController;
+use App\Http\Controllers\HasilLhpController;
+use App\Http\Controllers\JenisPemeriksaanController;
 use App\Http\Controllers\KlarifikasiObrikController;
 use App\Http\Controllers\KodePenyebabController;
 use App\Http\Controllers\KodeRekomendasiController;
@@ -48,6 +50,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('klarifikasiobrik', KlarifikasiObrikController::class);
         // Klarifikasi Obrik
         Route::resource('pendaftaranobrik', PendaftaranObrikController::class);
+        // Klarifikasi Laporan Hasil Pemeriksaan
+        Route::resource('jenispemeriksaan', JenisPemeriksaanController::class);
     });
 
 

@@ -79,6 +79,14 @@
         </p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="{{ route('jenispemeriksaan.index') }}" class="nav-link {{ set_active(['jenispemeriksaan.index']) }}">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>
+            Jenis Pemeriksaan
+        </p>
+    </a>
+</li>
 
 <li class="nav-item">
     <a href="" class="nav-link">

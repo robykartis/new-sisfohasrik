@@ -8,10 +8,10 @@
         <!-- /.login-logo -->
         <div class="card card-outline card-warning">
             <div class="card-header text-center">
-                <a href="{{ asset('assets/index2.html') }}" class="h1"><b>Admin</b>LTE</a>
+                <a href="{{ url('/') }}" class="h2"><b>Admin</b>{{ config('app.name') }}</a>
             </div>
             <div class="card-body">
-                <p class="login-box-msg">Sign in to start your session</p>
+                <p class="login-box-msg">Silahkan Masuk Untuk Akses Aplikasi</p>
 
                 <form action="{{ route('proses_login') }}" method="POST">
                     @csrf

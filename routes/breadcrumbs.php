@@ -83,6 +83,12 @@ Breadcrumbs::for('pendaftaranobrik.edit', function (BreadcrumbTrail $trail, $id)
     $trail->parent('admin');
     $trail->push('Edit Pendaftaran Obrik', route('pendaftaranobrik.edit', $id));
 });
+// Jenis Pemeriksaan
+Breadcrumbs::for('jenispemeriksaan.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Jenis Pemeriksaan', route('jenispemeriksaan.index'));
+});
+
 
 // =======================END HALAMAN ADMIN========================//
 
