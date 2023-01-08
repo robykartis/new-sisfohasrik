@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.v1.app')
 @section('title')
     Kode TLHP
 @endsection
@@ -6,120 +6,81 @@
     {{ Breadcrumbs::render() }}
 @endsection
 @push('css')
-    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
+    <link href="{{ asset('ltr/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
 @endpush
 @section('content')
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card card-warning">
-                        <div class="card-header">
-                            <h3 class="card-title">{{ $title }}</h3>
-                            <div align="right">
-                                <a href="{{ route('pendaftaranobrik.create') }}" type="button"
-                                    class="btn btn-success btn-sm"> <i class="fas fa-plus"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <div class="col-12 table-responsive">
+    <div class="row">
+        <div class="col-lg-12 mx-auto">
+            <div class="card">
+                <div class="card-header py-3 bg-transparent">
+                    <div class="d-sm-flex align-items-center">
+                        <h5 class="mb-2 mb-sm-0">{{ $title }}</h5>
+                        <div class="ms-auto">
 
-                                <table class="table table-striped table-bordered data-table">
-                                    <form>
-
-                                        <div class="row mb-2">
-
-                                            <div class="col-2">
-                                                <div class="input-group">
-
-                                                    {{-- <select name="tahun" id="tahun" class="form-control">
-                                                        <option value="">Semua Tahun</option>
-                                                        @foreach (DB::table('pendaftaran_obriks')->pluck('tahun') as $i)
-                                                            <option value="{{ $i }}"
-                                                                {{ $request->tahun == $i ? 'selected' : '' }}>
-                                                                {{ $i }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select> --}}
-                                                    <select name="tahun" id="tahun" class="form-control">
-                                                        <option value="">Semua Tahun</option>
-                                                        @for ($i = date('Y'); $i >= 1900; $i--)
-                                                            <option value="{{ $i }}"
-                                                                {{ $request->tahun == $i ? 'selected' : '' }}>
-                                                                {{ $i }}</option>
-                                                        @endfor
-                                                    </select>
-
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="input-group">
-                                                    <select name="klarifikasi" id="klarifikasi" class="form-control">
-                                                        <option value="">Semua Klarifikasi</option>
-                                                        @foreach ($klarifikasis as $klarifikasi)
-                                                            <option value="{{ $klarifikasi->id }}">
-                                                                {{ $klarifikasi->name_obrik }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                    {{-- <div class="input-group-append">
-                                                        <button class="btn btn-outline-secondary" type="submit"><i
-                                                                class="fas fa-filter"></i></button>
-                                                    </div> --}}
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-
-
-
-
-
-                                    </form>
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Tahun</th>
-                                            <th>Kode</th>
-                                            <th>Klarifikasi</th>
-                                            <th>Nama</th>
-                                            <th>Induk</th>
-                                            <th width="180px">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody></tbody>
-                                </table>
-                            </div>
-
+                            <a href="{{ route('pendaftaranobrik.create') }}" class="btn btn-primary btn-sm"><i
+                                    class="fas fa-plus"></i></a>
                         </div>
                     </div>
                 </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="example" class="table table-striped table-bordered data-table" style="width:100%">
+                            <form>
+                                <div class="row mb-2">
+                                    <div class="col-2">
+                                        <div class="input-group">
+                                            <select class="form-select" name="tahun" id="tahun">
+                                                <option value="">Semua Tahun</option>
+                                                @for ($i = date('Y'); $i >= 1900; $i--)
+                                                    <option value="{{ $i }}"
+                                                        {{ $request->tahun == $i ? 'selected' : '' }}>
+                                                        {{ $i }}</option>
+                                                @endfor
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="input-group">
+                                            <select name="klarifikasi" id="klarifikasi" class="form-select">
+                                                <option value="">Semua Klarifikasi</option>
+                                                @foreach ($klarifikasis as $klarifikasi)
+                                                    <option value="{{ $klarifikasi->id }}">
+                                                        {{ $klarifikasi->name_obrik }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Tahun</th>
+                                    <th>Kode</th>
+                                    <th>Klarifikasi</th>
+                                    <th>Nama</th>
+                                    <th>Induk</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
             </div>
-            <!-- /.container-fluid -->
-    </section>
+        </div>
+    </div>
 @endsection
 
 @push('js')
-    <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jszip/jszip.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/pdfmake/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
-    <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="{{ asset('ltr/assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('ltr/assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('ltr/assets/js/table-datatable.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 

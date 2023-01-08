@@ -1,142 +1,105 @@
-@extends('layouts.app')
+@extends('layouts.v1.app')
 @section('title')
     User Edit
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
 @endsection
-@push('css')
-    <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
-@endpush
+
 @section('content')
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-
-                <!-- left column -->
-                <div class="col-md-6">
-                    <!-- jquery validation -->
-                    <div class="card card-warning">
-                        <div class="card-header">
-                            <h3 class="card-title">{{ $title }}</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <!-- form start -->
-                        <form action="{{ route('users.update', $user) }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            @method('PUT')
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label>Name <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        value="{{ old('name', $user->name) }}" name="name" class="form-control">
-
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Email Address <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control  @error('email') is-invalid @enderror"
-                                        value="{{ old('name', $user->email) }}" name="email" class="form-control">
-
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label>Nip <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control  @error('nip') is-invalid @enderror"
-                                        value="{{ old('nip', $user->nip) }}" name="nip" class="form-control">
-
-                                    @error('nip')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label>Image <span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="image"
-                                                class="custom-file-input @error('image') is-invalid @enderror"
-                                                id="exampleInputFile">
-                                            @error('image')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+    <div class="row">
+        <div class="col-lg-12 mx-auto">
+            <div class="card">
+                <div class="card-header py-3 bg-transparent">
+                    <div class="d-sm-flex align-items-center">
+                        <h5 class="mb-2 mb-sm-0">{{ $title }}</h5>
+                    </div>
+                </div>
+                <form class="row g-3" action="{{ route('users.update', $user) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-12 col-lg-8">
+                                <div class="card shadow-none bg-light border">
+                                    <div class="card-body">
+                                        <div class="col-12">
+                                            <label class="form-label">Name</label>
+                                            <input type="text" name="name" value="{{ old('name', $user->name) }}"
+                                                class="form-control" placeholder="Name">
+                                        </div>
+                                        <div class="col-12 col-lg-12">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" name="email" value="{{ old('email', $user->email) }}"
+                                                class="form-control" placeholder="Email">
+                                        </div>
+                                        <div class="col-12 col-lg-12">
+                                            <label class="form-label">Nip</label>
+                                            <input type="number" name="nip" value="{{ old('nip', $user->nip) }}"
+                                                class="form-control" placeholder="Nip">
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">Password</label>
+                                            <input type="password" name="password" class="form-control"
+                                                placeholder="Password">
                                         </div>
 
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Level <span class="text-danger">*</span></label>
-                                    <select class="custom-select  @error('level') is-invalid @enderror"" name="level"
-                                        required>
-                                        @foreach ($data as $key => $val)
-                                            @if ($key == old('level', $user->level))
-                                                <option selected value="{{ $key }}">{{ $val }}</option>
-                                            @endif
-                                            <option value="{{ $key }}">{{ $val }}</option>
-                                        @endforeach
-                                    </select>
+                            </div>
 
-                                    @error('level')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                            <div class="col-12 col-lg-4">
+                                <div class="card shadow-none bg-light border">
+                                    <div class="card-body">
+                                        <div class="row g-3">
+                                            <div class="col-12">
+                                                <label class="form-label">Images</label>
+                                                <input class="form-control" name="image" value="{{ old('image') }}"
+                                                    type="file">
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label">Status</label>
+                                                <select class="form-select" name="level">
+                                                    @foreach ($data as $key => $val)
+                                                        @if ($key == old('level', $user->level))
+                                                            <option selected value="{{ $key }}">{{ $val }}
+                                                            </option>
+                                                        @endif
+                                                        <option value="{{ $key }}">{{ $val }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--end row-->
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label>Password <span class="text-danger">*</span></label>
-                                    <input type="password" name="password" class="form-control" placeholder="Password">
+                                <div class="card shadow-none bg-light border">
+                                    <div class="card-body">
+                                        <div class="row g-3">
+                                            <div class="col-12 text-center">
+                                                <img src="{{ asset('images/akun/smal/small_' . $user->image) }}"
+                                                    class="rounded shadow" width="120" height="120" alt="">
+                                            </div>
+
+                                        </div>
+                                        <!--end row-->
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                    <a href="{{ route('users.index') }}" type="submit"
+                                        class="btn btn-info btn-sm">Cancel</a>
                                 </div>
                             </div>
-                            <!-- /.card-body -->
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary btn-sm">Update</button>
-                                <a href="{{ route('users.index') }}" type="submit" class="btn btn-info btn-sm">Cancel</a>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- /.card -->
-                </div>
-
-
-                <div class="col-md-6">
-                    <!-- Box Comment -->
-                    <div class="card card-warning">
-                        <div class="card-header">
-                            <h3 class="card-title">Images</h3>
+                            <!--end row-->
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <img class="img-fluid pad" src="{{ asset('images/akun/smal/small_' . $user->image) }}"
-                                alt="Photo">
-                        </div>
-                    </div>
-                </div>
-
-                <!--/.col (right) -->
+                </form>
             </div>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </section>
+        </div>
+    </div>
 @endsection
 
 @push('js')
-    <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-validation/additional-methods.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
     <script>
         $(document).ready(function() {

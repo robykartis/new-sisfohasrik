@@ -26,9 +26,9 @@ class KodeTemuanController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
 
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-info btn-sm editKodeTemuan"> <i class="fas fa-pencil-alt"></i></a> | ';
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="text-info  btn btn-md editKodeTemuan"><i class="bi bi-pencil-fill"></i></a> | ';
 
-                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteKodeTemuan"><i class="fas fa-trash"></i></a>';
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="text-danger  btn btn-md deleteKodeTemuan"><i class="bi bi-trash-fill"></i></a>';
 
                     return $btn;
                 })

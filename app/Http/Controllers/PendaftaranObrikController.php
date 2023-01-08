@@ -32,8 +32,8 @@ class PendaftaranObrikController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn =  '<a href="' . route('pendaftaranobrik.edit', $row->id) . '" class="btn btn-info btn-sm"> <i class="fas fa-pencil-alt"></i></a> | ';
-                    $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteData"><i class="fas fa-trash"></i></a>';
+                    $btn =  '<a href="' . route('pendaftaranobrik.edit', $row->id) . '" class="text-info btn btn-md "><i class="bi bi-pencil-fill"></i></a>  |';
+                    $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="text-danger btn btn-md deleteData"><i class="bi bi-trash-fill"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])

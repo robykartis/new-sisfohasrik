@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -11,12 +12,13 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
+        $title = 'Detail Pengguna Aplikasi';
+        $user['user'] = $user;
+        $data = ['admin' => 'Admin', 'operator' => 'Operator', 'readonly' => 'Read Only'];
         $route = route('admin');
-        return view('dashboard', [
-            'route' => $route
-        ]);
+        return view('dashboard')->with(['user' => $user, 'title' => $title, 'data' => $data]);
     }
 
     /**

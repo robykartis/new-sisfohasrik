@@ -1,143 +1,77 @@
-@extends('layouts.app')
+@extends('layouts.v1.app')
 @section('title')
     Kode TLHP
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
 @endsection
-@push('css')
-    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
-@endpush
+
 @section('content')
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card card-warning">
-                        <div class="card-header">
-                            <h3 class="card-title">{{ $title }}</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <form method="POST" action="{{ route('pendaftaranobrik.update', $data->id) }}">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card">
+                <div class="card-header py-3 bg-transparent">
+                    <h5 class="mb-0">{{ $title }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="border p-3 rounded">
+                        <form class="row g-3" method="POST" action="{{ route('pendaftaranobrik.update', $data->id) }}">
                             @csrf
                             @method('PATCH')
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                        <!-- text input -->
-                                        <div class="form-group">
-                                            <label for="tahun">Tahun</label>
-                                            <input type="text" disabled value="{{ $data->tahun }}" class="form-control"
-                                                required>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <!-- text input -->
-                                        <div class="form-group">
-                                            <label for="tahun" class="text text-waring"><span class="text-danger"><small>
-                                                        Rubah
-                                                        Tahun Jika Diperlukan</small></span></label>
-                                            <select name="tahun" id="tahun" class="form-control">
-                                                <option value="">Semua Tahun</option>
-                                                @for ($i = date('Y'); $i >= 1900; $i--)
-                                                    <option value="{{ $i }}"
-                                                        {{ $request->tahun == $i ? 'selected' : '' }}>
-                                                        {{ $i }}</option>
-                                                @endfor
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for="klarifikasi">Klarifikasi</label>
-                                            <select name="klarifikasi" class="form-control">
-                                                @foreach ($klarifikasi_obriks as $klarifikasi)
-                                                    <option value="{{ $klarifikasi->id }}"
-                                                        {{ $klarifikasi->id == $data->klarifikasi ? 'selected' : '' }}>
-                                                        {{ $klarifikasi->name_obrik }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <!-- text input -->
-                                        <div class="form-group">
-                                            <label for="induk">Kode Obrik</label>
-                                            <input type="text" name="kode" value="{{ $data->kode }}"
-                                                class="form-control" placeholder="Enter ..." required>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        <!-- text input -->
-                                        <div class="form-group">
-                                            <label for="induk">Induk Obrik</label>
-                                            <input type="text" name="induk" value="{{ $data->induk }}"
-                                                class="form-control" placeholder="Enter ..." required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <!-- textarea -->
-                                        <div class="form-group">
-                                            <label for="nama">Nama Obrik</label>
-                                            <textarea name="nama" class="form-control" rows="3" placeholder="Enter ..." required>{{ $data->nama }}</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
+                            <div class="col-12 col-md-3">
+                                <label class="form-label">Tahun</label>
+                                <input type="text" disabled value="{{ $data->tahun }}" class="form-control">
                             </div>
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary btn-sm">Update</button>
-                                <a href="{{ route('pendaftaranobrik.index') }}" class="btn btn-info btn-sm">Cancel</a>
+                            <div class="col-12 col-md-3">
+                                <label class="form-label"><span class="text-danger"><small>
+                                            Rubah
+                                            Tahun Jika Diperlukan</small></span></label>
+                                <select class="form-select" name="tahun" id="tahun">
+                                    <option value="">Semua Tahun</option>
+                                    @for ($i = date('Y'); $i >= 1900; $i--)
+                                        <option value="{{ $i }}" {{ $request->tahun == $i ? 'selected' : '' }}>
+                                            {{ $i }}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Klarifikasi</label>
+                                <select class="form-select" name="klarifikasi">
+                                    @foreach ($klarifikasi_obriks as $klarifikasi)
+                                        <option value="{{ $klarifikasi->id }}"
+                                            {{ $klarifikasi->id == $data->klarifikasi ? 'selected' : '' }}>
+                                            {{ $klarifikasi->name_obrik }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <div class="row g-3">
+                                    <div class="col-lg-6">
+                                        <label class="form-label">Kode Obrik</label>
+                                        <input type="text" name="kode" class="form-control"
+                                            value="{{ $data->kode }}">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <label class="form-label">Induk Obrik</label>
+                                        <input type="text" name="induk" class="form-control"
+                                            value="{{ $data->induk }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Nama Obrik</label>
+                                <textarea class="form-control" name="nama" placeholder="Nama Obrik" rows="4" cols="4">{{ $data->nama }}</textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary px-4">Save</button>
+                                <a href="{{ route('pendaftaranobrik.index') }}" class="btn btn-info px-4">Cancel</a>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <!-- /.container-fluid -->
-    </section>
+        </div>
+    </div>
 @endsection
-
-@push('js')
-    <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jszip/jszip.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/pdfmake/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
-    <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-
-
-
-    <script type="text/javascript">
-        function confirmDelete() {
-            if (!confirm("Are You Sure to delete this"))
-                event.preventDefault();
-        }
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            toastr.options.timeOut = 10000;
-            @if (Session::has('error'))
-                toastr.error('{{ Session::get('error') }}');
-            @elseif (Session::has('success'))
-                toastr.success('{{ Session::get('success') }}');
-            @endif
-        });
-    </script>
-    {{-- Action Tambah Data --}}
-@endpush

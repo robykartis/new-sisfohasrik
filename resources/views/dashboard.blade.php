@@ -1,87 +1,86 @@
-@extends('layouts.app')
+@extends('layouts.v1.app')
 @section('title')
-    Dashboard
+    Dashboard Admin
 @endsection
+
 @section('breadcrumbs')
-    @if (Auth::user()->level == 'admin')
-        {{ Breadcrumbs::render('admin') }}
-    @elseif(Auth::user()->level == 'operator')
-        {{ Breadcrumbs::render('operator') }}
-    @else
-        {{ Breadcrumbs::render('readonly') }}
-    @endif
+    {{ Breadcrumbs::render() }}
 @endsection
+
+{{-- @section('tambah')
+    <button type="button" class="btn btn-primary">Settings</button>
+@endsection --}}
 
 @section('content')
-    <section class="content">
-        <div class="container-fluid">
-            <!-- Small boxes (Stat box) -->
-            <div class="row">
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-info">
-                        <div class="inner">
-                            <h3>150</h3>
-
-                            <p>New Orders</p>
+    <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4">
+        <div class="col">
+            <div class="card rounded-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="">
+                            <p class="mb-1">Total Orders</p>
+                            <h4 class="mb-0">5.8K</h4>
+                            <p class="mb-0 mt-2 font-13"><i class="bi bi-arrow-up"></i><span>22.5% from last
+                                    week</span></p>
                         </div>
-                        <div class="icon">
-                            <i class="ion ion-bag"></i>
+                        <div class="ms-auto widget-icon bg-primary text-white">
+                            <i class="bi bi-basket2"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-success">
-                        <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
 
-                            <p>Bounce Rate</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
                 </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-warning">
-                        <div class="inner">
-                            <h3>44</h3>
-
-                            <p>User Registrations</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3>65</h3>
-
-                            <p>Unique Visitors</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <!-- ./col -->
             </div>
-            <!-- /.row -->
-
-        </div><!-- /.container-fluid -->
-    </section>
+        </div>
+        <div class="col">
+            <div class="card rounded-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="">
+                            <p class="mb-1">Total Income</p>
+                            <h4 class="mb-0">$9,786</h4>
+                            <p class="mb-0 mt-2 font-13"><i class="bi bi-arrow-up"></i><span>13.2% from last
+                                    week</span></p>
+                        </div>
+                        <div class="ms-auto widget-icon bg-success text-white">
+                            <i class="bi bi-currency-dollar"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card rounded-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="">
+                            <p class="mb-1">Total Views</p>
+                            <h4 class="mb-0">875</h4>
+                            <p class="mb-0 mt-2 font-13"><i class="bi bi-arrow-up"></i><span>12.3% from last
+                                    week</span></p>
+                        </div>
+                        <div class="ms-auto widget-icon bg-orange text-white">
+                            <i class="bi bi-emoji-heart-eyes"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card rounded-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div class="">
+                            <p class="mb-1">New Clients</p>
+                            <h4 class="mb-0">9853</h4>
+                            <p class="mb-0 mt-2 font-13"><i class="bi bi-arrow-up"></i><span>32.7% from last
+                                    week</span></p>
+                        </div>
+                        <div class="ms-auto widget-icon bg-info text-white">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
-@push('js')
-@endpush

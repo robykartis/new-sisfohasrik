@@ -1,64 +1,50 @@
-@extends('layouts.app')
+@extends('layouts.v1.app')
 @section('title')
     User Show
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
 @endsection
-@push('css')
-    <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
-@endpush
-@section('content')
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <div class="card bg-light d-flex flex-fill">
-                        <div class="card-header text-muted border-bottom-0">
-                            {{ $title }}
-                        </div>
-                        <div class="card-body pt-0">
-                            <div class="row">
-                                <div class="col-7">
-                                    <h2 class="lead"><b>{{ $user->name }}</b></h2>
-                                    <p class="text-muted text-sm"><i class="fas fa-universal-access"></i> <b>Level:
-                                        </b>{{ $user->level }}</p>
-                                    <ul class="ml-4 mb-0 fa-ul text-muted">
-                                        <li class="small"><span class="fa-li"><i class="fas fa-envelope"></i></i></span>
-                                            Email Address: {{ $user->email }}</li>
-                                        <li class="small"><span class="fa-li"><i class="fas fa-user-tag"></i></span>
-                                            NIP :{{ $user->nip }}</li>
-                                    </ul>
-                                </div>
-                                <div class="col-5 text-center">
-                                    <img src="{{ asset('images/akun/smal/small_' . $user->image) }}" alt="user-avatar"
-                                        class="img-circle img-fluid">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <div class="text-right">
 
-                                <a href="{{ route('users.index') }}" class="btn btn-sm btn-info">
-                                    <i class="fas fa-chevron-circle-left"></i> Back
-                                </a>
-                            </div>
+@section('content')
+    <div class="row justify-content-center">
+
+        <div class="col-12 col-lg-4">
+            <div class="card shadow-sm border-0 overflow-hidden">
+                <div class="card-body">
+                    <div class="profile-avatar text-center">
+                        <img src="{{ asset('images/akun/smal/small_' . $user->image) }}" class="rounded-circle shadow"
+                            width="120" height="120" alt="">
+                    </div>
+                    <div class="text-center mt-4">
+                        <h4 class="mb-1">{{ $user->name }}</h4>
+                        <p class="mb-0 text-secondary">{{ $user->email }}</p>
+                        <div class="mt-4"></div>
+
+                    </div>
+                    <div class="d-flex align-items-center justify-content-around mt-5 gap-3">
+
+                        <div class="text-center">
+                            <h4 class="mb-0">Level</h4>
+                            <p class="mb-0 text-secondary">{{ $user->level }}</p>
+                        </div>
+                        <div class="text-center">
+                            <h4 class="mb-0">Nip</h4>
+                            <p class="mb-0 text-secondary">{{ $user->nip }}</p>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-around mt-5 gap-3">
+                        <div class="text-center">
+                            <a href="{{ route('users.index') }}" class="btn btn-primary">Back</a>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-        <!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </section>
+    </div>
 @endsection
 
 @push('js')
-    <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
-    <script src="{{ asset('assets/plugins/jquery-validation/additional-methods.min.js') }}"></script>
-
-    <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
     <script>
         $(document).ready(function() {

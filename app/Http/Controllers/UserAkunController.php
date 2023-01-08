@@ -27,9 +27,9 @@ class UserAkunController extends Controller
                 ->addIndexColumn()
 
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' . route('users.show', $row->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a> | ';
-                    $btn = $btn . '<a href="' . route('users.edit', $row->id) . '" class="btn btn-info btn-sm"> <i class="fas fa-pencil-alt"></i></a> | ';
-                    $btn = $btn . '<a href="' . url('users/hapus', $row->id) . '" onclick="confirmDelete()" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></a>';
+                    $btn = '<a href="' . route('users.show', $row->id) . '"  class="text-primary btn btn-md"><i class="bi bi-eye-fill"></i></a> | ';
+                    $btn = $btn . '<a href="' . route('users.edit', $row->id) . '" class="text-info  btn btn-md"><i class="bi bi-pencil-fill"></i></a> | ';
+                    $btn = $btn . '<a href="' . url('users/hapus', $row->id) . '" onclick="confirmDelete()" class="text-danger  btn btn-md"><i class="bi bi-trash-fill"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -84,9 +84,6 @@ class UserAkunController extends Controller
         $user->password = Hash::make($request->password);
         $user->image = $file_name;
         $user->save();
-
-
-
 
         return redirect('users')->with('success', 'Tambah Data Berhasil');
     }

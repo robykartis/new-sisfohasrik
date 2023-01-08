@@ -11,6 +11,7 @@ use App\Http\Controllers\KodeRekomendasiController;
 use App\Http\Controllers\KodeTemuanController;
 use App\Http\Controllers\KodeTlhpController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\LhpController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PendaftaranObrikController;
 use App\Http\Controllers\ReadonlyController;
@@ -18,6 +19,10 @@ use App\Http\Controllers\UserAkunController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
+// Route::get('/', function () {
+//     return view('layouts.v1.auth');
+// });
 
 
 Route::get('/', [AuthController::class, 'index'])->name('login');
@@ -52,6 +57,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('pendaftaranobrik', PendaftaranObrikController::class);
         // Klarifikasi Laporan Hasil Pemeriksaan
         Route::resource('jenispemeriksaan', JenisPemeriksaanController::class);
+        // Lhp
+        Route::resource('lhp', LhpController::class);
     });
 
 

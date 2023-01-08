@@ -24,9 +24,9 @@ class BidangTemuanController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
 
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit btn btn-info btn-sm editBidangTemuan"> <i class="fas fa-pencil-alt"></i></a> | ';
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="text-info  btn btn-md editBidangTemuan"><i class="bi bi-pencil-fill"></i></a> | ';
 
-                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-sm deleteBidangTemuan"><i class="fas fa-trash"></i></a>';
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="text-danger  btn btn-md deleteBidangTemuan"><i class="bi bi-trash-fill"></i></a>';
 
                     return $btn;
                 })
