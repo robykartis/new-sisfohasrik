@@ -12,6 +12,7 @@ use App\Http\Controllers\KodeTemuanController;
 use App\Http\Controllers\KodeTlhpController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LhpController;
+use App\Http\Controllers\ObrikController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PendaftaranObrikController;
 use App\Http\Controllers\ReadonlyController;
@@ -54,7 +55,7 @@ Route::group(['middleware' => ['auth']], function () {
         // Klarifikasi Obrik
         Route::resource('klarifikasiobrik', KlarifikasiObrikController::class);
         // Klarifikasi Obrik
-        Route::resource('pendaftaranobrik', PendaftaranObrikController::class);
+        Route::resource('pendaftaranobrik', ObrikController::class);
         // Klarifikasi Laporan Hasil Pemeriksaan
         Route::resource('jenispemeriksaan', JenisPemeriksaanController::class);
         // Lhp

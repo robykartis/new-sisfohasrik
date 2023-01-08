@@ -46,7 +46,7 @@
                                                 <option value="">Semua Klarifikasi</option>
                                                 @foreach ($klarifikasis as $klarifikasi)
                                                     <option value="{{ $klarifikasi->id }}">
-                                                        {{ $klarifikasi->name_obrik }}
+                                                        {{ $klarifikasi->nama_klarifikasi }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -139,10 +139,10 @@
                         name: 'kode'
                     },
                     {
-                        data: 'name_obrik',
-                        name: 'name_obrik',
+                        data: 'nama_klarifikasi',
+                        name: 'nama_klarifikasi',
                         render: function(data, type, full, meta) {
-                            return full.name_obrik;
+                            return full.nama_klarifikasi;
                         }
                     },
                     {
@@ -224,7 +224,7 @@
                                                 <tr>
                                                     <td>{{ $pendaftaran_obrik->tahun }}</td>
                                                     <td>{{ $pendaftaran_obrik->kode }}</td>
-                                                    <td>{{ $pendaftaran_obrik->name_obrik }}</td>
+                                                    <td>{{ $pendaftaran_obrik->nama_klarifikasi }}</td>
                                                     <td>{{ $pendaftaran_obrik->nama }}</td>
                                                     <td>{{ $pendaftaran_obrik->induk }}</td>
                                                     <td>

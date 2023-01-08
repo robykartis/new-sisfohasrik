@@ -20,16 +20,13 @@ class KodeTemuanController extends Controller
 
         if ($request->ajax()) {
 
-            $data = KodeTemuan::select('id', 'kode',  'name')->get();
+            $data = KodeTemuan::select('id', 'kode',  'nama')->get();
 
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="text-info  btn btn-md editKodeTemuan"><i class="bi bi-pencil-fill"></i></a> | ';
-
-                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="text-danger  btn btn-md deleteKodeTemuan"><i class="bi bi-trash-fill"></i></a>';
-
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="text-info  btn btn-md editForm"><i class="bi bi-pencil-fill"></i></a> | ';
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="text-danger  btn btn-md deleteForm"><i class="bi bi-trash-fill"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -72,7 +69,8 @@ class KodeTemuanController extends Controller
             ],
             [
                 'kode' => $request->kode,
-                'name' => $request->name
+                'nama' => $request->nama,
+                'create_by' => auth()->user()->level,
             ]
         );
 

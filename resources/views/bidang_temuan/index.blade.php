@@ -53,20 +53,20 @@
                     <div class="modal-header">
                         <h4 class="modal-title" id="modelHeading"></h4>
                     </div>
-                    <form id="bidangTemuanForm" name="bidangTemuanForm">
+                    <form id="dataForm" name="dataForm">
                         <div class="modal-body">
                             <input type="hidden" name="kode_id" id="kode_id">
                             <div class="form-group">
                                 <label for="kode" class="col-sm-2 control-label">Kode</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="kode_bidang" name="kode_bidang"
+                                    <input type="text" class="form-control" id="kode" name="kode"
                                         placeholder="Enter Kode" value="" maxlength="50" required="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Name</label>
                                 <div class="col-sm-12">
-                                    <textarea id="name_bidang" name="name_bidang" required="" placeholder="Enter Details" class="form-control"></textarea>
+                                    <textarea id="nama" name="nama" required="" placeholder="Enter Details" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -134,12 +134,12 @@
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'kode_bidang',
-                        name: 'kode_bidang'
+                        data: 'kode',
+                        name: 'kode'
                     },
                     {
-                        data: 'name_bidang',
-                        name: 'name_bidang'
+                        data: 'nama',
+                        name: 'nama'
                     },
                     {
                         data: 'action',
@@ -158,7 +158,7 @@
             $('#createBidangTemuan').click(function() {
                 $('#saveBtn').val("Save");
                 $('#kode_id').val('');
-                $('#bidangTemuanForm').trigger("reset");
+                $('#dataForm').trigger("reset");
                 $('#modelHeading').html("Input Kode Bidang Temuan");
                 $('#ajaxModel').modal('show');
             });
@@ -168,7 +168,7 @@
             Click to Edit Button
             --------------------------------------------
             --------------------------------------------*/
-            $('body').on('click', '.editBidangTemuan', function() {
+            $('body').on('click', '.editForm', function() {
                 var kode_id = $(this).data('id');
                 $.get("{{ route('bidangtemuan.index') }}" + '/' + kode_id + '/edit', function(
                     data) {
@@ -176,8 +176,8 @@
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);
-                    $('#name_bidang').val(data.name_bidang);
-                    $('#kode_bidang').val(data.kode_bidang);
+                    $('#nama').val(data.nama);
+                    $('#kode').val(data.kode);
 
                 })
 
@@ -193,7 +193,7 @@
                 $(this).html('Sending..');
 
                 $.ajax({
-                    data: $('#bidangTemuanForm').serialize(),
+                    data: $('#dataForm').serialize(),
                     url: "{{ route('bidangtemuan.store') }}",
                     type: "POST",
                     dataType: 'json',
@@ -208,7 +208,7 @@
                                 timeOut: 5000
                             });
                         }
-                        $('#bidangTemuanForm').trigger("reset");
+                        $('#dataForm').trigger("reset");
                         $('#ajaxModel').modal('hide');
                         table.draw();
 
@@ -225,7 +225,7 @@
             Delete Product Code
             --------------------------------------------
             --------------------------------------------*/
-            $('body').on('click', '.deleteBidangTemuan', function() {
+            $('body').on('click', '.deleteForm', function() {
 
                 var kode_id = $(this).data("id");
                 if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {

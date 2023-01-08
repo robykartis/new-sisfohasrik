@@ -19,8 +19,7 @@
                         <h5 class="mb-2 mb-sm-0">{{ $title }}</h5>
                         <div class="ms-auto">
 
-                            <button id="createKodeTemuan" class="btn btn-primary btn-sm"><i
-                                    class="fas fa-plus"></i></button>
+                            <button id="createForm" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i></button>
                         </div>
                     </div>
                 </div>
@@ -54,7 +53,7 @@
                     <div class="modal-header">
                         <h4 class="modal-title" id="modelHeading"></h4>
                     </div>
-                    <form id="kodeTemuanForm" name="kodeTemuanForm">
+                    <form id="dataForm" name="dataForm">
                         <div class="modal-body">
                             <input type="hidden" name="kode_id" id="kode_id">
                             <div class="form-group">
@@ -67,7 +66,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Name</label>
                                 <div class="col-sm-12">
-                                    <textarea id="name" name="name" required="" placeholder="Enter Details" class="form-control"></textarea>
+                                    <textarea id="nama" name="nama" required="" placeholder="Enter Details" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -141,8 +140,8 @@
                         name: 'kode'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'nama',
+                        name: 'nama'
                     },
                     {
                         data: 'action',
@@ -158,10 +157,10 @@
             Click to Button
             --------------------------------------------
             --------------------------------------------*/
-            $('#createKodeTemuan').click(function() {
+            $('#createForm').click(function() {
                 $('#saveBtn').val("Save");
                 $('#kode_id').val('');
-                $('#kodeTemuanForm').trigger("reset");
+                $('#dataForm').trigger("reset");
                 $('#modelHeading').html("Input Daftar Kode Temuan Pemeriksaan");
                 $('#ajaxModel').modal('show');
             });
@@ -171,7 +170,7 @@
             Click to Edit Button
             --------------------------------------------
             --------------------------------------------*/
-            $('body').on('click', '.editKodeTemuan', function() {
+            $('body').on('click', '.editForm', function() {
                 var kode_id = $(this).data('id');
                 $.get("{{ route('temuan.index') }}" + '/' + kode_id + '/edit', function(
                     data) {
@@ -179,7 +178,7 @@
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);
-                    $('#name').val(data.name);
+                    $('#nama').val(data.nama);
                     $('#kode').val(data.kode);
 
                 })
@@ -196,7 +195,7 @@
                 $(this).html('Sending..');
 
                 $.ajax({
-                    data: $('#kodeTemuanForm').serialize(),
+                    data: $('#dataForm').serialize(),
                     url: "{{ route('temuan.store') }}",
                     type: "POST",
                     dataType: 'json',
@@ -211,7 +210,7 @@
                                 timeOut: 5000
                             });
                         }
-                        $('#kodeTemuanForm').trigger("reset");
+                        $('#dataForm').trigger("reset");
                         $('#ajaxModel').modal('hide');
                         table.draw();
 
@@ -228,7 +227,7 @@
             Delete Product Code
             --------------------------------------------
             --------------------------------------------*/
-            $('body').on('click', '.deleteKodeTemuan', function() {
+            $('body').on('click', '.deleteForm', function() {
                 var kode_id = $(this).data("id");
                 if (confirm("Are You sure want to delete !")) {
                     $.ajax({

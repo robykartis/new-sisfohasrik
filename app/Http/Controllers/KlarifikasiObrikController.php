@@ -17,7 +17,7 @@ class KlarifikasiObrikController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = KlarifikasiObrik::select('id', 'kode_obrik',  'name_obrik')->get();
+            $data = KlarifikasiObrik::select('id', 'kode',  'nama')->get();
 
             return Datatables::of($data)
                 ->addIndexColumn()
@@ -65,8 +65,9 @@ class KlarifikasiObrikController extends Controller
                 'id' => $request->kode_id
             ],
             [
-                'kode_obrik' => $request->kode_obrik,
-                'name_obrik' => $request->name_obrik
+                'kode' => $request->kode,
+                'nama' => $request->nama,
+                'create_by' => auth()->user()->level,
             ]
         );
 

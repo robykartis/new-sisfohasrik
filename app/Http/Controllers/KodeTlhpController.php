@@ -17,17 +17,13 @@ class KodeTlhpController extends Controller
     {
         if ($request->ajax()) {
 
-            $data = KodeTlhp::select('id', 'kode_tlhp',  'name_tlhp')->get();
+            $data = KodeTlhp::select('id', 'kode',  'nama')->get();
 
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-
-
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit text-info btn btn-md editData"><i class="bi bi-pencil-fill"></i></a>  | ';
-
                     $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="text-danger btn btn-md deleteData"><i class="bi bi-trash-fill"></i></a>';
-
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -69,8 +65,9 @@ class KodeTlhpController extends Controller
                 'id' => $request->kode_id
             ],
             [
-                'kode_tlhp' => $request->kode_tlhp,
-                'name_tlhp' => $request->name_tlhp
+                'kode' => $request->kode,
+                'nama' => $request->nama,
+                'create_by' => auth()->user()->level,
             ]
         );
 

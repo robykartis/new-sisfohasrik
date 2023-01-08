@@ -18,16 +18,13 @@ class KodeRekomendasiController extends Controller
 
         if ($request->ajax()) {
 
-            $data = KodeRekomendasi::select('id', 'kode_rekomendasi',  'name_rekomendasi')->get();
+            $data = KodeRekomendasi::select('id', 'kode',  'nama')->get();
 
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-
                     $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="edit text-info btn btn-md editData"><i class="bi bi-pencil-fill"></i></a>  | ';
-
                     $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="text-danger btn btn-md deleteData"><i class="bi bi-trash-fill"></i></a>';
-
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -69,8 +66,9 @@ class KodeRekomendasiController extends Controller
                 'id' => $request->kode_id
             ],
             [
-                'kode_rekomendasi' => $request->kode_rekomendasi,
-                'name_rekomendasi' => $request->name_rekomendasi
+                'kode' => $request->kode,
+                'nama' => $request->nama,
+                'create_by' => auth()->user()->level,
             ]
         );
 

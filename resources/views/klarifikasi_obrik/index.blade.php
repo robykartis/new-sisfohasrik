@@ -58,14 +58,14 @@
                             <div class="form-group">
                                 <label for="kode" class="col-sm-2 control-label">Kode</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="kode_obrik" name="kode_obrik"
+                                    <input type="text" class="form-control" id="kode" name="kode"
                                         placeholder="Enter Kode" value="" maxlength="50" required="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Name</label>
                                 <div class="col-sm-12">
-                                    <textarea id="name_obrik" name="name_obrik" required="" placeholder="Enter Details" class="form-control"></textarea>
+                                    <textarea id="nama" name="nama" required="" placeholder="Enter Details" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -135,12 +135,12 @@
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'kode_obrik',
-                        name: 'kode_obrik'
+                        data: 'kode',
+                        name: 'kode'
                     },
                     {
-                        data: 'name_obrik',
-                        name: 'name_obrik'
+                        data: 'nama',
+                        name: 'nama'
                     },
                     {
                         data: 'action',
@@ -177,8 +177,8 @@
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);
-                    $('#name_obrik').val(data.name_obrik);
-                    $('#kode_obrik').val(data.kode_obrik);
+                    $('#nama').val(data.nama);
+                    $('#kode').val(data.kode);
 
                 })
 

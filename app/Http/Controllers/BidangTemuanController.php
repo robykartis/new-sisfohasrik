@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BidangTemuan;
+
+use App\Models\KodeBidang;
 use Illuminate\Http\Request;
 use DataTables;
 
@@ -13,21 +14,18 @@ class BidangTemuanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, BidangTemuan $temuan)
+    public function index(Request $request, KodeBidang $temuan)
     {
 
         if ($request->ajax()) {
 
-            $data = BidangTemuan::select('id', 'kode_bidang',  'name_bidang')->get();
+            $data = KodeBidang::select('id', 'kode',  'nama')->get();
 
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-
-                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="text-info  btn btn-md editBidangTemuan"><i class="bi bi-pencil-fill"></i></a> | ';
-
-                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="text-danger  btn btn-md deleteBidangTemuan"><i class="bi bi-trash-fill"></i></a>';
-
+                    $btn = '<a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Edit" class="text-info  btn btn-md editForm"><i class="bi bi-pencil-fill"></i></a> | ';
+                    $btn = $btn . ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="text-danger  btn btn-md deleteForm"><i class="bi bi-trash-fill"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -41,7 +39,7 @@ class BidangTemuanController extends Controller
         )->with([
             'success',
             'title' => $title,
-            'temuan' => BidangTemuan::all(),
+            'temuan' => KodeBidang::all(),
             'temuan' => $temuan,
         ]);
     }
@@ -64,13 +62,14 @@ class BidangTemuanController extends Controller
      */
     public function store(Request $request)
     {
-        BidangTemuan::updateOrCreate(
+        KodeBidang::updateOrCreate(
             [
                 'id' => $request->kode_id
             ],
             [
-                'kode_bidang' => $request->kode_bidang,
-                'name_bidang' => $request->name_bidang
+                'kode' => $request->kode,
+                'nama' => $request->nama,
+                'create_by' => auth()->user()->level,
             ]
         );
 
@@ -96,7 +95,7 @@ class BidangTemuanController extends Controller
      */
     public function edit($id)
     {
-        $temuan = BidangTemuan::find($id);
+        $temuan = KodeBidang::find($id);
         return response()->json($temuan);
     }
 
@@ -120,7 +119,7 @@ class BidangTemuanController extends Controller
      */
     public function destroy($id)
     {
-        BidangTemuan::find($id)->delete();
+        KodeBidang::find($id)->delete();
 
         return response()->json(['success' => 'Kode temuan deleted successfully.']);
     }

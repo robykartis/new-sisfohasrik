@@ -58,14 +58,14 @@
                             <div class="form-group">
                                 <label for="kode" class="col-sm-2 control-label">Kode</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="kode_penyebab" name="kode_penyebab"
+                                    <input type="text" class="form-control" id="kode" name="kode"
                                         placeholder="Enter Kode" value="" maxlength="50" required="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Name</label>
                                 <div class="col-sm-12">
-                                    <textarea id="name_penyebab" name="name_penyebab" required="" placeholder="Enter Details" class="form-control"></textarea>
+                                    <textarea id="nama" name="nama" required="" placeholder="Enter Details" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -136,12 +136,12 @@
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'kode_penyebab',
-                        name: 'kode_penyebab'
+                        data: 'kode',
+                        name: 'kode'
                     },
                     {
-                        data: 'name_penyebab',
-                        name: 'name_penyebab'
+                        data: 'nama',
+                        name: 'nama'
                     },
                     {
                         data: 'action',
@@ -178,8 +178,8 @@
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);
-                    $('#name_penyebab').val(data.name_penyebab);
-                    $('#kode_penyebab').val(data.kode_penyebab);
+                    $('#nama').val(data.nama);
+                    $('#kode').val(data.kode);
 
                 })
 

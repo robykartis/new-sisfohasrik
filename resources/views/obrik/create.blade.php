@@ -31,7 +31,7 @@
                                 <label class="form-label">Klarifikasi</label>
                                 <select class="form-select" name="klarifikasi">
                                     @foreach ($klarifikasi_obriks as $klarifikasi)
-                                        <option value="{{ $klarifikasi->id }}">{{ $klarifikasi->name_obrik }}
+                                        <option value="{{ $klarifikasi->id }}">{{ $klarifikasi->nama }}
                                         </option>
                                     @endforeach
                                 </select>

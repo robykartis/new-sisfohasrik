@@ -58,14 +58,14 @@
                             <div class="form-group">
                                 <label for="kode" class="col-sm-2 control-label">Kode</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="kode_tlhp" name="kode_tlhp"
+                                    <input type="text" class="form-control" id="kode" name="kode"
                                         placeholder="Enter Kode" value="" maxlength="50" required="">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Name</label>
                                 <div class="col-sm-12">
-                                    <textarea id="name_tlhp" name="name_tlhp" required="" placeholder="Enter Details" class="form-control"></textarea>
+                                    <textarea id="nama" name="nama" required="" placeholder="Enter Details" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -136,12 +136,12 @@
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'kode_tlhp',
-                        name: 'kode_tlhp'
+                        data: 'kode',
+                        name: 'kode'
                     },
                     {
-                        data: 'name_tlhp',
-                        name: 'name_tlhp'
+                        data: 'nama',
+                        name: 'nama'
                     },
                     {
                         data: 'action',
@@ -178,8 +178,8 @@
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);
-                    $('#name_tlhp').val(data.name_tlhp);
-                    $('#kode_tlhp').val(data.kode_tlhp);
+                    $('#nama').val(data.nama);
+                    $('#kode').val(data.kode);
 
                 })
 
