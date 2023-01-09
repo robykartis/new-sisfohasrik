@@ -64,7 +64,7 @@
     </li>
 
     <li class="menu-label ">ISIAN</li>
-    <li class="{{ set_active(['lhp.index']) }}">
+    <li class="{{ set_active(['lhp.index', 'lhp.create', 'lhp.edit']) }}">
         <a href="{{ route('lhp.index') }}">
             <div class="parent-icon"><i class="bi bi-file-earmark-break-fill"></i></div>
             <div class="menu-title">Hasil Pemeriksaan</div>

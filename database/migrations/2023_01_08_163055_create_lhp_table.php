@@ -16,13 +16,13 @@ return new class extends Migration
         Schema::create('lhp', function (Blueprint $table) {
             $table->id();
             $table->string('no_lhp');
-            $table->string('tahun');
-            $table->string('obrik');
-            $table->string('klarifikasi');
+            $table->string('tahun')->nullable();
+            $table->string('obrik')->nullable();
+            $table->string('klarifikasi')->nullable();
             $table->timestamp('tgl_lhp');
-            $table->string('jns_pemeriksaan');
+            $table->string('jns_pemeriksaan')->nullable();
             $table->string('uraian')->nullable();
-            $table->string('create_by');
+            $table->string('created_by')->nullable();
             $table->timestamps();
         });
     }

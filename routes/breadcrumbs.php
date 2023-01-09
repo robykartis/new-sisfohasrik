@@ -88,6 +88,16 @@ Breadcrumbs::for('jenispemeriksaan.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
     $trail->push('Jenis Pemeriksaan', route('jenispemeriksaan.index'));
 });
+// LHP
+Breadcrumbs::for('lhp.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('LHP', route('lhp.index'));
+});
+// LHP
+Breadcrumbs::for('lhp.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Tambah LHP', route('lhp.create'));
+});
 
 
 // =======================END HALAMAN ADMIN========================//

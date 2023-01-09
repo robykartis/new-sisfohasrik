@@ -30,6 +30,7 @@
                             <div class="col-12 col-md-6">
                                 <label class="form-label">Klarifikasi</label>
                                 <select class="form-select" name="klarifikasi">
+                                    <option value="">Semua Klarifikasi</option>
                                     @foreach ($klarifikasi_obriks as $klarifikasi)
                                         <option value="{{ $klarifikasi->id }}">{{ $klarifikasi->nama }}
                                         </option>
