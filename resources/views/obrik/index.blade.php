@@ -1,6 +1,6 @@
 @extends('layouts.v1.app')
 @section('title')
-    Kode TLHP
+    Obrik
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}

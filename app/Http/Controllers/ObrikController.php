@@ -53,27 +53,56 @@ class ObrikController extends Controller
     public function store(Request $request)
     {
         // validate the form input
-        // $request->validate([
-        //     'tahun' => 'required',
-        //     'klarifikasi' => 'required',
-        //     'kode' => 'required',
-        //     'induk' => 'required',
-        //     'nama' => 'required',
-        // ]);
+        $request->validate([
+            'tahun' => 'required',
+            'klarifikasi' => 'required',
+            'kode' => 'required',
+            'induk' => 'required',
+            'nama' => 'required',
+        ]);
         try {
-            Obrik::create([
-                'tahun' => $request->tahu,
-                'klarifikasi' => $request->klarifikasi,
-                'kode' => $request->kode,
-                'induk' => $request->induk,
-                'nama' => $request->nama,
-                'created_by' => auth()->user()->level,
-            ]);
+            $request['created_by'] = auth()->user()->level;
+            Obrik::create($request->all());
             return redirect()->route('pendaftaranobrik.index')->with('success', 'Tambah Data Berhasil');
         } catch (\Exception $e) {
-            echo $e->getMessage();
-            die;
+            // echo $e->getMessage();
+            // die;
             return redirect()->route('pendaftaranobrik.index')->with('error', 'Terjadi kesalahan saat menyimpan data.');
         }
+    }
+    public function edit(Request $request, $id)
+    {
+        // get the data item by id
+        $data = Obrik::findOrFail($id);
+
+        // get all klarifikasi obrik
+        $klarifikasi_obriks = KlarifikasiObrik::all();
+        $title = 'Edit Daftar Obyek Pemeriksaan (Obrik)';
+        return view('obrik.edit', compact('data', 'klarifikasi_obriks', 'request', 'title'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // validate the form input
+        // $request->validate([
+        //     'tahun' => 'required',
+        //     'klarifikasi' => 'required?',
+        //     'kode' => 'required?',
+        //     'induk' => 'required?',
+        //     'nama' => 'required?',
+        // ]);
+
+
+        $request['created_by'] = auth()->user()->level;
+        $obrik = Obrik::find($id);
+        $obrik->update([
+            'tahun' => $request->tahun,
+            'kode' => $request->kode,
+            'nama' => $request->nama,
+            'klarifikasi' => $request->klarifikasi,
+            'induk' => $request->induk,
+        ]);
+        // dd($obrik);
+        return redirect()->route('pendaftaranobrik.index')->with('success', 'Update Data Berhasil');
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.v1.app')
 @section('title')
-    Kode TLHP
+    Edit Obrik
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -20,7 +20,8 @@
                             @method('PATCH')
                             <div class="col-12 col-md-3">
                                 <label class="form-label">Tahun</label>
-                                <input type="text" disabled value="{{ $data->tahun }}" class="form-control">
+                                <input type="text" name="tahunold" readonly value="{{ $data->tahun }}"
+                                    class="form-control">
                             </div>
                             <div class="col-12 col-md-3">
                                 <label class="form-label"><span class="text-danger"><small>
@@ -29,7 +30,7 @@
                                 <select class="form-select" name="tahun" id="tahun">
                                     <option value="">Semua Tahun</option>
                                     @for ($i = date('Y'); $i >= 1900; $i--)
-                                        <option value="{{ $i }}" {{ $request->tahun == $i ? 'selected' : '' }}>
+                                        <option value="{{ $i }}" {{ $data->tahun == $i ? 'selected' : '' }}>
                                             {{ $i }}</option>
                                     @endfor
                                 </select>
@@ -40,7 +41,7 @@
                                     @foreach ($klarifikasi_obriks as $klarifikasi)
                                         <option value="{{ $klarifikasi->id }}"
                                             {{ $klarifikasi->id == $data->klarifikasi ? 'selected' : '' }}>
-                                            {{ $klarifikasi->name_obrik }}
+                                            {{ $klarifikasi->nama }}
                                         </option>
                                     @endforeach
                                 </select>

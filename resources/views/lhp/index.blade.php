@@ -1,10 +1,10 @@
 @extends('layouts.v1.app')
 @section('title')
-    Obrik
+    LHP
 @endsection
-@section('breadcrumbs')
+{{-- @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
-@endsection
+@endsection --}}
 
 
 @push('css')
