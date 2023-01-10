@@ -1,30 +1,30 @@
-<li class="nav-item">
-    <a href="{{ route('readonly') }}" class="nav-link
-        {{ set_active(['readonly']) }}
-     ">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Dashboard
-        </p>
-    </a>
-</li>
-<li class="nav-header">
-    <hr class="mt-1 mb-1 color-white">
-</li>
-<li class="nav-header">COVER LAPORAN</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Cover PHP
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Cover Rekapitulasi
-        </p>
-    </a>
-</li>
+<div class="content-side">
+    <ul class="nav-main">
+        <li class="nav-main-item">
+            <a class="nav-main-link active" href="gs_backend.html">
+                <i class="nav-main-link-icon si si-speedometer"></i>
+                <span class="nav-main-link-name">Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-main-heading">Heading</li>
+        <li class="nav-main-item">
+            <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                aria-expanded="false" href="#">
+                <i class="nav-main-link-icon si si-puzzle"></i>
+                <span class="nav-main-link-name">Dropdown</span>
+            </a>
+            <ul class="nav-main-submenu">
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="javascript:void(0)">
+                        <span class="nav-main-link-name">Link #1</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="javascript:void(0)">
+                        <span class="nav-main-link-name">Link #2</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

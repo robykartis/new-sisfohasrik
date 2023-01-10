@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // Route::get('/', function () {
-//     return view('layouts.v1.auth');
+//     return view('layouts.login');
 // });
 
 

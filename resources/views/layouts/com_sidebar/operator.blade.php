@@ -1,185 +1,30 @@
-<li class="nav-item">
-    <a href="{{ route('operator') }}" class="nav-link
-        {{ set_active(['operator']) }}
-     ">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Dashboard
-        </p>
-    </a>
-</li>
-<li class="nav-header">
-    <hr class="mt-1 mb-1 color-white">
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Bidang Pemeriksaan
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Kode Temuan
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Kode Rekomendasi
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Kode Penyebab
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Kode TLHP
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Klarifikasi Obrik
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Jenis Pemeriksaan
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Jabatan Pemeriksa
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Perangkat/Golongan
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Daftar Pemeriksa
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Pendaftaran Obrik
-        </p>
-    </a>
-</li>
-
-<li class="nav-header">FORM ISIAN</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Hasil Pemeriksaan
-        </p>
-    </a>
-</li>
-<li class="nav-header">LAPORAN</li>
-<li class="nav-item">
-    <a href="{{ route('php') }}" class="nav-link {{ set_active(['php']) }}">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Laporan PHP
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Ikhtisar RND (01)
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Ikhtisar SND (02)
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Rekapitulasi TRTL-I
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Rekapitulasi TRTL-II
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Rekapitulasi Temuan
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Laporan Aktifitas
-        </p>
-    </a>
-</li>
-<li class="nav-header">COVER LAPORAN</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Cover PHP
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="" class="nav-link">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Cover Rekapitulasi
-        </p>
-    </a>
-</li>
+<div class="content-side">
+    <ul class="nav-main">
+        <li class="nav-main-item">
+            <a class="nav-main-link active" href="gs_backend.html">
+                <i class="nav-main-link-icon si si-speedometer"></i>
+                <span class="nav-main-link-name">Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-main-heading">Heading</li>
+        <li class="nav-main-item">
+            <a class="nav-main-link nav-main-link-submenu" data-toggle="submenu" aria-haspopup="true"
+                aria-expanded="false" href="#">
+                <i class="nav-main-link-icon si si-puzzle"></i>
+                <span class="nav-main-link-name">Dropdown</span>
+            </a>
+            <ul class="nav-main-submenu">
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="javascript:void(0)">
+                        <span class="nav-main-link-name">Link #1</span>
+                    </a>
+                </li>
+                <li class="nav-main-item">
+                    <a class="nav-main-link" href="javascript:void(0)">
+                        <span class="nav-main-link-name">Link #2</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

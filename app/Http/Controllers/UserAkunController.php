@@ -27,9 +27,8 @@ class UserAkunController extends Controller
                 ->addIndexColumn()
 
                 ->addColumn('action', function ($row) {
-                    $btn = '<a href="' . route('users.show', $row->id) . '"  class="text-primary btn btn-md"><i class="bi bi-eye-fill"></i></a> | ';
-                    $btn = $btn . '<a href="' . route('users.edit', $row->id) . '" class="text-info  btn btn-md"><i class="bi bi-pencil-fill"></i></a> | ';
-                    $btn = $btn . '<a href="' . url('users/hapus', $row->id) . '" onclick="confirmDelete()" class="text-danger  btn btn-md"><i class="bi bi-trash-fill"></i></a>';
+                    $btn = '<a href="' . route('users.edit', $row->id) . '" class="btn btn-info btn-md btn-sm"><i class="si si-note"></i></a> | ';
+                    $btn = $btn . '<a href="' . url('users/hapus', $row->id) . '" onclick="confirmDelete()" class="btn btn-danger btn-md btn-sm"><i class="far fa-trash-can"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
