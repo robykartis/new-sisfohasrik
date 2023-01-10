@@ -46,140 +46,141 @@
             </div>
         </div>
         <!-- END Dynamic Table Full -->
-    @endsection
-    @section('modal')
-        <section class="content">
-            <div class="container-fluid">
-                <div class="modal fade"id="modal-delete" aria-labelledby="ModalLabel">
-                    <div class="modal-dialog modal-sm ">
-                        <div class="modal-content">
+    </div>
+@endsection
+@section('modal')
+    <section class="content">
+        <div class="container-fluid">
+            <div class="modal fade"id="modal-delete" aria-labelledby="ModalLabel">
+                <div class="modal-dialog modal-sm ">
+                    <div class="modal-content">
 
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="ModalLabel">Konfirmasi</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p>Klik Oke untuk lanjutkan&hellip;</p>
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="ModalLabel">Konfirmasi</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Klik Oke untuk lanjutkan&hellip;</p>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-                                <button type="submit" class="btn btn-danger">Ya</button>
-
-                            </div>
+                            <button type="submit" class="btn btn-danger">Ya</button>
 
                         </div>
-                        <!-- /.modal-content -->
+
                     </div>
-                    <!-- /.modal-dialog -->
+                    <!-- /.modal-content -->
                 </div>
-                <!-- /.row -->
+                <!-- /.modal-dialog -->
             </div>
-            <!-- /.container-fluid -->
-        </section>
-    @endsection
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+@endsection
 
-    @push('js')
-        <!-- jQuery (required for DataTables plugin) -->
-        <script src="{{ asset('backend/assets/js/lib/jquery.min.js') }}"></script>
+@push('js')
+    <!-- jQuery (required for DataTables plugin) -->
+    <script src="{{ asset('backend/assets/js/lib/jquery.min.js') }}"></script>
 
-        <!-- Page JS Plugins -->
-        <script src="{{ asset('backend/assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/js/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/js/plugins/datatables-responsive-bs5/js/responsive.bootstrap5.min.js') }}">
-        </script>
-        <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-jszip/jszip.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-pdfmake/pdfmake.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
-        <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
-        <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
+    <!-- Page JS Plugins -->
+    <script src="{{ asset('backend/assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-responsive-bs5/js/responsive.bootstrap5.min.js') }}">
+    </script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
 
-        <!-- Page JS Code -->
-        <script src="{{ asset('backend/assets/js/pages/be_tables_datatables.min.js') }}"></script>
-
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-
+    <!-- Page JS Code -->
+    <script src="{{ asset('backend/assets/js/pages/be_tables_datatables.min.js') }}"></script>
 
 
-        <script type="text/javascript">
-            function confirmDelete() {
-                if (!confirm("Are You Sure to delete this"))
-                    event.preventDefault();
-            }
-        </script>
-        <script type="text/javascript">
-            $(function() {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
-                var table = $('.data-table').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: "{{ route('users.index') }}",
-                    columns: [{
-                            data: 'DT_RowIndex',
-                            name: 'DT_RowIndex'
-                        },
-                        {
-                            data: 'name',
-                            name: 'name'
-                        },
-                        {
-                            data: 'level',
-                            name: 'level'
-                        },
-                        {
-                            data: 'email',
-                            name: 'email'
-                        },
-                        {
-                            data: 'nip',
-                            name: 'nip'
-                        },
-                        {
-                            data: 'action',
-                            name: 'action',
-                            orderable: false,
-                            searchable: false
-                        },
-                    ]
-                });
-                var user_id;
 
-                $(document).on('click', '.delete', function() {
-                    user_id = $(this).attr('id');
-                    $('#confirmModal').modal('show');
-                });
 
-                $('#ok_button').click(function() {
-                    $.ajax({
-                        url: "users/destroy/" + user_id,
-                        beforeSend: function() {
-                            $('#ok_button').text('Deleting...');
-                        },
-                        success: function(data) {
-                            setTimeout(function() {
-                                $('#confirmModal').modal('hide');
-                                $('#user_table').DataTable().ajax.reload();
-                                alert('Data Deleted');
-                            }, 2000);
-                        }
-                    })
-                });
+    <script type="text/javascript">
+        function confirmDelete() {
+            if (!confirm("Are You Sure to delete this"))
+                event.preventDefault();
+        }
+    </script>
+    <script type="text/javascript">
+        $(function() {
+
+            var table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('users.index') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex'
+                    },
+                    {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
+                        data: 'level',
+                        name: 'level'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'nip',
+                        name: 'nip'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
+                ]
             });
-        </script>
-        <script>
-            $(document).ready(function() {
-                toastr.options.timeOut = 10000;
-                @if (Session::has('error'))
-                    toastr.error('{{ Session::get('error') }}');
-                @elseif (Session::has('success'))
-                    toastr.success('{{ Session::get('success') }}');
-                @endif
+            var user_id;
+
+            $(document).on('click', '.delete', function() {
+                user_id = $(this).attr('id');
+                $('#confirmModal').modal('show');
             });
-        </script>
-    @endpush
+
+            $('#ok_button').click(function() {
+                $.ajax({
+                    url: "users/destroy/" + user_id,
+                    beforeSend: function() {
+                        $('#ok_button').text('Deleting...');
+                    },
+                    success: function(data) {
+                        setTimeout(function() {
+                            $('#confirmModal').modal('hide');
+                            $('#user_table').DataTable().ajax.reload();
+                            alert('Data Deleted');
+                        }, 2000);
+                    }
+                })
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            toastr.options.timeOut = 10000;
+            @if (Session::has('error'))
+                toastr.error('{{ Session::get('error') }}');
+            @elseif (Session::has('success'))
+                toastr.success('{{ Session::get('success') }}');
+            @endif
+        });
+    </script>
+@endpush

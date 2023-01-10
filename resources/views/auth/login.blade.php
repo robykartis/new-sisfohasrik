@@ -19,7 +19,7 @@
                                     Sign In
                                 </h1>
                                 <p class="fw-medium text-muted mb-3">
-                                    A perfect match for your project
+                                    Silahkan Login Untuk Aksess Aplikasi
                                 </p>
                             </div>
                             <!-- END Header -->
@@ -74,7 +74,7 @@
 
             <!-- Footer -->
             <div class="fs-sm text-center text-muted py-3">
-                <strong>OneUI 5.5</strong> &copy; <span data-toggle="year-copy"></span>
+                <strong>{{ config('app.name') }} 0.1</strong> &copy; <span data-toggle="year-copy"></span>
             </div>
             <!-- END Footer -->
         </div>

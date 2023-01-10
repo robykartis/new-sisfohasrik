@@ -1,4 +1,4 @@
-@extends('layouts.v1.app')
+@extends('layouts.app')
 @section('title')
     Kode Penyebab
 @endsection
@@ -6,85 +6,111 @@
     {{ Breadcrumbs::render() }}
 @endsection
 @push('css')
-    <link href="{{ asset('ltr/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('backend/assets/js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('backend/assets/js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('backend/assets/js/plugins/datatables-responsive-bs5/css/responsive.bootstrap5.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
 @endpush
 @section('content')
-    <div class="row">
-        <div class="col-lg-12 mx-auto">
-            <div class="card">
-                <div class="card-header py-3 bg-transparent">
-                    <div class="d-sm-flex align-items-center">
-                        <h5 class="mb-2 mb-sm-0">{{ $title }}</h5>
-                        <div class="ms-auto">
+    <div class="content">
+        <!-- Dynamic Table Full -->
+        <div class="block block-rounded">
+            <div class="block-header block-header-default">
+                <h3 class="block-title">{{ $title }}</h3>
+                <div class="ms-auto">
 
-                            <button id="createData" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="example" class="table table-striped table-bordered data-table" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Kode</th>
-                                    <th>Name</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-
-                        </table>
-                    </div>
+                    <button id="createForm" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
                 </div>
             </div>
+            <div class="block-content block-content-full">
+                <!-- DataTables init on table by adding .js-dataTable-full class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
+                <table class="table table-bordered table-striped table-vcenter  data-table">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 80px;">No</th>
+                            <th>Kode</th>
+                            <th class="d-none d-sm-table-cell" style="width: 30%;">Nama</th>
+                            <th style="width: 15%;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
         </div>
+        <!-- END Dynamic Table Full -->
     </div>
 @endsection
 @section('modal')
-    <div class="row">
-        <div class="modal fade" id="ajaxModel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="modelHeading"></h4>
+    <div class="modal fade" id="ajaxModel" tabindex="-1" role="dialog" aria-labelledby="modal-block-popin"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-popin" role="document">
+            <div class="modal-content">
+                <form id="dataForm" name="dataForm">
+                    <div class="block block-rounded block-transparent mb-0">
+                        <div class="block-header block-header-default">
+                            <h3 class="block-title" id="modelHeading"></h3>
+                            <div class="block-options">
+                                <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
+                                    <i class="fa fa-fw fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="block-content fs-sm">
+                            <div class="modal-body">
+                                <input type="hidden" name="kode_id" id="kode_id">
+                                <div class="form-group">
+                                    <label for="kode" class="col-sm-2 control-label">Kode</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" id="kode" name="kode"
+                                            placeholder="Enter Kode" value="" maxlength="50" required="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Name</label>
+                                    <div class="col-sm-12">
+                                        <textarea id="nama" name="nama" required="" placeholder="Enter Details" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block-content block-content-full text-end bg-body">
+                            <button type="button" class="btn btn-sm btn-alt-secondary me-1"
+                                data-bs-dismiss="modal">Close</button>
+                            <button type="submit" id="saveBtn" value="create" class="btn btn-sm btn-primary"
+                                data-bs-dismiss="modal">Save Changes</button>
+                        </div>
                     </div>
-                    <form id="dataForm" name="dataForm">
-                        <div class="modal-body">
-                            <input type="hidden" name="kode_id" id="kode_id">
-                            <div class="form-group">
-                                <label for="kode" class="col-sm-2 control-label">Kode</label>
-                                <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="kode" name="kode"
-                                        placeholder="Enter Kode" value="" maxlength="50" required="">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Name</label>
-                                <div class="col-sm-12">
-                                    <textarea id="nama" name="nama" required="" placeholder="Enter Details" class="form-control"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save
-                                changes
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 @endsection
 
 @push('js')
-    <script src="{{ asset('ltr/assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('ltr/assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('ltr/assets/js/table-datatable.js') }}"></script>
+    <!-- jQuery (required for DataTables plugin) -->
+    <script src="{{ asset('backend/assets/js/lib/jquery.min.js') }}"></script>
+
+    <!-- Page JS Plugins -->
+    <script src="{{ asset('backend/assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-responsive-bs5/js/responsive.bootstrap5.min.js') }}">
+    </script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
+
+    <!-- Page JS Code -->
+    <script src="{{ asset('backend/assets/js/pages/be_tables_datatables.min.js') }}"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 
@@ -157,7 +183,7 @@
             Click to Button
             --------------------------------------------
             --------------------------------------------*/
-            $('#createData').click(function() {
+            $('#createForm').click(function() {
                 $('#saveBtn').val("Save");
                 $('#kode_id').val('');
                 $('#dataForm').trigger("reset");
