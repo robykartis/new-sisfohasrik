@@ -5,111 +5,102 @@
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
 @endsection
+
 @push('css')
-    <link rel="stylesheet" href="{{ asset('backend/assets/js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('backend/assets/js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('backend/assets/js/plugins/datatables-responsive-bs5/css/responsive.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
 @endpush
 @section('content')
-    <div class="content">
-        <!-- Dynamic Table Full -->
-        <div class="block block-rounded">
-            <div class="block-header block-header-default">
-                <h3 class="block-title">{{ $title }}</h3>
-                <div class="ms-auto">
-
-                    <button id="createForm" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
+    <section class="content">
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ $title }}</h3>
+                <div class="card-tools">
+                    <button id="createForm" class="btn btn-success btn-sm" title="Add">
+                        <i class="fas fa-plus"></i>
+                    </button>
                 </div>
             </div>
-            <div class="block-content block-content-full">
-                <!-- DataTables init on table by adding .js-dataTable-full class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter  data-table">
+            <div class="card-body">
+                <table class="table table-bordered table-striped data-table">
                     <thead>
                         <tr>
-                            <th class="text-center" style="width: 80px;">No</th>
+                            <th>No</th>
                             <th>Kode</th>
-                            <th class="d-none d-sm-table-cell" style="width: 30%;">Nama</th>
-                            <th style="width: 15%;">Action</th>
+                            <th>Nama</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-
                     </tbody>
                 </table>
             </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                Footer
+            </div>
+            <!-- /.card-footer-->
         </div>
-        <!-- END Dynamic Table Full -->
-    </div>
+        <!-- /.card -->
+    </section>
 @endsection
 @section('modal')
-    <div class="modal fade" id="ajaxModel" tabindex="-1" role="dialog" aria-labelledby="modal-block-popin"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-popin" role="document">
+    <div class="modal fade" id="ajaxModel">
+        <div class="modal-dialog">
             <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ $title }}</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <form id="dataForm" name="dataForm">
-                    <div class="block block-rounded block-transparent mb-0">
-                        <div class="block-header block-header-default">
-                            <h3 class="block-title" id="modelHeading"></h3>
-                            <div class="block-options">
-                                <button type="button" class="btn-block-option" data-bs-dismiss="modal" aria-label="Close">
-                                    <i class="fa fa-fw fa-times"></i>
-                                </button>
+                    <div class="modal-body">
+                        <input type="hidden" name="kode_id" id="kode_id">
+                        <div class="form-group">
+                            <label for="kode" class="col-sm-2 control-label">Kode</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="kode" name="kode"
+                                    placeholder="Enter Kode" value="" maxlength="50" required="">
                             </div>
                         </div>
-                        <div class="block-content fs-sm">
-                            <div class="modal-body">
-                                <input type="hidden" name="kode_id" id="kode_id">
-                                <div class="form-group">
-                                    <label for="kode" class="col-sm-2 control-label">Kode</label>
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" id="kode" name="kode"
-                                            placeholder="Enter Kode" value="" maxlength="50" required="">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Name</label>
-                                    <div class="col-sm-12">
-                                        <textarea id="nama" name="nama" required="" placeholder="Enter Details" class="form-control"></textarea>
-                                    </div>
-                                </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-12">
+                                <textarea id="nama" name="nama" required="" placeholder="Enter Details" class="form-control"></textarea>
                             </div>
                         </div>
-                        <div class="block-content block-content-full text-end bg-body">
-                            <button type="button" class="btn btn-sm btn-alt-secondary me-1"
-                                data-bs-dismiss="modal">Close</button>
-                            <button type="submit" id="saveBtn" value="create" class="btn btn-sm btn-primary"
-                                data-bs-dismiss="modal">Save Changes</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" id="saveBtn" value="create" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
             </div>
+            <!-- /.modal-content -->
         </div>
+        <!-- /.modal-dialog -->
     </div>
+    <!-- /.modal -->
 @endsection
 
 @push('js')
-    <!-- jQuery (required for DataTables plugin) -->
-    <script src="{{ asset('backend/assets/js/lib/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
-    <!-- Page JS Plugins -->
-    <script src="{{ asset('backend/assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-responsive-bs5/js/responsive.bootstrap5.min.js') }}">
-    </script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-jszip/jszip.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
-
-    <!-- Page JS Code -->
-    <script src="{{ asset('backend/assets/js/pages/be_tables_datatables.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 

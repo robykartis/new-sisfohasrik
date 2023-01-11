@@ -1,228 +1,127 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ config('app.name') }} | @yield('title')</title>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
-    <title>{{ config('app.name') }} - @yield('title')</title>
-
-    <meta name="description" content="{{ config('app.name') }}- robyfulldev">
-    <meta name="author" content="{{ config('app.name') }}- robyfulldev">
-    <meta name="robots" content="noindex, nofollow">
-
-    <!-- Open Graph Meta -->
-    <meta property="og:title" content="{{ config('app.name') }}- robyfulldev">
-    <meta property="og:site_name" content="OneUI">
-    <meta property="og:description" content="{{ config('app.name') }}- robyfulldev ">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
-
-    <!-- Icons -->
-    <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
     <link rel="shortcut icon" href="{{ asset('assets/logo/logosiap.png') }}">
     <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/logo/logosiap.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/logo/logosiap.png') }}">
-    <!-- END Icons -->
 
-    <!-- Stylesheets -->
-    <!-- OneUI framework -->
-    <link rel="stylesheet" id="css-main" href="{{ asset('backend/assets/css/oneui.min.css') }}">
 
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
     @stack('css')
-
 </head>
 
-<body>
-
-    <div id="page-container"
-        class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
-        <nav id="sidebar" aria-label="Main Navigation">
-            <!-- Side Header -->
-            <div class="content-header">
-                <!-- Logo -->
-                <a class="fw-semibold text-dual" href="index.html">
-                    <span class="smini-visible">
-                        <i class="fa fa-circle-notch text-primary"></i>
-                    </span>
-                    <span class="smini-hide fs-5 tracking-wider"><span
-                            class="fw-normal">{{ config('app.name') }}</span>
-                    </span>
-                </a>
-                <!-- END Logo -->
-
-                <!-- Options -->
-                <div>
-                    <!-- Dark Mode -->
-                    <button type="button" class="btn btn-sm btn-alt-secondary" data-toggle="layout"
-                        data-action="dark_mode_toggle">
-                        <i class="far fa-moon"></i>
-                    </button>
-                    <!-- END Dark Mode -->
-
-                    <!-- Options -->
-                    <div class="dropdown d-inline-block ms-1">
-                        <button type="button" class="btn btn-sm btn-alt-secondary" id="sidebar-themes-dropdown"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-brush"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end fs-sm smini-hide border-0"
-                            aria-labelledby="sidebar-themes-dropdown">
-                            <!-- Color Themes -->
-                            <a class="dropdown-item d-flex align-items-center justify-content-between fw-medium"
-                                data-toggle="theme" data-theme="default" href="#">
-                                <span>Default</span>
-                                <i class="fa fa-circle text-default"></i>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center justify-content-between fw-medium"
-                                data-toggle="theme" data-theme="assets/css/themes/amethyst.min.css" href="#">
-                                <span>Amethyst</span>
-                                <i class="fa fa-circle text-amethyst"></i>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center justify-content-between fw-medium"
-                                data-toggle="theme" data-theme="assets/css/themes/city.min.css" href="#">
-                                <span>City</span>
-                                <i class="fa fa-circle text-city"></i>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center justify-content-between fw-medium"
-                                data-toggle="theme" data-theme="assets/css/themes/flat.min.css" href="#">
-                                <span>Flat</span>
-                                <i class="fa fa-circle text-flat"></i>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center justify-content-between fw-medium"
-                                data-toggle="theme" data-theme="assets/css/themes/modern.min.css" href="#">
-                                <span>Modern</span>
-                                <i class="fa fa-circle text-modern"></i>
-                            </a>
-                            <a class="dropdown-item d-flex align-items-center justify-content-between fw-medium"
-                                data-toggle="theme" data-theme="assets/css/themes/smooth.min.css" href="#">
-                                <span>Smooth</span>
-                                <i class="fa fa-circle text-smooth"></i>
-                            </a>
-                            <!-- END Color Themes -->
-
-                            <div class="dropdown-divider"></div>
-
-                            <!-- Sidebar Styles -->
-                            <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                            <a class="dropdown-item fw-medium" data-toggle="layout" data-action="sidebar_style_light"
-                                href="javascript:void(0)">
-                                <span>Sidebar Light</span>
-                            </a>
-                            <a class="dropdown-item fw-medium" data-toggle="layout" data-action="sidebar_style_dark"
-                                href="javascript:void(0)">
-                                <span>Sidebar Dark</span>
-                            </a>
-                            <!-- END Sidebar Styles -->
-
-                            <div class="dropdown-divider"></div>
-
-                            <!-- Header Styles -->
-                            <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                            <a class="dropdown-item fw-medium" data-toggle="layout" data-action="header_style_light"
-                                href="javascript:void(0)">
-                                <span>Header Light</span>
-                            </a>
-                            <a class="dropdown-item fw-medium" data-toggle="layout" data-action="header_style_dark"
-                                href="javascript:void(0)">
-                                <span>Header Dark</span>
-                            </a>
-                            <!-- END Header Styles -->
-                        </div>
+<body class="hold-transition sidebar-mini layout-navbar-fixed layout-fixed">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__shake" src="{{ asset('assets/logo/logosiap.png') }}" alt="AdminLTELogo"
+                height="60" width="60">
+        </div>
+        <!-- Navbar -->
+        @include('layouts._header')
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-light-warning elevation-4">
+            <!-- Brand Logo -->
+            <a href="#" class="brand-link">
+                <img src="{{ asset('assets/logo/logosiap.png') }}" alt="AdminLTE Logo" class="brand-image "
+                    style="opacity: .8">
+                <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
+            </a>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        @if (Auth::user()->level == 'admin')
+                            <img src="{{ asset('images/akun/' . Auth::user()->image) }}" class="img-circle elevation-2"
+                                height="20px" alt="User Image">
+                        @elseif (Auth::user()->level == 'operator')
+                            <img src="{{ asset('images/akun/' . Auth::user()->image) }}" class="img-circle elevation-2"
+                                alt="User Image">
+                        @else
+                            <img src="{{ asset('images/akun/' . Auth::user()->image) }}" class="img-circle elevation-2"
+                                alt="User Image">
+                        @endif
                     </div>
-                    <!-- END Options -->
-
-                    <!-- Close Sidebar, Visible only on mobile screens -->
-                    <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
-                    <a class="d-lg-none btn btn-sm btn-alt-secondary ms-1" data-toggle="layout"
-                        data-action="sidebar_close" href="javascript:void(0)">
-                        <i class="fa fa-fw fa-times"></i>
-                    </a>
-                    <!-- END Close Sidebar -->
-                </div>
-                <!-- END Options -->
-            </div>
-            <!-- END Side Header -->
-
-            <!-- Sidebar Scrolling -->
-            <div class="js-sidebar-scroll">
-                <!-- Side Navigation -->
-                @include('layouts._sidebar')
-                <!-- END Side Navigation -->
-            </div>
-            <!-- END Sidebar Scrolling -->
-        </nav>
-        <!-- END Sidebar -->
-        <!-- Header -->
-        <header id="page-header">
-            <!-- Header Content -->
-            @include('layouts._header')
-            <!-- END Header Content -->
-            <!-- Header Loader -->
-            <div id="page-header-loader" class="overlay-header bg-body-extra-light">
-                <div class="content-header">
-                    <div class="w-100 text-center">
-                        <i class="fa fa-fw fa-circle-notch fa-spin"></i>
+                    <div class="info">
+                        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                     </div>
                 </div>
-            </div>
-            <!-- END Header Loader -->
-        </header>
-        <!-- END Header -->
 
-        <!-- Main Container -->
-        <main id="main-container">
-            <!-- Hero -->
-            <div class="bg-body-light">
-                <div class="content content-full">
-                    <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2">
-                        <div class="flex-grow-1">
-                            <h1 class="h3 fw-bold mb-2">
-                                @yield('title')
-                            </h1>
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    @include('layouts._sidebar')
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>@yield('title')</h1>
                         </div>
-                        <nav class="flex-shrink-0 mt-3 mt-sm-0 ms-sm-3" aria-label="breadcrumb">
-                            <ol class="breadcrumb breadcrumb-alt">
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
                                 @yield('breadcrumbs')
                             </ol>
-                        </nav>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <!-- END Hero -->
+                </div><!-- /.container-fluid -->
+            </section>
 
-            <!-- Page Content -->
+            <!-- Main content -->
             @yield('content')
-            <!-- END Page Content -->
+            <!-- /.content -->
             @yield('modal')
-        </main>
-        <!-- END Main Container -->
+        </div>
+        <!-- /.content-wrapper -->
 
-        <!-- Footer -->
-        <footer id="page-footer" class="bg-body-light">
-            <div class="content py-3">
-                <div class="row fs-sm">
-                    <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
-                        Crafted with <i class="fa fa-heart text-danger"></i> by <a class="fw-semibold"
-                            href="javascript:void(0)" target="_blank">roby</a>
-                    </div>
-                    <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
-                        <a class="fw-semibold" href="javascript:void(0)" target="_blank">OneUI 5.5</a>
-                        &copy; <span data-toggle="year-copy"></span>
-                    </div>
-                </div>
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-block">
+                <b>Version</b> 0.0.1
             </div>
+            <strong>Copyright &copy; 2022-<?php
+            $tgl = date('Y');
+            echo $tgl;
+            ?> <a href="#">{{ config('app.name') }}</a>.</strong>
+            All rights
+            reserved.
         </footer>
-        <!-- END Footer -->
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
     </div>
-    <!-- END Page Container -->
+    <!-- ./wrapper -->
 
+    <!-- jQuery -->
+    <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
 
-    <script src="{{ asset('backend/assets/js/oneui.app.min.js') }}"></script>
     @stack('js')
 </body>
 

@@ -8,75 +8,64 @@
 
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('backend/assets/js/plugins/datatables-bs5/css/dataTables.bootstrap5.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('backend/assets/js/plugins/datatables-buttons-bs5/css/buttons.bootstrap5.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('backend/assets/js/plugins/datatables-responsive-bs5/css/responsive.bootstrap5.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 @endpush
 
 @section('content')
-    <div class="content">
-        <!-- Full Table -->
-        <div class="block block-rounded">
-            <div class="block-header block-header-default">
-                <h3 class="block-title">{{ $title }}</h3>
-                <div class="block-options">
-                    <a href="{{ route('users.create') }}" type="button" class="btn btn-success btn-sm">
-                        <i class="si si-plus"></i>
+    <section class="content">
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ $title }}</h3>
+                <div class="card-tools">
+                    <a href="{{ route('users.create') }}" class="btn btn-success btn-sm" title="Add">
+                        <i class="fas fa-plus"></i>
                     </a>
                 </div>
             </div>
-            <div class="block-content">
-
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped table-vcenter data-table">
-                        <thead>
-                            <tr>
-                                <th class="text-center" style="width: 50px;">
-                                    No
-                                </th>
-                                <th>Nama</th>
-                                <th style="width: 30%;">Level</th>
-                                <th style="width: 15%;">Email</th>
-                                <th style="width: 15%;">NIP</th>
-                                <th class="text-center" style="width: 100px;">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-
-                        </tbody>
-                    </table>
-                </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped data-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Level</th>
+                            <th>Email</th>
+                            <th>NIP</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                Footer
+            </div>
+            <!-- /.card-footer-->
         </div>
-        <!-- END Full Table -->
-
-    </div>
+        <!-- /.card -->
+    </section>
 @endsection
 
 
 @push('js')
-    <!-- jQuery (required for DataTables plugin) -->
-    <script src="{{ asset('backend/assets/js/lib/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
-    <!-- Page JS Plugins -->
-    <script src="{{ asset('backend/assets/js/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-responsive-bs5/js/responsive.bootstrap5.min.js') }}">
-    </script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-bs5/js/buttons.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-jszip/jszip.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons-pdfmake/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('backend/assets/js/plugins/datatables-buttons/buttons.html5.min.js') }}"></script>
-
-    <!-- Page JS Code -->
-    <script src="{{ asset('backend/assets/js/pages/be_tables_datatables.min.js') }}"></script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
@@ -93,6 +82,8 @@
         $(function() {
 
             var table = $('.data-table').DataTable({
+                "responsive": true,
+                "autoWidth": false,
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('users.index') }}",
@@ -123,7 +114,7 @@
                         searchable: false
                     },
                 ]
-            });
+            })
             var user_id;
 
             $(document).on('click', '.delete', function() {

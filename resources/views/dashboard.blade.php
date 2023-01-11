@@ -6,42 +6,27 @@
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
 @endsection
-
-{{-- @section('tambah')
-    <button type="button" class="btn btn-primary">Settings</button>
-@endsection --}}
-
 @section('content')
-    <div class="content">
-        <!-- Your Block -->
-        <div class="block block-rounded">
-            <div class="block-header block-header-default">
-                <h3 class="block-title">
-                    Title <small>Get Started</small>
-                </h3>
-                <div class="block-options">
-                    <button type="button" class="btn-block-option" data-toggle="block-option"
-                        data-action="fullscreen_toggle"></button>
-                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="pinned_toggle">
-                        <i class="si si-pin"></i>
-                    </button>
-                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="state_toggle"
-                        data-action-mode="demo">
-                        <i class="si si-refresh"></i>
-                    </button>
-                    <button type="button" class="btn-block-option" data-toggle="block-option"
-                        data-action="content_toggle"></button>
-                    <button type="button" class="btn-block-option" data-toggle="block-option" data-action="close">
-                        <i class="si si-close"></i>
-                    </button>
+    <section class="content">
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Title</h3>
+                <div class="card-tools">
+                    <a class="btn btn-success btn-sm" title="Add">
+                        <i class="fas fa-plus"></i>
+                    </a>
                 </div>
             </div>
-            <div class="block-content fs-sm">
-                <p>
-                    Create your own awesome project!
-                </p>
+            <div class="card-body">
+                Start creating your amazing application!
             </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                Footer
+            </div>
+            <!-- /.card-footer-->
         </div>
-        <!-- END Your Block -->
-    </div>
+        <!-- /.card -->
+    </section>
 @endsection
