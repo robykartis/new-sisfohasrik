@@ -15,33 +15,38 @@
 @endpush
 @section('content')
     <div class="content">
-        <!-- Dynamic Table Full -->
+        <!-- Full Table -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">{{ $title }}</h3>
-                <div class="ms-auto">
-
+                <div class="block-options">
                     <button id="createForm" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
                 </div>
             </div>
-            <div class="block-content block-content-full">
-                <!-- DataTables init on table by adding .js-dataTable-full class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter  data-table">
-                    <thead>
-                        <tr>
-                            <th class="text-center" style="width: 80px;">No</th>
-                            <th>Kode</th>
-                            <th class="d-none d-sm-table-cell" style="width: 30%;">Nama</th>
-                            <th style="width: 15%;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <div class="block-content">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-vcenter data-table">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 2%;">
+                                    No
+                                </th>
+                                <th style="width: 10%;">Kode</th>
+                                <th style="width: 20%;">Nama</th>
 
-                    </tbody>
-                </table>
+                                <th class="text-center" style="width: 10%;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <!-- END Dynamic Table Full -->
+        <!-- END Full Table -->
+
     </div>
 @endsection
 @section('modal')
@@ -62,7 +67,7 @@
                         <div class="block-content fs-sm">
                             <div class="modal-body">
                                 <input type="hidden" name="kode_id" id="kode_id">
-                                <div class="form-group">
+                                <div class="form-group mb-3">
                                     <label for="kode" class="col-sm-2 control-label">Kode</label>
                                     <div class="col-sm-12">
                                         <input type="text" class="form-control" id="kode" name="kode"

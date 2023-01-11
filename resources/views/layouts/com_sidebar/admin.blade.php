@@ -6,7 +6,7 @@
                 <span class="nav-main-link-name">Dashboardd</span>
             </a>
         </li>
-        <li class="nav-main-heading">Heading</li>
+        <li class="nav-main-heading">ADMIN</li>
         <li class="nav-main-item">
             <a class="nav-main-link {{ set_active(['users.index', 'users.create', 'users.show', 'users.edit']) }}"
                 href="{{ route('users.index') }}">

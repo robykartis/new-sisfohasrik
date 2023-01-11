@@ -1,0 +1,1 @@
+git clone https://github.com/MGeurts/laravel-9-bootstrap-5-datatables.git

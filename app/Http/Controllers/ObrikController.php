@@ -34,7 +34,7 @@ class ObrikController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn =  '<a href="' . route('pendaftaranobrik.edit', $row->id) . '" class="btn btn-info btn-sm btn-md editForm"><i class="si si-note"></i></a>  |';
-                    $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-md btn-sm deleteForm"><i class="far fa-trash-can"></i></a>';
+                    $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-danger btn-md btn-sm deleteData"><i class="far fa-trash-can"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -105,5 +105,12 @@ class ObrikController extends Controller
         ]);
         // dd($obrik);
         return redirect()->route('pendaftaranobrik.index')->with('success', 'Update Data Berhasil');
+    }
+
+    public function destroy($id)
+    {
+        Obrik::find($id)->delete();
+
+        return response()->json(['success' => ' deleted successfully.']);
     }
 }

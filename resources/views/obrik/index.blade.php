@@ -17,37 +17,43 @@
 
 @section('content')
     <div class="content">
-        <!-- Dynamic Table Full -->
+        <!-- Full Table -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">{{ $title }}</h3>
-                <div class="ms-auto">
-
-                    <a href="{{ route('pendaftaranobrik.create') }}" class="btn btn-success btn-sm"><i
-                            class="si si-plus"></i></a>
+                <div class="block-options">
+                    <a href="{{ route('pendaftaranobrik.create') }}" type="button" class="btn btn-success btn-sm">
+                        <i class="si si-plus"></i>
+                    </a>
                 </div>
             </div>
-            <div class="block-content block-content-full">
-                <!-- DataTables init on table by adding .js-dataTable-full class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter  data-table">
-                    <thead>
-                        <tr>
-                            <th class="text-center" style="width: 80px;">No</th>
-                            <th>Tahun</th>
-                            <th class="d-none d-sm-table-cell" style="width: 30%;">Kode</th>
-                            <th class="d-none d-sm-table-cell" style="width: 15%;">Klarifikasi</th>
-                            <th style="width: 15%;">Nama</th>
-                            <th style="width: 15%;">Induk</th>
-                            <th style="width: 15%;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <div class="block-content">
 
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-vcenter data-table">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 50px;">
+                                    No
+                                </th>
+                                <th>Tahun</th>
+                                <th style="width: 15%;">Kode</th>
+                                <th style="width: 15%;">Klarifikasi</th>
+                                <th style="width: 30%;">Nama</th>
+                                <th style="width: 15%;">Induk</th>
+                                <th class="text-center" style="width: 100px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <!-- END Dynamic Table Full -->
+        <!-- END Full Table -->
+
     </div>
 @endsection
 
@@ -164,10 +170,9 @@
 
 
 
-            $(document).on('click', '.deleteData', function() {
+            $('body').on('click', '.deleteData', function() {
                 var kode_id = $(this).data("id");
-                if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
-                    // Tambahkan kode ajax di sini
+                if (confirm("Are You sure want to delete !")) {
                     $.ajax({
                         type: "DELETE",
                         url: "{{ route('pendaftaranobrik.store') }}" + '/' + kode_id,

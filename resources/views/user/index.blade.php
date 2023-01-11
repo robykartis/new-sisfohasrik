@@ -17,70 +17,45 @@
 
 @section('content')
     <div class="content">
-        <!-- Dynamic Table Full -->
+        <!-- Full Table -->
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">{{ $title }}</h3>
-                <div class="ms-auto">
-
-                    <a href="{{ route('users.create') }}" class="btn btn-success btn-sm"><i class="si si-plus"></i></a>
+                <div class="block-options">
+                    <a href="{{ route('users.create') }}" type="button" class="btn btn-success btn-sm">
+                        <i class="si si-plus"></i>
+                    </a>
                 </div>
             </div>
-            <div class="block-content block-content-full">
-                <!-- DataTables init on table by adding .js-dataTable-full class, functionality is initialized in js/pages/be_tables_datatables.min.js which was auto compiled from _js/pages/be_tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter  data-table">
-                    <thead>
-                        <tr>
-                            <th class="text-center" style="width: 80px;">No</th>
-                            <th>Nama</th>
-                            <th class="d-none d-sm-table-cell" style="width: 30%;">Level</th>
-                            <th class="d-none d-sm-table-cell" style="width: 15%;">Email</th>
-                            <th style="width: 15%;">Nip</th>
-                            <th style="width: 15%;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <div class="block-content">
 
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-vcenter data-table">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 50px;">
+                                    No
+                                </th>
+                                <th>Nama</th>
+                                <th style="width: 30%;">Level</th>
+                                <th style="width: 15%;">Email</th>
+                                <th style="width: 15%;">NIP</th>
+                                <th class="text-center" style="width: 100px;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <!-- END Dynamic Table Full -->
+        <!-- END Full Table -->
+
     </div>
 @endsection
-@section('modal')
-    <section class="content">
-        <div class="container-fluid">
-            <div class="modal fade"id="modal-delete" aria-labelledby="ModalLabel">
-                <div class="modal-dialog modal-sm ">
-                    <div class="modal-content">
 
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="ModalLabel">Konfirmasi</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Klik Oke untuk lanjutkan&hellip;</p>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                            <button type="submit" class="btn btn-danger">Ya</button>
-
-                        </div>
-
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-    </section>
-@endsection
 
 @push('js')
     <!-- jQuery (required for DataTables plugin) -->
