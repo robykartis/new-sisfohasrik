@@ -93,14 +93,15 @@
             </li>
         </ul>
     </li>
-    <li class="nav-header">EXAMPLES</li>
-    <li class="nav-item">
-        <a href="../calendar.html" class="nav-link">
-            <i class="nav-icon far fa-calendar-alt"></i>
+    <li class="nav-header">Form Isian</li>
+    <li class="nav-item ">
+        <a href="{{ route('lhp.index') }}"
+            class="nav-link {{ set_active(['lhp.index', 'lhp.create', 'lhp.edit', 'lhp.show']) }}">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
-                Calendar
-                <span class="badge badge-info right">2</span>
+                Hasil Pemeriksaan
             </p>
         </a>
     </li>
+
 </ul>

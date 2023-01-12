@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\KlarifikasiObrik;
 use App\Models\Lhp;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DataTables;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 
 class LhpController extends Controller
@@ -18,8 +20,9 @@ class LhpController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn =  '<a href="' . route('pendaftaranobrik.edit', $row->id) . '" class="text-info btn btn-md "><i class="bi bi-pencil-fill"></i></a>  |';
-                    $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="text-danger btn btn-md deleteData"><i class="bi bi-trash-fill"></i></a>';
+                    $btn =  '<a href="' . route('lhp.edit', $row->id) . '" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
+                    $btn .= ' <a href="' . route('lhp.show', $row->id) . '" data-toggle="tooltip"   data-original-title="Delete" class="btn btn-sm btn-warning " data-bs-toggle="tooltip" title="Show"><i class="far fa-check-circle"></i></a> |';
+                    $btn .= ' <a href="' . url('lhp/hapus', $row->id) . '" data-toggle="tooltip"  onclick="confirmDelete()" data-original-title="Delete" class="btn btn-sm btn-danger " data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></a>';
                     return $btn;
                 })
                 ->editColumn('tgl_lhp', function ($row) {
@@ -77,7 +80,6 @@ class LhpController extends Controller
         ]);;
     }
 
-
     public function store(Request $request)
     {
         $request->validate([
@@ -87,7 +89,6 @@ class LhpController extends Controller
             'obrik' => 'required',
             'tgl_lhp' => 'required',
         ]);
-
         try {
 
             $lhp = new Lhp();
@@ -106,26 +107,71 @@ class LhpController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        // get the data item by id
+        $data = Lhp::findOrFail($id);
+        $klarifikasi = KlarifikasiObrik::find($data->klarifikasi);
+        $tgl_lhp = new DateTime($data->tgl_lhp);
+        $tgl_lhp = $tgl_lhp->format('d  F  Y');
+        $data = DB::table('lhp')
+            ->join('klarifikasi_obrik', 'klarifikasi_obrik.id', '=', 'lhp.klarifikasi')
+            ->join('obrik', 'obrik.id', '=', 'lhp.obrik')
+            ->select('lhp.*', 'klarifikasi_obrik.nama', 'obrik.nama AS nama_obrik')
+            ->where('lhp.id', $id)
+            ->first();
+        $dataobrik = DB::table('obrik')->get();
+        $title = 'Detail Obyek Pemeriksaan (Obrik)';
+        return view('lhp.show', compact('data', 'dataobrik', 'klarifikasi', 'tgl_lhp', 'title', 'request'));
     }
 
-
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
-    }
+        // get the data item by id
+        $data = Lhp::findOrFail($id);
+        $tgl_lhp = new DateTime($data->tgl_lhp);
+        $tgl_lhp = $tgl_lhp->format('d  F  Y');
 
+        $klarifikasi_obrik = DB::table('klarifikasi_obrik')->get();
+        $dataobrik = DB::table('obrik')->get();
+        $title = 'Edit Daftar Obyek Pemeriksaan (Obrik)';
+        return view('lhp.edit', compact('data', 'dataobrik', 'klarifikasi_obrik', 'tgl_lhp', 'title', 'request'));
+    }
 
     public function update(Request $request, $id)
     {
-        //
+        // validate the form input
+        $request->validate([
+            'tahun' => 'required',
+            'klarifikasi' => 'required',
+            'no_lhp' => 'required',
+            'obrik' => 'required',
+            'tgl_lhp' => 'required',
+        ]);
+        try {
+            $request['created_by'] = auth()->user()->level;
+            $obrik = Lhp::find($id);
+            $obrik->update([
+                'tahun' => $request->tahun,
+                'klarifikasi' => $request->klarifikasi,
+                'no_lhp' => $request->no_lhp,
+                'obrik' => $request->obrik,
+                'tgl_lhp' => $request->tgl_lhp,
+            ]);
+            return redirect()->route('lhp.index')->with('success', 'Update Data Berhasil');
+        } catch (\Throwable $th) {
+            // echo $e->getMessage();
+            // die;
+            return redirect()->route('lhp.edit')->with('error', 'Terjadi kesalahan saat menyimpan data.');
+        }
     }
 
-
-    public function destroy($id)
+    public function deletelhp(Lhp $lhp, $id)
     {
-        //
+
+        $lhp = Lhp::find($id);
+        $lhp->delete();
+        return redirect('lhp')
+            ->with('success', 'Data Berhasil Dihapus');
     }
 }

@@ -56,10 +56,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('klarifikasiobrik', KlarifikasiObrikController::class);
         // Klarifikasi Obrik
         Route::resource('pendaftaranobrik', ObrikController::class);
+        Route::get('obrik/hapus/{id}', [ObrikController::class, 'deleteobrik'])->name('deleteobrik');
         // Klarifikasi Laporan Hasil Pemeriksaan
         Route::resource('jenispemeriksaan', JenisPemeriksaanController::class);
         // Lhp
         Route::resource('lhp', LhpController::class);
+        Route::get('lhp/hapus/{id}', [LhpController::class, 'deletelhp'])->name('deletelhp');
     });
 
 

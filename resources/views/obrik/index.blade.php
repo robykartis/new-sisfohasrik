@@ -161,24 +161,27 @@
 
 
 
-            $('body').on('click', '.deleteData', function() {
-                var kode_id = $(this).data("id");
-                if (confirm("Are You sure want to delete !")) {
-                    $.ajax({
-                        type: "DELETE",
-                        url: "{{ route('pendaftaranobrik.store') }}" + '/' + kode_id,
-                        success: function(data) {
-                            // Tambahkan toastr untuk menampilkan pesan sukses
-                            toastr.success('Data berhasil dihapus.', 'Sukses', {
-                                timeOut: 5000
-                            });
-                            table.draw();
-                        },
-                        error: function(data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                }
+            var obrik;
+
+            $(document).on('click', '.delete', function() {
+                obrik = $(this).attr('id');
+                $('#confirmModal').modal('show');
+            });
+
+            $('#ok_button').click(function() {
+                $.ajax({
+                    url: "obrik/hapus/" + obrik,
+                    beforeSend: function() {
+                        $('#ok_button').text('Deleting...');
+                    },
+                    success: function(data) {
+                        setTimeout(function() {
+                            $('#confirmModal').modal('hide');
+                            $('#user_table').DataTable().ajax.reload();
+                            alert('Data Deleted');
+                        }, 2000);
+                    }
+                })
             });
         });
     </script>

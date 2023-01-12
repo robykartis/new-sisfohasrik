@@ -93,10 +93,20 @@ Breadcrumbs::for('lhp.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
     $trail->push('LHP', route('lhp.index'));
 });
-// LHP
+// LHP Create
 Breadcrumbs::for('lhp.create', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
     $trail->push('Tambah LHP', route('lhp.create'));
+});
+// LHP Edit
+Breadcrumbs::for('lhp.edit', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('lhp.index');
+    $trail->push('Edit LHP', route('lhp.edit', $id));
+});
+// LHP Show
+Breadcrumbs::for('lhp.show', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('lhp.index');
+    $trail->push('Detail LHP', route('lhp.show', $id));
 });
 
 

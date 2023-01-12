@@ -34,7 +34,7 @@ class ObrikController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
                     $btn =  '<a href="' . route('pendaftaranobrik.edit', $row->id) . '" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
-                    $btn .= ' <a href="javascript:void(0)" data-toggle="tooltip"  data-id="' . $row->id . '" data-original-title="Delete" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></a>';
+                    $btn .= ' <a  href="' . url('obrik/hapus', $row->id) . '" data-toggle="tooltip" onclick="confirmDelete()" data-original-title="Delete" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
@@ -107,10 +107,12 @@ class ObrikController extends Controller
         return redirect()->route('pendaftaranobrik.index')->with('success', 'Update Data Berhasil');
     }
 
-    public function destroy($id)
-    {
-        Obrik::find($id)->delete();
 
-        return response()->json(['success' => ' deleted successfully.']);
+    public function deleteobrik(Obrik $obrik, $id)
+    {
+        $obrik = Obrik::find($id);
+        $obrik->delete();
+        return redirect('pendaftaranobrik')
+            ->with('success', 'Data Berhasil Dihapus');
     }
 }

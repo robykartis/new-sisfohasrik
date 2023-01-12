@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Create Hasil Pemeriksaan (LHP)
+    Edit Hasil Pemeriksaan (LHP)
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -8,8 +8,9 @@
 
 @section('content')
     <section class="content">
-        <form method="POST" action="{{ route('lhp.store') }}">
+        <form method="POST" action="{{ route('lhp.update', $data->id) }}">
             @csrf
+            @method('PATCH')
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-warning">
@@ -23,7 +24,7 @@
                                         <div class="form-group">
                                             <label for="inputStatus">Tahun</label>
                                             <select id="inputStatus" name="tahun" class="form-control custom-select">
-                                                <option value="">Semua Tahun</option>
+                                                <option selected value="{{ $data->tahun }}">{{ $data->tahun }}</option>
                                                 @for ($i = date('Y'); $i >= 1900; $i--)
                                                     <option value="{{ $i }}"
                                                         {{ $request->tahun == $i ? 'selected' : '' }}>
@@ -36,9 +37,11 @@
                                         <div class="form-group">
                                             <label for="inputStatus">Klarifikasi</label>
                                             <select id="inputStatus" name="klarifikasi" class="form-control custom-select">
-                                                <option selected disabled>Pilih Klarifikasi</option>
+
                                                 @foreach ($klarifikasi_obrik as $klarifikasi)
-                                                    <option value="{{ $klarifikasi->id }}">{{ $klarifikasi->nama }}
+                                                    <option value="{{ $klarifikasi->id }}"
+                                                        {{ $klarifikasi->id == $data->klarifikasi ? 'selected' : '' }}>
+                                                        {{ $klarifikasi->nama }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -51,17 +54,18 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="inputName">No LHP</label>
-                                            <input type="text" name="no_lhp" class="form-control"
-                                                placeholder="Masukan No LHP">
+                                            <input type="text" value="{{ $data->no_lhp }}" name="no_lhp"
+                                                class="form-control" placeholder="Masukan No LHP">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="inputName">Obrik</label>
                                             <select class="form-control custom-select" name="obrik">
-                                                <option value="">Semua Obrik</option>
                                                 @foreach ($dataobrik as $dobrik)
-                                                    <option value="{{ $dobrik->id }}">{{ $dobrik->nama }}
+                                                    <option value="{{ $dobrik->id }}"
+                                                        {{ $dobrik->id == $data->dobrik ? 'selected' : '' }}>
+                                                        {{ $dobrik->nama }}
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -75,12 +79,20 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-label" for="one-ecom-product-price">Tanggal Obrik</label>
-                                            <input type="date" name="tgl_lhp" class="form-control">
+                                            <input type="text" value="{{ $tgl_lhp }}" readonly
+                                                class="form-control">
                                         </div>
                                     </div>
-
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="inputStatus"><span class="text-danger"><small>
+                                                        Rubah
+                                                        Tahun Jika Diperlukan</small></span></label>
+                                            <input type="date" value="{{ date('Y-m-d', strtotime($data->tgl_lhp)) }}"
+                                                name="tgl_lhp" class="form-control">
+                                        </div>
+                                    </div>
                                 </div>
-
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
