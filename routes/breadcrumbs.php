@@ -44,9 +44,9 @@ Breadcrumbs::for('bidangtemuan.index', function (BreadcrumbTrail $trail) {
     $trail->push('Bidang Temuan', route('bidangtemuan.index'));
 });
 // Kode Temuan
-Breadcrumbs::for('temuan.index', function (BreadcrumbTrail $trail) {
+Breadcrumbs::for('kodetemuan.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin');
-    $trail->push('Kode Temuan', route('temuan.index'));
+    $trail->push('Kode Temuan', route('kodetemuan.index'));
 });
 // Kode Rekomendasi
 Breadcrumbs::for('koderekomendasi.index', function (BreadcrumbTrail $trail) {
@@ -107,6 +107,11 @@ Breadcrumbs::for('lhp.edit', function (BreadcrumbTrail $trail, $id) {
 Breadcrumbs::for('lhp.show', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('lhp.index');
     $trail->push('Detail LHP', route('lhp.show', $id));
+});
+// Temuan
+Breadcrumbs::for('temuan.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin');
+    $trail->push('Tambah LHP', route('temuan.index'));
 });
 
 

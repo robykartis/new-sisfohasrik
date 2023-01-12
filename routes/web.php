@@ -16,6 +16,7 @@ use App\Http\Controllers\ObrikController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PendaftaranObrikController;
 use App\Http\Controllers\ReadonlyController;
+use App\Http\Controllers\TemuanController;
 use App\Http\Controllers\UserAkunController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -45,7 +46,7 @@ Route::group(['middleware' => ['auth']], function () {
         // Kode Bidang Temuan
         Route::resource('bidangtemuan', BidangTemuanController::class);
         // Kode Temuan
-        Route::resource('kode/temuan', KodeTemuanController::class);
+        Route::resource('kodetemuan', KodeTemuanController::class);
         // Kode Rekomendasi
         Route::resource('koderekomendasi', KodeRekomendasiController::class);
         // Kode Penyebab
@@ -62,6 +63,9 @@ Route::group(['middleware' => ['auth']], function () {
         // Lhp
         Route::resource('lhp', LhpController::class);
         Route::get('lhp/hapus/{id}', [LhpController::class, 'deletelhp'])->name('deletelhp');
+        // Temuan
+        Route::resource('temuan', TemuanController::class);
+        // Route::get('lhp/hapus/{id}', [LhpController::class, 'deletelhp'])->name('deletelhp');
     });
 
 

@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('title')
-    Kode Temuan
+    Input Temuan
 @endsection
-@section('breadcrumbs')
+{{-- @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
-@endsection
+@endsection --}}
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
 @endpush
+
 @section('content')
     <section class="content">
         <!-- Default box -->
@@ -19,9 +20,94 @@
             <div class="card-header">
                 <h3 class="card-title">{{ $title }}</h3>
                 <div class="card-tools">
-                    <button id="createForm" class="btn btn-success btn-sm" title="Add">
+                    <a href="{{ route('lhp.create') }}" class="btn btn-success btn-sm" title="Add">
                         <i class="fas fa-plus"></i>
-                    </button>
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="invoice p-3 mb-3">
+                    <!-- title row -->
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>
+                                <i class="fas fa-globe"></i> {{ $title }}
+                                <small class="float-right">Date: {{ $tgl_lhp }}</small>
+                            </h4>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- info row -->
+                    <div class="row invoice-info">
+                        <div class="col-sm-4 invoice-col">
+                            <address>
+                                <strong>Tahun
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                                    {{ $data->tahun }} </strong><br>
+                                <strong>No LHP
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                                    {{ $data->no_lhp }} </strong><br>
+                                <strong>Nama Obrik
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                                    {{ $data->nama_obrik }} </strong><br>
+                                <strong>Klarifikasi Obrik &nbsp;&nbsp;:
+                                    {{ $data->nama }}
+                                </strong><br>
+                            </address>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+
+                    <!-- Table row -->
+                    <div class="row">
+                        <div class="col-12 table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+
+                                    <tr>
+                                        <th>No</th>
+                                        <th>No Temuan</th>
+                                        <th>Judul Temuan</th>
+                                        <th>Bidang</th>
+                                        <th>Kode Temuan</th>
+                                        <th>Jumlah Kerugian Negara (01)</th>
+                                        <th>Jumlah Wajib Setor (02)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>001</td>
+                                        <td>455-981-221</td>
+                                        <td>El snort testosterone trophy driving gloves handsome</td>
+                                        <td>$64.50</td>
+                                        <td>El snort testosterone trophy driving gloves handsome</td>
+                                        <td>$64.50</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                Footer
+            </div>
+            <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
+    </section>
+    {{-- <section class="content">
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ $title }}</h3>
+                <div class="card-tools">
+                    <a href="{{ route('lhp.create') }}" class="btn btn-success btn-sm" title="Add">
+                        <i class="fas fa-plus"></i>
+                    </a>
                 </div>
             </div>
             <div class="card-body">
@@ -29,8 +115,8 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Kode</th>
-                            <th>Nama</th>
+                            <th>No LHP</th>
+                            <th>Tanggal LHP</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -45,48 +131,8 @@
             <!-- /.card-footer-->
         </div>
         <!-- /.card -->
-    </section>
+    </section> --}}
 @endsection
-@section('modal')
-    <div class="modal fade" id="ajaxModel">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Default Modal</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="dataForm" name="dataForm">
-                    <div class="modal-body">
-                        <input type="hidden" name="kode_id" id="kode_id">
-                        <div class="form-group">
-                            <label for="kode" class="col-sm-2 control-label">Kode</label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="kode" name="kode"
-                                    placeholder="Enter Kode" value="" maxlength="50" required="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Name</label>
-                            <div class="col-sm-12">
-                                <textarea id="nama" name="nama" required="" placeholder="Enter Details" class="form-control"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" id="saveBtn" value="create" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-@endsection
-
 @push('js')
     <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -100,7 +146,6 @@
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 
@@ -143,22 +188,31 @@
             --------------------------------------------
             --------------------------------------------*/
             var table = $('.data-table').DataTable({
-                "responsive": true,
-                "autoWidth": false,
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('kodetemuan.index') }}",
+                ajax: {
+                    url: "{{ route('lhp.index') }}",
+                    type: "GET",
+                },
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'kode',
-                        name: 'kode'
+                        data: 'no_lhp',
+                        name: 'no_lhp'
                     },
                     {
-                        data: 'nama',
-                        name: 'nama'
+                        data: 'tgl_lhp',
+                        name: 'tgl_lhp',
+                        render: function(data, type, row) {
+                            var date = new Date(row.tgl_lhp);
+                            return date.toLocaleDateString('id-ID', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric'
+                            });
+                        }
                     },
                     {
                         data: 'action',
@@ -189,14 +243,14 @@
             --------------------------------------------*/
             $('body').on('click', '.editForm', function() {
                 var kode_id = $(this).data('id');
-                $.get("{{ route('temuan.index') }}" + '/' + kode_id + '/edit', function(
+                $.get("{{ route('lhp.index') }}" + '/' + kode_id + '/edit', function(
                     data) {
                     $('#modelHeading').html("Edit Daftar Kode Temuan Pemeriksaan");
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);
-                    $('#nama').val(data.nama);
-                    $('#kode').val(data.kode);
+                    $('#no_lhp').val(data.no_lhp);
+                    $('#tgl_lhp').val(data.tgl_lhp);
 
                 })
 
@@ -213,7 +267,7 @@
 
                 $.ajax({
                     data: $('#dataForm').serialize(),
-                    url: "{{ route('temuan.store') }}",
+                    url: "{{ route('lhp.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function(data) {
@@ -244,24 +298,27 @@
             Delete Product Code
             --------------------------------------------
             --------------------------------------------*/
-            $('body').on('click', '.deleteForm', function() {
-                var kode_id = $(this).data("id");
-                if (confirm("Are You sure want to delete !")) {
-                    $.ajax({
-                        type: "DELETE",
-                        url: "{{ route('temuan.store') }}" + '/' + kode_id,
-                        success: function(data) {
-                            // Tambahkan toastr untuk menampilkan pesan sukses
-                            toastr.success('Data berhasil dihapus.', 'Sukses', {
-                                timeOut: 5000
-                            });
-                            table.draw();
-                        },
-                        error: function(data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                }
+            var lhp_id;
+
+            $(document).on('click', '.delete', function() {
+                lhp_id = $(this).attr('id');
+                $('#confirmModal').modal('show');
+            });
+
+            $('#ok_button').click(function() {
+                $.ajax({
+                    url: "lhp/hapus/" + lhp_id,
+                    beforeSend: function() {
+                        $('#ok_button').text('Deleting...');
+                    },
+                    success: function(data) {
+                        setTimeout(function() {
+                            $('#confirmModal').modal('hide');
+                            $('#user_table').DataTable().ajax.reload();
+                            alert('Data Deleted');
+                        }, 2000);
+                    }
+                })
             });
 
         });

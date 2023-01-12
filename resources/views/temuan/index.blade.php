@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Kode Temuan
+    Isi Hasil Pemeriksaan (LHP)
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
 @endpush
+
 @section('content')
     <section class="content">
         <!-- Default box -->
@@ -19,9 +20,9 @@
             <div class="card-header">
                 <h3 class="card-title">{{ $title }}</h3>
                 <div class="card-tools">
-                    <button id="createForm" class="btn btn-success btn-sm" title="Add">
+                    <a href="{{ route('lhp.create') }}" class="btn btn-success btn-sm" title="Add">
                         <i class="fas fa-plus"></i>
-                    </button>
+                    </a>
                 </div>
             </div>
             <div class="card-body">
@@ -29,8 +30,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Kode</th>
-                            <th>Nama</th>
+                            <th>No LHP</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -47,46 +47,6 @@
         <!-- /.card -->
     </section>
 @endsection
-@section('modal')
-    <div class="modal fade" id="ajaxModel">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Default Modal</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form id="dataForm" name="dataForm">
-                    <div class="modal-body">
-                        <input type="hidden" name="kode_id" id="kode_id">
-                        <div class="form-group">
-                            <label for="kode" class="col-sm-2 control-label">Kode</label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control" id="kode" name="kode"
-                                    placeholder="Enter Kode" value="" maxlength="50" required="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Name</label>
-                            <div class="col-sm-12">
-                                <textarea id="nama" name="nama" required="" placeholder="Enter Details" class="form-control"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" id="saveBtn" value="create" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-@endsection
-
 @push('js')
     <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -100,7 +60,6 @@
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 
@@ -143,22 +102,31 @@
             --------------------------------------------
             --------------------------------------------*/
             var table = $('.data-table').DataTable({
-                "responsive": true,
-                "autoWidth": false,
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('kodetemuan.index') }}",
+                ajax: {
+                    url: "{{ route('temuan.index') }}",
+                    type: "GET",
+                },
                 columns: [{
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'kode',
-                        name: 'kode'
+                        data: 'nama_lhp',
+                        name: 'nama_lhp'
                     },
                     {
-                        data: 'nama',
-                        name: 'nama'
+                        data: 'nama_kode_bidang',
+                        name: 'nama_kode_bidang'
+                    },
+                    {
+                        data: 'nama_kode_temuan',
+                        name: 'nama_kode_temuan'
+                    },
+                    {
+                        data: 'nama_temuan',
+                        name: 'nama_temuan'
                     },
                     {
                         data: 'action',
@@ -189,14 +157,14 @@
             --------------------------------------------*/
             $('body').on('click', '.editForm', function() {
                 var kode_id = $(this).data('id');
-                $.get("{{ route('temuan.index') }}" + '/' + kode_id + '/edit', function(
+                $.get("{{ route('lhp.index') }}" + '/' + kode_id + '/edit', function(
                     data) {
                     $('#modelHeading').html("Edit Daftar Kode Temuan Pemeriksaan");
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);
-                    $('#nama').val(data.nama);
-                    $('#kode').val(data.kode);
+                    $('#no_lhp').val(data.no_lhp);
+                    $('#tgl_lhp').val(data.tgl_lhp);
 
                 })
 
@@ -213,7 +181,7 @@
 
                 $.ajax({
                     data: $('#dataForm').serialize(),
-                    url: "{{ route('temuan.store') }}",
+                    url: "{{ route('lhp.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function(data) {
@@ -244,24 +212,27 @@
             Delete Product Code
             --------------------------------------------
             --------------------------------------------*/
-            $('body').on('click', '.deleteForm', function() {
-                var kode_id = $(this).data("id");
-                if (confirm("Are You sure want to delete !")) {
-                    $.ajax({
-                        type: "DELETE",
-                        url: "{{ route('temuan.store') }}" + '/' + kode_id,
-                        success: function(data) {
-                            // Tambahkan toastr untuk menampilkan pesan sukses
-                            toastr.success('Data berhasil dihapus.', 'Sukses', {
-                                timeOut: 5000
-                            });
-                            table.draw();
-                        },
-                        error: function(data) {
-                            console.log('Error:', data);
-                        }
-                    });
-                }
+            var lhp_id;
+
+            $(document).on('click', '.delete', function() {
+                lhp_id = $(this).attr('id');
+                $('#confirmModal').modal('show');
+            });
+
+            $('#ok_button').click(function() {
+                $.ajax({
+                    url: "lhp/hapus/" + lhp_id,
+                    beforeSend: function() {
+                        $('#ok_button').text('Deleting...');
+                    },
+                    success: function(data) {
+                        setTimeout(function() {
+                            $('#confirmModal').modal('hide');
+                            $('#user_table').DataTable().ajax.reload();
+                            alert('Data Deleted');
+                        }, 2000);
+                    }
+                })
             });
 
         });

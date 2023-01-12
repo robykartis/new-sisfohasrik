@@ -15,91 +15,91 @@
 
 @section('content')
     <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="callout callout-info">
-                        <h5><i class="fas fa-info"></i> Note:</h5>
-                        This page has been enhanced for printing. Click the print button at the bottom of the invoice to
-                        test.
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">{{ $title }}</h3>
+                <div class="card-tools">
+                    <a href="" class="btn btn-success btn-sm" title="Add">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="invoice p-3 mb-3">
+                    <!-- title row -->
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>
+                                <i class="fas fa-globe"></i> {{ $title }}
+                                <small class="float-right">Date: {{ $tgl_lhp }}</small>
+                            </h4>
+                        </div>
+                        <!-- /.col -->
                     </div>
-
-
-                    <!-- Main content -->
-                    <div class="invoice p-3 mb-3">
-                        <!-- title row -->
-                        <div class="row">
-                            <div class="col-12">
-                                <h4>
-                                    <i class="fas fa-globe"></i> {{ $title }}
-                                    <small class="float-right">Date: {{ $tgl_lhp }}</small>
-                                </h4>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                        <!-- info row -->
-                        <div class="row invoice-info">
-                            <div class="col-sm-4 invoice-col">
-                                <address>
-                                    <strong>Tahun
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                        {{ $data->tahun }} </strong><br>
-                                    <strong>No LHP
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                        {{ $data->no_lhp }} </strong><br>
-                                    <strong>Nama Obrik
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                        {{ $data->nama_obrik }} </strong><br>
-                                    <strong>Klarifikasi Obrik &nbsp;&nbsp;:
-                                        {{ $data->nama }}
-                                    </strong><br>
-                                </address>
-                            </div>
-                        </div>
-                        <!-- /.row -->
-
-                        <!-- Table row -->
-                        <div class="row">
-                            <div class="col-12 table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-
-                                        <tr>
-                                            <th>No</th>
-                                            <th>No Temuan</th>
-                                            <th>Judul Temuan</th>
-                                            <th>Bidang</th>
-                                            <th>Kode Temuan</th>
-                                            <th>Jumlah Kerugian Negara (01)</th>
-                                            <th>Jumlah Wajib Setor (02)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <tr>
-                                            <td>1</td>
-                                            <td>001</td>
-                                            <td>455-981-221</td>
-                                            <td>El snort testosterone trophy driving gloves handsome</td>
-                                            <td>$64.50</td>
-                                            <td>El snort testosterone trophy driving gloves handsome</td>
-                                            <td>$64.50</td>
-                                        </tr>
-
-
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.col -->
+                    <!-- info row -->
+                    <div class="row invoice-info">
+                        <div class="col-sm-4 invoice-col">
+                            <address>
+                                <strong>Tahun
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                                    {{ $data->tahun }} </strong><br>
+                                <strong>No LHP
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                                    {{ $data->no_lhp }} </strong><br>
+                                <strong>Nama Obrik
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                                    {{ $data->nama_obrik }} </strong><br>
+                                <strong>Klarifikasi Obrik &nbsp;&nbsp;:
+                                    {{ $data->nama }}
+                                </strong><br>
+                            </address>
                         </div>
                     </div>
-                    <!-- /.invoice -->
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+                    <!-- /.row -->
+
+                    <!-- Table row -->
+                    <div class="row">
+                        <div class="col-12 table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+
+                                    <tr>
+                                        <th>No</th>
+                                        <th>No Temuan</th>
+                                        <th>Judul Temuan</th>
+                                        <th>Bidang</th>
+                                        <th>Kode Temuan</th>
+                                        <th>Jumlah Kerugian Negara (01)</th>
+                                        <th>Jumlah Wajib Setor (02)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>001</td>
+                                        <td>455-981-221</td>
+                                        <td>El snort testosterone trophy driving gloves handsome</td>
+                                        <td>$64.50</td>
+                                        <td>El snort testosterone trophy driving gloves handsome</td>
+                                        <td>$64.50</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer">
+                Footer
+            </div>
+            <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
     </section>
-    <section class="content">
+    {{-- <section class="content">
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
@@ -131,7 +131,7 @@
             <!-- /.card-footer-->
         </div>
         <!-- /.card -->
-    </section>
+    </section> --}}
 @endsection
 @push('js')
     <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>

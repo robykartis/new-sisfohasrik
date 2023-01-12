@@ -28,9 +28,9 @@
     </li>
 
     <li
-        class="nav-item {{ set_expand(['temuan.index', 'koderekomendasi.index', 'kodepenyebab.index', 'kodetlhp.index']) }}">
+        class="nav-item {{ set_expand(['kodetemuan.index', 'koderekomendasi.index', 'kodepenyebab.index', 'kodetlhp.index']) }}">
         <a href="#"
-            class="nav-link {{ set_active(['temuan.index', 'koderekomendasi.index', 'kodepenyebab.index', 'kodetlhp.index']) }}">
+            class="nav-link {{ set_active(['kodetemuan.index', 'koderekomendasi.index', 'kodepenyebab.index', 'kodetlhp.index']) }}">
             <i class="nav-icon fas fa-copy"></i>
             <p>
                 Kode
@@ -39,7 +39,7 @@
         </a>
         <ul class="nav nav-treeview">
             <li class="nav-item">
-                <a href="{{ route('temuan.index') }}" class="nav-link {{ set_active(['temuan.index']) }}">
+                <a href="{{ route('kodetemuan.index') }}" class="nav-link {{ set_active(['kodetemuan.index']) }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Kode Temuan</p>
                 </a>
@@ -94,14 +94,33 @@
         </ul>
     </li>
     <li class="nav-header">Form Isian</li>
-    <li class="nav-item ">
-        <a href="{{ route('lhp.index') }}"
-            class="nav-link {{ set_active(['lhp.index', 'lhp.create', 'lhp.edit', 'lhp.show']) }}">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
+    <li
+        class="nav-item {{ set_expand(['lhp.index', 'lhp.create', 'lhp.edit', 'temuan.index', 'temuan.create', 'temuan.edit']) }}">
+        <a href="#"
+            class="nav-link {{ set_active(['lhp.index', 'lhp.create', 'lhp.edit', 'temuan.index', 'temuan.create', 'temuan.edit']) }}">
+            <i class="nav-icon fas fa-copy"></i>
             <p>
-                Hasil Pemeriksaan
+                Pemeriksaan
+                <i class="fas fa-angle-left right"></i>
             </p>
         </a>
+        <ul class="nav nav-treeview">
+
+            <li class="nav-item">
+                <a href="{{ route('lhp.index') }}"
+                    class="nav-link {{ set_active(['lhp.index', 'lhp.create', 'lhp.edit']) }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>List Pemeriksaan</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('temuan.index') }}"
+                    class="nav-link {{ set_active(['temuan.index', 'temuan.create', 'temuan.edit']) }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Temuan</p>
+                </a>
+            </li>
+        </ul>
     </li>
 
 </ul>

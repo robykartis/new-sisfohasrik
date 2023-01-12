@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\KlarifikasiObrik;
 use App\Models\Lhp;
+use App\Models\Temuan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DataTables;

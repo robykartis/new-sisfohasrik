@@ -1,1 +1,12 @@
-git clone https://github.com/MGeurts/laravel-9-bootstrap-5-datatables.git
+  $data = DB::table('table5')
+            ->leftJoin('table1', 'table5.id_tbl1', '=', 'table1.id')
+            ->leftJoin('table2', 'table5.id_tbl2', '=', 'table2.id')
+            ->leftJoin('table3', 'table5.id_tbl3', '=', 'table3.id')
+            ->leftJoin('table4', 'table5.id_tbl4', '=', 'table4.id')
+            ->select(
+                'table1.nama as nama_table1',
+                'table2.nama as nama_table2',
+                'table3.nama as nama_table3',
+                'table4.nama as nama_table4'
+            )
+            ->get();
