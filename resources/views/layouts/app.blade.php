@@ -7,10 +7,10 @@
     <title>{{ config('app.name') }} | @yield('title')</title>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    {{-- 
     <link rel="shortcut icon" href="{{ asset('assets/logo/logosiap.png') }}">
     <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/logo/logosiap.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/logo/logosiap.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/logo/logosiap.png') }}"> --}}
 
 
     <!-- Google Font: Source Sans Pro -->
@@ -27,8 +27,8 @@
     <!-- Site wrapper -->
     <div class="wrapper">
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{ asset('assets/logo/logosiap.png') }}" alt="AdminLTELogo"
-                height="60" width="60">
+            {{-- <img class="animation__shake" src="{{ asset('assets/logo/logosiap.png') }}" alt="AdminLTELogo"
+                height="60" width="60"> --}}
         </div>
         <!-- Navbar -->
         @include('layouts._header')
@@ -37,8 +37,8 @@
         <aside class="main-sidebar sidebar-light-warning elevation-4">
             <!-- Brand Logo -->
             <a href="#" class="brand-link">
-                <img src="{{ asset('assets/logo/logosiap.png') }}" alt="AdminLTE Logo" class="brand-image "
-                    style="opacity: .8">
+                {{-- <img src="{{ asset('assets/logo/logosiap.png') }}" alt="AdminLTE Logo" class="brand-image "
+                    style="opacity: .8"> --}}
                 <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
             </a>
             <!-- Sidebar -->

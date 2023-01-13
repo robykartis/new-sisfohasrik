@@ -108,23 +108,7 @@ class LhpController extends Controller
         }
     }
 
-    public function show(Request $request, $id)
-    {
-        // get the data item by id
-        $data = Lhp::findOrFail($id);
-        $klarifikasi = KlarifikasiObrik::find($data->klarifikasi);
-        $tgl_lhp = new DateTime($data->tgl_lhp);
-        $tgl_lhp = $tgl_lhp->format('d  F  Y');
-        $data = DB::table('lhp')
-            ->join('klarifikasi_obrik', 'klarifikasi_obrik.id', '=', 'lhp.klarifikasi')
-            ->join('obrik', 'obrik.id', '=', 'lhp.obrik')
-            ->select('lhp.*', 'klarifikasi_obrik.nama', 'obrik.nama AS nama_obrik')
-            ->where('lhp.id', $id)
-            ->first();
-        $dataobrik = DB::table('obrik')->get();
-        $title = 'Detail Obyek Pemeriksaan (Obrik)';
-        return view('lhp.show', compact('data', 'dataobrik', 'klarifikasi', 'tgl_lhp', 'title', 'request'));
-    }
+
 
     public function edit(Request $request, $id)
     {
@@ -174,5 +158,48 @@ class LhpController extends Controller
         $lhp->delete();
         return redirect('lhp')
             ->with('success', 'Data Berhasil Dihapus');
+    }
+
+
+
+
+    public function show(Request $request, $id)
+    {
+
+        if ($request->ajax()) {
+            $data = DB::table('temuan')
+                ->join('kode_bidang', 'temuan.bidang_temuan', '=', 'kode_bidang.id')
+                ->join('lhp', 'temuan.id_lhp', '=', 'lhp.id')
+                ->select('temuan.*', 'kode_bidang.kode as kodetemuan', 'kode_bidang.nama as katemuan', 'lhp.id as idlhpp', 'lhp.no_lhp as nolhp', 'lhp.tahun as thnlhp',)
+                ->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn =  '<a href="' . route('lhp.edit', $row->id) . '" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
+                    $btn .= ' <a href="' . route('lhp.show', $row->id) . '" data-toggle="tooltip"   data-original-title="Delete" class="btn btn-sm btn-warning " data-bs-toggle="tooltip" title="Show"><i class="far fa-check-circle"></i></a> |';
+                    $btn .= ' <a href="' . url('lhp/hapus', $row->id) . '" data-toggle="tooltip"  onclick="confirmDelete()" data-original-title="Delete" class="btn btn-sm btn-danger " data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+
+
+
+        // get the data item by id
+        $data = Lhp::findOrFail($id);
+        $klarifikasi = KlarifikasiObrik::find($data->klarifikasi);
+        $tgl_lhp = new DateTime($data->tgl_lhp);
+        $tgl_lhp = $tgl_lhp->format('d  F  Y');
+        $data = DB::table('lhp')
+            ->join('klarifikasi_obrik', 'klarifikasi_obrik.id', '=', 'lhp.klarifikasi')
+            ->join('obrik', 'obrik.id', '=', 'lhp.obrik')
+            ->select('lhp.*', 'klarifikasi_obrik.nama', 'obrik.nama AS nama_obrik')
+            ->where('lhp.id', $id)
+            ->first();
+        $dataobrik = DB::table('obrik')->get();
+        $title = 'Detail Obyek Pemeriksaan (Obrik)';
+        return view('lhp.index_temuan', compact('data', 'dataobrik', 'klarifikasi', 'tgl_lhp', 'title', 'request', 'id'));
     }
 }

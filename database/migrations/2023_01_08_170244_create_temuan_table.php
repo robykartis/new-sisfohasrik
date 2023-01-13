@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('no_temuan');
             $table->string('judul_temuan');
             $table->text('urian_temuan');
+            $table->string('kode_temuan');
             $table->string('jml_rnd_neg')->nullable();
             $table->string('jml_rnd_drh')->nullable();
             $table->string('jml_snd_neg')->nullable();

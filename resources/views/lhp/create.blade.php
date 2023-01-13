@@ -34,7 +34,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="inputStatus">Klarifikasi</label>
+                                            <label for="inputStatus">Klarifikasi Obrik</label>
                                             <select id="inputStatus" name="klarifikasi" class="form-control custom-select">
                                                 <option selected disabled>Pilih Klarifikasi</option>
                                                 @foreach ($klarifikasi_obrik as $klarifikasi)
@@ -57,7 +57,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="inputName">Obrik</label>
+                                            <label for="inputName">Nama Obrik</label>
                                             <select class="form-control custom-select" name="obrik">
                                                 <option value="">Semua Obrik</option>
                                                 @foreach ($dataobrik as $dobrik)
@@ -74,7 +74,7 @@
                                 <div class="row mb-4">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="form-label" for="one-ecom-product-price">Tanggal Obrik</label>
+                                            <label class="form-label" for="one-ecom-product-price">Tanggal LHP</label>
                                             <input type="date" name="tgl_lhp" class="form-control">
                                         </div>
                                     </div>
@@ -85,7 +85,7 @@
                             <!-- /.card-body -->
                             <div class="card-footer">
                                 <div class="col-4">
-                                    <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
+                                    <a href="{{ route('lhp.index') }}" class="btn btn-secondary">Cancel</a>
                                     <button type="submit" class="btn btn-success float-right">Save</button>
                                 </div>
                             </div>

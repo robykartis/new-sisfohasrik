@@ -1,10 +1,10 @@
 @extends('layouts.app')
 @section('title')
-    Input Temuan
+    Detail Hasil Pemeriksaan (LHP)
 @endsection
-{{-- @section('breadcrumbs')
+@section('breadcrumbs')
     {{ Breadcrumbs::render() }}
-@endsection --}}
+@endsection
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
@@ -20,7 +20,7 @@
             <div class="card-header">
                 <h3 class="card-title">{{ $title }}</h3>
                 <div class="card-tools">
-                    <a href="{{ route('lhp.create') }}" class="btn btn-success btn-sm" title="Add">
+                    <a href="" class="btn btn-success btn-sm" title="Add">
                         <i class="fas fa-plus"></i>
                     </a>
                 </div>
@@ -61,7 +61,7 @@
                     <!-- Table row -->
                     <div class="row">
                         <div class="col-12 table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-striped data-table">
                                 <thead>
 
                                     <tr>
@@ -75,15 +75,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>001</td>
-                                        <td>455-981-221</td>
-                                        <td>El snort testosterone trophy driving gloves handsome</td>
-                                        <td>$64.50</td>
-                                        <td>El snort testosterone trophy driving gloves handsome</td>
-                                        <td>$64.50</td>
-                                    </tr>
+
+
                                 </tbody>
                             </table>
                         </div>
@@ -93,45 +86,12 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                Footer
+                <a href="{{ route('lhp.index') }}" class="btn btn-secondary">Cancel</a>
             </div>
             <!-- /.card-footer-->
         </div>
         <!-- /.card -->
     </section>
-    {{-- <section class="content">
-        <!-- Default box -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">{{ $title }}</h3>
-                <div class="card-tools">
-                    <a href="{{ route('lhp.create') }}" class="btn btn-success btn-sm" title="Add">
-                        <i class="fas fa-plus"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered table-striped data-table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>No LHP</th>
-                            <th>Tanggal LHP</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
-                Footer
-            </div>
-            <!-- /.card-footer-->
-        </div>
-        <!-- /.card -->
-    </section> --}}
 @endsection
 @push('js')
     <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -187,11 +147,12 @@
             Render DataTable
             --------------------------------------------
             --------------------------------------------*/
+            var id = {{ $id }};
             var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('lhp.index') }}",
+                    ajax: "{{ route('lhp.show', $id) }}",
                     type: "GET",
                 },
                 columns: [{
@@ -199,21 +160,22 @@
                         name: 'DT_RowIndex'
                     },
                     {
-                        data: 'no_lhp',
-                        name: 'no_lhp'
+                        data: 'nolhp',
+                        name: 'nolhp'
                     },
                     {
-                        data: 'tgl_lhp',
-                        name: 'tgl_lhp',
-                        render: function(data, type, row) {
-                            var date = new Date(row.tgl_lhp);
-                            return date.toLocaleDateString('id-ID', {
-                                day: 'numeric',
-                                month: 'long',
-                                year: 'numeric'
-                            });
-                        }
+                        data: 'katemuan',
+                        name: 'katemuan'
                     },
+                    {
+                        data: 'thnlhp',
+                        name: 'thnlhp'
+                    },
+                    {
+                        data: 'kodetemuan',
+                        name: 'kodetemuan'
+                    },
+
                     {
                         data: 'action',
                         name: 'action',
@@ -249,8 +211,6 @@
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);
-                    $('#no_lhp').val(data.no_lhp);
-                    $('#tgl_lhp').val(data.tgl_lhp);
 
                 })
 
