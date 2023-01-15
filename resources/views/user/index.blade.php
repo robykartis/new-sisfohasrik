@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    User
+    Pengguna Aplikasi
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -11,12 +11,23 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <style type="text/css">
+        th {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        table.dataTable td.child {
+            text-align: left;
+        }
+    </style>
 @endpush
 
 @section('content')
     <section class="content">
         <!-- Default box -->
-        <div class="card">
+        <div class="card card-warning">
             <div class="card-header">
                 <h3 class="card-title">{{ $title }}</h3>
                 <div class="card-tools">
@@ -26,25 +37,25 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-bordered table-striped data-table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Level</th>
-                            <th>Email</th>
-                            <th>NIP</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped data-table">
+                        <thead>
+                            <tr>
+                                <th class="nowrap text-overflow" style="width: 5%">No</th>
+                                <th class="nowrap text-overflow">Nama</th>
+                                <th class="nowrap text-overflow">Level</th>
+                                <th class="nowrap text-overflow">Email</th>
+                                <th class="nowrap text-overflow">NIP</th>
+                                <th class="nowrap text-overflow">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <!-- /.card-body -->
-            <div class="card-footer">
-                Footer
-            </div>
+
             <!-- /.card-footer-->
         </div>
         <!-- /.card -->
@@ -82,34 +93,49 @@
         $(function() {
 
             var table = $('.data-table').DataTable({
-                "responsive": true,
-                "autoWidth": false,
+                responsive: true,
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('users.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
-                        name: 'DT_RowIndex'
+                        name: 'DT_RowIndex',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
                         data: 'name',
-                        name: 'name'
+                        name: 'name',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
                         data: 'level',
-                        name: 'level'
+                        name: 'level',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
                         data: 'email',
-                        name: 'email'
+                        name: 'email',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
                         data: 'nip',
-                        name: 'nip'
+                        name: 'nip',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
                         data: 'action',
                         name: 'action',
+                        className: "text-center",
                         orderable: false,
                         searchable: false
                     },

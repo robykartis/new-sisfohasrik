@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('temuan', function (Blueprint $table) {
             $table->id();
             $table->string('id_temuan');
-            $table->string('id_lhp');
-            $table->string('bidang_temuan');
+            $table->string('id_lhp'); // ini menampung id table lhp 
+            $table->string('bidang_temuan'); //ini menampung id table kode_temuan mengabil data field nama
             $table->string('no_temuan');
             $table->string('judul_temuan');
             $table->text('urian_temuan');
-            $table->string('kode_temuan');
+            $table->string('kode_temuan'); //ini menampung kode temuan di table kode_temuan mengambil data field kode
             $table->string('jml_rnd_neg')->nullable();
             $table->string('jml_rnd_drh')->nullable();
             $table->string('jml_snd_neg')->nullable();

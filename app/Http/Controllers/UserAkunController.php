@@ -51,7 +51,7 @@ class UserAkunController extends Controller
 
     public function create()
     {
-        $title = 'Input Daftar Pengguna Apllikasi';
+        $title = 'Tambah Pengguna Apllikasi';
         return view('user.create')->with([
             'title' => $title
         ]);
@@ -101,7 +101,7 @@ class UserAkunController extends Controller
 
     public function edit(User $user)
     {
-        $title = 'Edit Daftar Pengguna Aplikasi';
+        $title = 'Edit Pengguna Aplikasi';
         $data = ['admin' => 'Admin', 'operator' => 'Operator', 'readonly' => 'Read Only'];
         return view('user.edit')->with(['user' => $user, 'title' => $title, 'data' => $data]);
     }

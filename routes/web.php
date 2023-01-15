@@ -15,6 +15,7 @@ use App\Http\Controllers\LhpController;
 use App\Http\Controllers\ObrikController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PendaftaranObrikController;
+use App\Http\Controllers\PenyebabController;
 use App\Http\Controllers\ReadonlyController;
 use App\Http\Controllers\TemuanController;
 use App\Http\Controllers\UserAkunController;
@@ -65,7 +66,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('lhp/hapus/{id}', [LhpController::class, 'deletelhp'])->name('deletelhp');
         // Temuan
         Route::resource('temuan', TemuanController::class);
-        // Route::get('lhp/hapus/{id}', [LhpController::class, 'deletelhp'])->name('deletelhp');
+        Route::get('lhp/{id}/temuan/create', [TemuanController::class, 'create'])->name('temuan.create');
+        Route::get('lhp/{id}/temuan/edit', [TemuanController::class, 'edit'])->name('temuan.edit');
+        Route::get('lhp/{id}/temuan/show', [TemuanController::class, 'show'])->name('temuan.show');
+        Route::get('lhp/{id}/temuan/delete', [TemuanController::class, 'destroy'])->name('temuan.destroy');
+        // Penyebab
+        Route::get('temuan/{id}/penyebab', [PenyebabController::class, 'index'])->name('penyebab.index');
+        Route::get('temuan/{id}/penyebab/edit', [PenyebabController::class, 'edit'])->name('penyebab.edit');
+        Route::get('temuan/{id}/penyebab/show', [PenyebabController::class, 'show'])->name('penyebab.show');
     });
 
 

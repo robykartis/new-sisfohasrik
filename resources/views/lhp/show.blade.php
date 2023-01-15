@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Detail Hasil Pemeriksaan (LHP)
+    Laporan Hasil Pemeriksaan (LHP)
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -11,16 +11,28 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
+
+    <style type="text/css">
+        th {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        table.dataTable td.child {
+            text-align: left;
+        }
+    </style>
 @endpush
 
 @section('content')
     <section class="content">
         <!-- Default box -->
-        <div class="card">
-            <div class="card-header">
+        <div class="card card-warning">
+            <div class="card-header ">
                 <h3 class="card-title">{{ $title }}</h3>
                 <div class="card-tools">
-                    <a href="" class="btn btn-success btn-sm" title="Add">
+                    <a href="{{ route('temuan.create', $id) }}" class="btn btn-success btn-sm" title="Add">
                         <i class="fas fa-plus"></i>
                     </a>
                 </div>
@@ -31,7 +43,6 @@
                     <div class="row">
                         <div class="col-12">
                             <h4>
-                                <i class="fas fa-globe"></i> {{ $title }}
                                 <small class="float-right">Date: {{ $tgl_lhp }}</small>
                             </h4>
                         </div>
@@ -61,29 +72,21 @@
                     <!-- Table row -->
                     <div class="row">
                         <div class="col-12 table-responsive">
-                            <table class="table table-striped">
+                            <table class="table table-striped data-table">
                                 <thead>
-
                                     <tr>
-                                        <th>No</th>
-                                        <th>No Temuan</th>
-                                        <th>Judul Temuan</th>
-                                        <th>Bidang</th>
-                                        <th>Kode Temuan</th>
-                                        <th>Jumlah Kerugian Negara (01)</th>
-                                        <th>Jumlah Wajib Setor (02)</th>
+                                        <th class="nowrap text-overflow">No</th>
+                                        <th class="nowrap text-overflow">No Temuan</th>
+                                        <th class="nowrap text-overflow">Judul Temuan</th>
+                                        <th class="nowrap text-overflow">Bidang</th>
+                                        <th class="nowrap text-overflow">Kode Temuan</th>
+                                        <th class="nowrap text-overflow">Jumlah Kerugian Negara (01)</th>
+                                        <th class="nowrap text-overflow">Jumlah Wajib Setor (02)</th>
+                                        <th class="nowrap text-overflow">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>001</td>
-                                        <td>455-981-221</td>
-                                        <td>El snort testosterone trophy driving gloves handsome</td>
-                                        <td>$64.50</td>
-                                        <td>El snort testosterone trophy driving gloves handsome</td>
-                                        <td>$64.50</td>
-                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -93,45 +96,12 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                Footer
+                <a href="{{ route('lhp.index') }}" class="btn btn-secondary">Kembali</a>
             </div>
             <!-- /.card-footer-->
         </div>
         <!-- /.card -->
     </section>
-    {{-- <section class="content">
-        <!-- Default box -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">{{ $title }}</h3>
-                <div class="card-tools">
-                    <a href="{{ route('lhp.create') }}" class="btn btn-success btn-sm" title="Add">
-                        <i class="fas fa-plus"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="card-body">
-                <table class="table table-bordered table-striped data-table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>No LHP</th>
-                            <th>Tanggal LHP</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
-                Footer
-            </div>
-            <!-- /.card-footer-->
-        </div>
-        <!-- /.card -->
-    </section> --}}
 @endsection
 @push('js')
     <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -146,6 +116,7 @@
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 
@@ -187,36 +158,68 @@
             Render DataTable
             --------------------------------------------
             --------------------------------------------*/
+            var id = {{ $id }};
             var table = $('.data-table').DataTable({
+                responsive: true,
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('lhp.index') }}",
+                    url: "{{ route('lhp.show', $id) }}",
                     type: "GET",
                 },
                 columns: [{
                         data: 'DT_RowIndex',
-                        name: 'DT_RowIndex'
+                        name: 'DT_RowIndex',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
-                        data: 'no_lhp',
-                        name: 'no_lhp'
+                        data: 'no_temuan',
+                        name: 'no_temuan',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
-                        data: 'tgl_lhp',
-                        name: 'tgl_lhp',
-                        render: function(data, type, row) {
-                            var date = new Date(row.tgl_lhp);
-                            return date.toLocaleDateString('id-ID', {
-                                day: 'numeric',
-                                month: 'long',
-                                year: 'numeric'
-                            });
+                        data: 'judul_temuan',
+                        name: 'judul_temuan',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
+                    },
+                    {
+                        data: 'kode_bidang_nama',
+                        name: 'kode_bidang_nama',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
+                    },
+                    {
+                        data: 'kode_temuan_kode',
+                        name: 'kode_temuan_kode',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
+                    },
+                    {
+                        data: 'jml_rnd_neg',
+                        name: 'jml_rnd_neg',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
+                    },
+                    {
+                        data: 'jml_snd_neg',
+                        name: 'jml_snd_neg',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
                         }
                     },
                     {
                         data: 'action',
                         name: 'action',
+                        className: "text-center",
                         orderable: false,
                         searchable: false
                     },
@@ -249,8 +252,6 @@
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);
-                    $('#no_lhp').val(data.no_lhp);
-                    $('#tgl_lhp').val(data.tgl_lhp);
 
                 })
 

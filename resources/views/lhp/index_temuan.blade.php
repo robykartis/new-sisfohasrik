@@ -11,6 +11,18 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
+
+    <style type="text/css">
+        th {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        table.dataTable td.child {
+            text-align: left;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -63,19 +75,18 @@
                         <div class="col-12 table-responsive">
                             <table class="table table-striped data-table">
                                 <thead>
-
                                     <tr>
-                                        <th>No</th>
-                                        <th>No Temuan</th>
-                                        <th>Judul Temuan</th>
-                                        <th>Bidang</th>
-                                        <th>Kode Temuan</th>
-                                        <th>Jumlah Kerugian Negara (01)</th>
-                                        <th>Jumlah Wajib Setor (02)</th>
+                                        <th class="nowrap text-overflow">No</th>
+                                        <th class="nowrap text-overflow">No Temuan</th>
+                                        <th class="nowrap text-overflow">Judul Temuan</th>
+                                        <th class="nowrap text-overflow">Bidang</th>
+                                        <th class="nowrap text-overflow">Kode Temuan</th>
+                                        <th class="nowrap text-overflow">Jumlah Kerugian Negara (01)</th>
+                                        <th class="nowrap text-overflow">Jumlah Wajib Setor (02)</th>
+                                        <th class="nowrap text-overflow">Akction</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
 
                                 </tbody>
                             </table>
@@ -106,6 +117,7 @@
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 
@@ -149,36 +161,66 @@
             --------------------------------------------*/
             var id = {{ $id }};
             var table = $('.data-table').DataTable({
+                responsive: true,
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    ajax: "{{ route('lhp.show', $id) }}",
+                    url: "{{ route('lhp.show', $id) }}",
                     type: "GET",
                 },
                 columns: [{
                         data: 'DT_RowIndex',
-                        name: 'DT_RowIndex'
+                        name: 'DT_RowIndex',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
-                        data: 'nolhp',
-                        name: 'nolhp'
+                        data: 'no_temuan',
+                        name: 'no_temuan',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
-                        data: 'katemuan',
-                        name: 'katemuan'
+                        data: 'judul_temuan',
+                        name: 'judul_temuan',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
-                        data: 'thnlhp',
-                        name: 'thnlhp'
+                        data: 'kode_bidang_nama',
+                        name: 'kode_bidang_nama',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
-                        data: 'kodetemuan',
-                        name: 'kodetemuan'
+                        data: 'kode_temuan_kode',
+                        name: 'kode_temuan_kode',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
-
+                    {
+                        data: 'jml_rnd_neg',
+                        name: 'jml_rnd_neg',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
+                    },
+                    {
+                        data: 'jml_rnd_drh',
+                        name: 'jml_rnd_drh',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
+                    },
                     {
                         data: 'action',
                         name: 'action',
+                        className: "text-center",
                         orderable: false,
                         searchable: false
                     },

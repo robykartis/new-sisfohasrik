@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Create Hasil Pemeriksaan (LHP)
+    Input Laporan Hasil Pemeriksaan (LHP)
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -84,10 +84,10 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <div class="col-4">
-                                    <a href="{{ route('lhp.index') }}" class="btn btn-secondary">Cancel</a>
-                                    <button type="submit" class="btn btn-success float-right">Save</button>
-                                </div>
+
+                                <a href="{{ route('lhp.index') }}" class="btn btn-secondary">Batal</a>
+                                <button type="submit" class="btn btn-success float-right">Simpan</button>
+
                             </div>
                         </div>
                         <!-- /.card -->

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Obrik
+    Daftar Obyek Pemeriksaan (Obrik)
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -11,12 +11,23 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
+    <style type="text/css">
+        th {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        table.dataTable td.child {
+            text-align: left;
+        }
+    </style>
 @endpush
 
 @section('content')
     <section class="content">
         <!-- Default box -->
-        <div class="card">
+        <div class="card card-warning">
             <div class="card-header">
                 <h3 class="card-title">{{ $title }}</h3>
                 <div class="card-tools">
@@ -26,26 +37,26 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-bordered table-striped data-table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Tahun</th>
-                            <th>Kode</th>
-                            <th>Klarifikasi</th>
-                            <th>Nama</th>
-                            <th>Induk</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped data-table">
+                        <thead>
+                            <tr>
+                                <th class="nowrap text-overflow" style="width: 5%">No</th>
+                                <th class="nowrap text-overflow" style="width: 5%">Tahun</th>
+                                <th class="nowrap text-overflow" style="width: 10%">Kode</th>
+                                <th class="nowrap text-overflow" style="width: 15%">Klarifikasi</th>
+                                <th class="nowrap text-overflow" style="width: 10%">Nama</th>
+                                <th class="nowrap text-overflow" style="width: 5%">Induk</th>
+                                <th class="nowrap text-overflow" style="width: 3%">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <!-- /.card-body -->
-            <div class="card-footer">
-                Footer
-            </div>
+
             <!-- /.card-footer-->
         </div>
         <!-- /.card -->
@@ -103,8 +114,7 @@
             });
             // Render Table
             var table = $('.data-table').DataTable({
-                "responsive": true,
-                "autoWidth": false,
+                responsive: true,
                 processing: true,
                 serverSide: true,
                 ajax: {
@@ -116,34 +126,53 @@
                 },
                 columns: [{
                         data: 'DT_RowIndex',
-                        name: 'DT_RowIndex'
+                        name: 'DT_RowIndex',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
                         data: 'tahun',
-                        name: 'tahun'
+                        name: 'tahun',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
                         data: 'kode',
-                        name: 'kode'
+                        name: 'kode',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
                         data: 'nama_klarifikasi',
                         name: 'nama_klarifikasi',
                         render: function(data, type, full, meta) {
                             return full.nama_klarifikasi;
+                        },
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
                         }
                     },
                     {
                         data: 'nama',
-                        name: 'nama'
+                        name: 'nama',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
                         data: 'induk',
-                        name: 'induk'
+                        name: 'induk',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
                         data: 'action',
                         name: 'action',
+                        className: "text-center",
                         orderable: false,
                         searchable: false
                     },

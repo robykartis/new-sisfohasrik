@@ -94,33 +94,25 @@
         </ul>
     </li>
     <li class="nav-header">Form Isian</li>
-    <li
-        class="nav-item {{ set_expand(['lhp.index', 'lhp.create', 'lhp.edit', 'temuan.index', 'temuan.create', 'temuan.edit']) }}">
-        <a href="#"
-            class="nav-link {{ set_active(['lhp.index', 'lhp.create', 'lhp.edit', 'temuan.index', 'temuan.create', 'temuan.edit']) }}">
-            <i class="nav-icon fas fa-copy"></i>
+    <li class="nav-item ">
+        <a href="{{ route('lhp.index') }}"
+            class="nav-link {{ set_active([
+                'lhp.index',
+                'lhp.create',
+                'lhp.edit',
+                'lhp.show',
+                'temuan.create',
+                'temuan.edit',
+                'temuan.index',
+                'temuan.show',
+                'penyebab.index',
+            ]) }}">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
                 Pemeriksaan
-                <i class="fas fa-angle-left right"></i>
             </p>
         </a>
-        <ul class="nav nav-treeview">
-
-            <li class="nav-item">
-                <a href="{{ route('lhp.index') }}"
-                    class="nav-link {{ set_active(['lhp.index', 'lhp.create', 'lhp.edit']) }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>List Pemeriksaan</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('temuan.index') }}"
-                    class="nav-link {{ set_active(['temuan.index', 'temuan.create', 'temuan.edit']) }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Temuan</p>
-                </a>
-            </li>
-        </ul>
     </li>
+
 
 </ul>

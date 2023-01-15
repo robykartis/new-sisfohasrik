@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\KlarifikasiObrik;
+use App\Models\KodeTemuan;
 use App\Models\Lhp;
 use App\Models\Temuan;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,70 +17,157 @@ class TemuanController extends Controller
 
     public function index(Request $request)
     {
-        // if ($request->ajax()) {
-        //     $data = DB::table('temuan')
-        //         ->join('lhp', 'temuan.id_lhp', '=', 'lhp.id')
-        //         ->join('kode_bidang', 'temuan.bidang_temuan', '=', 'kode_bidang.id')
-        //         ->join('kode_temuan', 'temuan.kode_temuan', '=', 'kode_temuan.id')
-        //         ->select(
-        //             'lhp.nama as nama_lhp',
-        //             'kode_bidang.nama as nama_kode_bidang',
-        //             'kode_temuan.nama as nama_kode_temuan'
-        //         )
-        //         ->get();
-        //     return Datatables::of($data)
-        //         ->addIndexColumn()
-        //         ->addColumn('action', function ($row) {
-        //             $btn =  '<a href="' . route('lhp.edit', $row->id) . '" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
-        //             $btn .= ' <a href="' . route('lhp.show', $row->id) . '" data-toggle="tooltip"   data-original-title="Delete" class="btn btn-sm btn-warning " data-bs-toggle="tooltip" title="Show"><i class="far fa-check-circle"></i></a> |';
-        //             $btn .= ' <a href="' . url('lhp/hapus', $row->id) . '" data-toggle="tooltip"  onclick="confirmDelete()" data-original-title="Delete" class="btn btn-sm btn-danger " data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></a>';
-        //             return $btn;
-        //         })
-        //         ->rawColumns(['action'])
-        //         ->make(true);
-        // }
-        $temuan = DB::table('temuan')
-            ->join('kode_bidang', 'temuan.bidang_temuan', '=', 'kode_bidang.id')
-            ->join('lhp', 'temuan.id_lhp', '=', 'lhp.id')
-            ->select('temuan.*', 'kode_bidang.kode as kodetemuan', 'kode_bidang.nama as katemuan', 'lhp.id as idlhpp', 'lhp.no_lhp as nolhp', 'lhp.tahun as thnlhp',)
-            ->get();
-        dd($temuan);
-        $title = 'Detail Obyek Pemeriksaan (Obrik)';
-        return view('temuan.index', compact('title'));
+        //   
     }
 
-    public function create()
+    public function create(Request $request, $id)
     {
-        //
+        $data = Lhp::find($id);
+        $klarifikasi = KlarifikasiObrik::find($data->klarifikasi);
+
+        $data = DB::table('lhp')
+            ->join('klarifikasi_obrik', 'klarifikasi_obrik.id', '=', 'lhp.klarifikasi')
+            ->join('obrik', 'obrik.id', '=', 'lhp.obrik')
+            ->select('lhp.*', 'klarifikasi_obrik.nama', 'obrik.nama AS nama_obrik')
+            ->where('lhp.id', $id)
+            ->first();
+        $tgl_lhp = Carbon::parse($data->tgl_lhp)->isoFormat(' D MMMM Y');
+        $dataobrik = DB::table('obrik')->get();
+
+        $kod_temuan = DB::table('kode_temuan')->get();
+        $kod_bidang = DB::table('kode_bidang')->get();
+        $title = 'Tambah Data';
+        return view('temuan.create', compact('kod_bidang', 'kod_temuan', 'data', 'dataobrik', 'klarifikasi', 'tgl_lhp', 'title', 'request', 'id'));
     }
 
 
     public function store(Request $request)
     {
-        //
+        // validate the form input
+        $data =  $request->validate([
+            'id_lhp' => 'required',
+            'bidang_temuan' => 'required',
+            'no_temuan' => 'required',
+            'judul_temuan' => 'required',
+            'uraian_temuan' => 'required',
+            'kode_temuan' => 'required',
+            "jml_rnd_neg" => 'required',
+            "jml_snd_neg" => 'required',
+            "jml_rnd_drh" => 'required',
+            "jml_snd_drh" => 'required',
+            "keterangan" => 'required',
+
+        ]);
+
+        try {
+            // dd($request);
+            $data['id_temuan'] = $request->kode_temuan;
+            $data['urian_temuan'] = $request->uraian_temuan;
+            $data['created_by'] = auth()->user()->level;
+            // $title = 'Detail Obyek Pemeriksaan (Obrik)';
+            // return view('temuan.index', compact('title'));
+            // $request['created_by'] = auth()->user()->level;
+            // dd($data);
+            Temuan::create($data);
+            return redirect()->route('lhp.show', $request->id_lhp)->with('success', 'Tambah Data Berhasil');
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            //     // die;
+            //     // return redirect()->route('pendaftaranobrik.index')->with('error', 'Terjadi kesalahan saat menyimpan data.');
+        }
+
+
+        // return redirect()->route('pendaftaranobrik.index')->with('success', 'Tambah Data Berhasil');
     }
 
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
+        $temuan = Temuan::find($id);
+        $data = DB::table('lhp')
+            ->join('klarifikasi_obrik', 'klarifikasi_obrik.id', '=', 'lhp.klarifikasi')
+            ->join('obrik', 'obrik.id', '=', 'lhp.obrik')
+            ->select('lhp.*', 'klarifikasi_obrik.nama', 'obrik.nama AS nama_obrik')
+            ->where('lhp.id', $temuan->id_lhp)
+            ->first();
+        // dd($data);
+        $tgl_lhp = Carbon::parse($data->tgl_lhp)->isoFormat(' D MMMM Y');
+
+        $kode = DB::table('temuan')
+            ->join('kode_temuan', 'temuan.kode_temuan', '=', 'kode_temuan.id')
+            ->join('kode_bidang', 'temuan.bidang_temuan', '=', 'kode_bidang.id')
+            ->select('kode_temuan.nama', 'kode_bidang.nama as bidang')
+            ->where('kode_temuan.id', $temuan->kode_temuan)
+            ->where('kode_bidang.id', $temuan->bidang_temuan)
+            ->first();
+        $title_lhp = 'Data LHP';
+        $title_temuan = 'Data Temuan';
+        $title = 'Edit Temuan Hasil Pemeriksaan';
+        return view('temuan.show', compact('title_lhp', 'title_temuan', 'kode', 'data', 'tgl_lhp', 'title', 'request', 'id', 'temuan'));
     }
 
-
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+
+        $temuan = Temuan::find($id);
+        $data = DB::table('lhp')
+            ->join('klarifikasi_obrik', 'klarifikasi_obrik.id', '=', 'lhp.klarifikasi')
+            ->join('obrik', 'obrik.id', '=', 'lhp.obrik')
+            ->select('lhp.*', 'klarifikasi_obrik.nama', 'obrik.nama AS nama_obrik')
+            ->where('lhp.id', $temuan->id_lhp)
+            ->first();
+        // dd($data);
+        $tgl_lhp = Carbon::parse($data->tgl_lhp)->isoFormat(' D MMMM Y');
+
+        $dataobrik = DB::table('obrik')->get();
+        $kod_temuan = DB::table('kode_temuan')->get();
+        $kod_bidang = DB::table('kode_bidang')->get();
+        $title = 'Edit Temuan Hasil Pemeriksaan';
+        return view('temuan.edit', compact('kod_bidang', 'kod_temuan', 'data', 'dataobrik', 'tgl_lhp', 'title', 'request', 'id', 'temuan'));
     }
 
 
     public function update(Request $request, $id)
     {
-        //
+        $data =  $request->validate([
+            'id_lhp' => 'required',
+            'bidang_temuan' => 'required',
+            'no_temuan' => 'required',
+            'judul_temuan' => 'required',
+            'uraian_temuan' => 'required',
+            'kode_temuan' => 'required',
+            "jml_rnd_neg" => 'required',
+            "jml_snd_neg" => 'required',
+            "jml_rnd_drh" => 'required',
+            "jml_snd_drh" => 'required',
+            "keterangan" => 'required',
+        ]);
+
+        try {
+            // dd($request);
+            $temuan = Temuan::find($request->id);
+            $data['id_temuan'] = $request->kode_temuan;
+            $data['urian_temuan'] = $request->uraian_temuan;
+            $data['created_by'] = auth()->user()->level;
+            // $title = 'Detail Obyek Pemeriksaan (Obrik)';
+            // return view('temuan.index', compact('title'));
+            // $request['created_by'] = auth()->user()->level;
+            // dd($data);
+            $temuan->update($data);
+            return redirect()->route('lhp.show', $request->id_lhp)->with('success', 'Tambah Data Berhasil');
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            //     // die;
+            return redirect()->route('temuan.edit', $temuan->id)->with('error', 'Terjadi kesalahan saat menyimpan data.');
+        }
     }
 
 
     public function destroy($id)
     {
-        //
+        $temuan = Temuan::find($id);
+        $lhpID = $temuan->id_lhp;
+        $temuan->delete();
+        return redirect()->route('lhp.show', $lhpID)->with('success', 'Data Berhasil Dihapus');
     }
 }

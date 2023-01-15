@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('id_temuan');
             $table->string('no_sebab');
-            $table->text('urian_sebab');
+            $table->text('uraian_sebab');
             $table->string('kode_sebab');
             $table->string('created_by');
             $table->timestamps();

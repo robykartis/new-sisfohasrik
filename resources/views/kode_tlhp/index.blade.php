@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Kode TLHP
+    Daftar Kode Tindak Lanjut
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -11,11 +11,22 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
+    <style type="text/css">
+        th {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        table.dataTable td.child {
+            text-align: left;
+        }
+    </style>
 @endpush
 @section('content')
     <section class="content">
         <!-- Default box -->
-        <div class="card">
+        <div class="card card-warning">
             <div class="card-header">
                 <h3 class="card-title">{{ $title }}</h3>
                 <div class="card-tools">
@@ -28,21 +39,17 @@
                 <table class="table table-bordered table-striped data-table">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Kode</th>
-                            <th>Nama</th>
-                            <th>Action</th>
+                            <th class="nowrap text-overflow" style="width: 5%">No</th>
+                            <th class="nowrap text-overflow" style="width: 10%">Kode</th>
+                            <th class="nowrap text-overflow">Nama</th>
+                            <th class="nowrap text-overflow" style="width: 10%">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
             </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
-                Footer
-            </div>
-            <!-- /.card-footer-->
+
         </div>
         <!-- /.card -->
     </section>
@@ -68,15 +75,15 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Name</label>
+                            <label class="col-sm-2 control-label">Nama</label>
                             <div class="col-sm-12">
                                 <textarea id="nama" name="nama" required="" placeholder="Enter Details" class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" id="saveBtn" value="create" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                        <button type="submit" id="saveBtn" value="create" class="btn btn-success">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -144,24 +151,35 @@
             --------------------------------------------
             --------------------------------------------*/
             var table = $('.data-table').DataTable({
+                responsive: true,
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('kodetlhp.index') }}",
                 columns: [{
                         data: 'DT_RowIndex',
-                        name: 'DT_RowIndex'
+                        name: 'DT_RowIndex',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
                         data: 'kode',
-                        name: 'kode'
+                        name: 'kode',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
                         data: 'nama',
-                        name: 'nama'
+                        name: 'nama',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
                     },
                     {
                         data: 'action',
                         name: 'action',
+                        className: "text-center",
                         orderable: false,
                         searchable: false
                     },

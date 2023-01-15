@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    User Edit
+    Edit Pengguna
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -89,8 +89,8 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-info">Save</button>
-                                <a href="{{ route('users.index') }}" class="btn btn-default float-right">Cancel</a>
+                                <a href="{{ route('users.index') }}" class="btn btn-default">Batal</a>
+                                <button type="submit" class="btn btn-success float-right">Perbaharui</button>
                             </div>
                         </div>
                         <!-- /.card -->

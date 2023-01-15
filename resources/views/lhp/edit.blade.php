@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Edit Hasil Pemeriksaan (LHP)
+    Edit Laporan Hasil Pemeriksaan (LHP)
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -19,7 +19,7 @@
                         </div>
                         <div class="card-body">
                             <div class="col-md-10 col-lg-12">
-                                <div class="row mb-4">
+                                <div class="row mb-2">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="inputStatus">Tahun</label>
@@ -37,7 +37,6 @@
                                         <div class="form-group">
                                             <label for="inputStatus">Klarifikasi</label>
                                             <select id="inputStatus" name="klarifikasi" class="form-control custom-select">
-
                                                 @foreach ($klarifikasi_obrik as $klarifikasi)
                                                     <option value="{{ $klarifikasi->id }}"
                                                         {{ $klarifikasi->id == $data->klarifikasi ? 'selected' : '' }}>
@@ -50,7 +49,7 @@
                                 </div>
                             </div>
                             <div class="col-md-10 col-lg-12">
-                                <div class="row mb-8">
+                                <div class="row mb-2">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="inputName">No LHP</label>
@@ -75,7 +74,7 @@
                             </div>
 
                             <div class="col-md-10 col-lg-12">
-                                <div class="row mb-4">
+                                <div class="row mb-2">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="form-label" for="one-ecom-product-price">Tanggal Obrik</label>
@@ -95,15 +94,13 @@
                                 </div>
                             </div>
                             <!-- /.card-body -->
-                            <div class="card-footer">
-                                <div class="col-4">
-                                    <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
-                                    <button type="submit" class="btn btn-success float-right">Save</button>
-                                </div>
-                            </div>
                         </div>
-                        <!-- /.card -->
+                        <div class="card-footer">
+                            <a href="{{ route('lhp.index') }}" class="btn btn-secondary">Batal</a>
+                            <button type="submit" class="btn btn-success float-right">Perbaharui</button>
+                        </div>
                     </div>
+                    <!-- /.card -->
                 </div>
             </div>
         </form>

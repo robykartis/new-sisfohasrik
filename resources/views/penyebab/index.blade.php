@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Laporan Hasil Pemeriksaan (LHP)
+    Data
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -12,50 +12,133 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
 
-    <style type="text/css">
-        th {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+    <style>
+        .container {
+            width: 100%;
+            border-collapse: collapse;
         }
 
-        table.dataTable td.child {
+        .item {
+            width: 25%;
             text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .text {
+            width: 75%;
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
         }
     </style>
 @endpush
 
 @section('content')
     <section class="content">
+
         <!-- Default box -->
         <div class="card card-warning">
-            <div class="card-header">
+            <div class="card-header ">
                 <h3 class="card-title">{{ $title }}</h3>
                 <div class="card-tools">
-                    <a href="{{ route('lhp.create') }}" class="btn btn-success btn-sm" title="Add">
+                    <a href="{{ route('temuan.create', $id) }}" class="btn btn-success btn-sm" title="Add">
                         <i class="fas fa-plus"></i>
                     </a>
                 </div>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped data-table">
-                        <thead>
-                            <tr>
-                                <th class="nowrap text-overflow">No</th>
-                                <th class="nowrap text-overflow">No LHP</th>
-                                <th class="nowrap text-overflow">Tanggal LHP</th>
-                                <th class="nowrap text-overflow">Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+            <div class="card-body pb-0">
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-12 d-flex align-items-stretch flex-column">
+                        <div class="card bg-light d-flex flex-fill">
+                            <div class="card-header text-muted border-bottom-0">
+                                {{ $title_lhp }} - ID = {{ $data->id }}
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="table-responsive">
+                                    <table class="container">
+                                        <tr>
+                                            <td class="item">Tahun</td>
+                                            <td class="text"> {{ $data->tahun }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="item">Klarifikasi Obrik</td>
+                                            <td class="text"> {{ $data->nama }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="item">No LHP</td>
+                                            <td class="text"> {{ $data->no_lhp }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="item">Nama Obrik</td>
+                                            <td class="text"> {{ $data->nama_obrik }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="item">Tanggal LHP</td>
+                                            <td class="text"> {{ $tgl_lhp }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-12 d-flex align-items-stretch flex-column">
+                        <div class="card bg-light d-flex flex-fill">
+                            <div class="card-header text-muted border-bottom-0">
+                                {{ $title_temuan }} - ID = {{ $temuan->id }}
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="table-responsive">
+                                    <table class="container">
+                                        <tr>
+                                            <td class="item">No Temuan</td>
+                                            <td class="text"> {{ $temuan->no_temuan }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="item">Judul Temuan</td>
+                                            <td class="text"> {{ $temuan->judul_temuan }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="item">Kode Temuan</td>
+                                            <td class="text"> {{ $kode->nama }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="item">Bidang</td>
+                                            <td class="text"> {{ $kode->bidang }}</td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 table-responsive">
+                        <table class="table table-striped data-table">
+                            <thead>
+                                <tr>
+                                    <th class="nowrap text-overflow">No</th>
+                                    <th class="nowrap text-overflow">No Sebab</th>
+                                    <th class="nowrap text-overflow">Kode Sebab</th>
+                                    <th class="nowrap text-overflow">Uraian Sebab</th>
+                                    <th class="nowrap text-overflow">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.col -->
                 </div>
             </div>
             <!-- /.card-body -->
-
-            <!-- /.card-footer-->
+            <div class="card-footer">
+                <a href="" class="btn btn-secondary">Kembali</a>
+            </div>
+            <!-- /.card-footer -->
         </div>
         <!-- /.card -->
     </section>
@@ -73,6 +156,7 @@
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
 
@@ -114,12 +198,13 @@
             Render DataTable
             --------------------------------------------
             --------------------------------------------*/
+            // var id = {{ $request->id }};
             var table = $('.data-table').DataTable({
                 responsive: true,
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ route('lhp.index') }}",
+                    url: "{{ route('penyebab.index', $request->id) }}",
                     type: "GET",
                 },
                 columns: [{
@@ -130,23 +215,22 @@
                         }
                     },
                     {
-                        data: 'no_lhp',
-                        name: 'no_lhp',
+                        data: 'no_sebab',
+                        name: 'no_sebab',
                         createdCell: function(td, cellData, rowData, row, col) {
                             $(td).css('word-break', 'break-all');
                         }
                     },
                     {
-                        data: 'tgl_lhp',
-                        name: 'tgl_lhp',
-                        render: function(data, type, row) {
-                            var date = new Date(row.tgl_lhp);
-                            return date.toLocaleDateString('id-ID', {
-                                day: 'numeric',
-                                month: 'long',
-                                year: 'numeric'
-                            });
-                        },
+                        data: 'kode_sebab',
+                        name: 'kode_sebab',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
+                    },
+                    {
+                        data: 'uraian_sebab',
+                        name: 'uraian_sebab',
                         createdCell: function(td, cellData, rowData, row, col) {
                             $(td).css('word-break', 'break-all');
                         }
@@ -187,8 +271,6 @@
                     $('#saveBtn').val("edit-user");
                     $('#ajaxModel').modal('show');
                     $('#kode_id').val(data.id);
-                    $('#no_lhp').val(data.no_lhp);
-                    $('#tgl_lhp').val(data.tgl_lhp);
 
                 })
 

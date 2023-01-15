@@ -17,7 +17,7 @@ class LhpController extends Controller
     public function index(Request $request, Lhp $lhp)
     {
         if ($request->ajax()) {
-            $data = Lhp::select('id', 'no_lhp',  'tgl_lhp')->get();
+            $data = Lhp::select('id', 'no_lhp', 'tgl_lhp')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -27,6 +27,7 @@ class LhpController extends Controller
                     return $btn;
                 })
                 ->editColumn('tgl_lhp', function ($row) {
+
                     return Carbon::parse($row->tgl_lhp)->format('d-F-Y');
                 })
                 ->rawColumns(['action'])
@@ -44,7 +45,7 @@ class LhpController extends Controller
         $klarifikasi_obrik = DB::table('klarifikasi_obrik')->get();
         $dataobrik = DB::table('obrik')->get();
 
-        $title = 'Laporan Hasil Pemeriksaan (LHP)';
+        $title = 'List Data';
         return view('lhp.index')->with([
             'success',
             'title' => $title,
@@ -68,7 +69,7 @@ class LhpController extends Controller
         $klarifikasi_obrik = DB::table('klarifikasi_obrik')->get();
         $dataobrik = DB::table('obrik')->get();
 
-        $title = 'Input Laporan Hasil Pemeriksaan (LHP)';
+        $title = 'Tambah Data';
         return view('lhp.create')->with([
             'success',
             'title' => $title,
@@ -114,12 +115,11 @@ class LhpController extends Controller
     {
         // get the data item by id
         $data = Lhp::findOrFail($id);
-        $tgl_lhp = new DateTime($data->tgl_lhp);
-        $tgl_lhp = $tgl_lhp->format('d  F  Y');
+        $tgl_lhp = Carbon::parse($data->tgl_lhp)->isoFormat(' D MMMM Y');
 
         $klarifikasi_obrik = DB::table('klarifikasi_obrik')->get();
         $dataobrik = DB::table('obrik')->get();
-        $title = 'Edit Daftar Obyek Pemeriksaan (Obrik)';
+        $title = 'Edit Data';
         return view('lhp.edit', compact('data', 'dataobrik', 'klarifikasi_obrik', 'tgl_lhp', 'title', 'request'));
     }
 
@@ -162,44 +162,41 @@ class LhpController extends Controller
 
 
 
-
+    // Bagian Isian Temuan
     public function show(Request $request, $id)
     {
 
         if ($request->ajax()) {
             $data = DB::table('temuan')
-                ->join('kode_bidang', 'temuan.bidang_temuan', '=', 'kode_bidang.id')
                 ->join('lhp', 'temuan.id_lhp', '=', 'lhp.id')
-                ->select('temuan.*', 'kode_bidang.kode as kodetemuan', 'kode_bidang.nama as katemuan', 'lhp.id as idlhpp', 'lhp.no_lhp as nolhp', 'lhp.tahun as thnlhp',)
+                ->join('kode_bidang', 'temuan.bidang_temuan', '=', 'kode_bidang.id')
+                ->select('temuan.*', 'lhp.no_lhp', 'kode_bidang.nama as kode_bidang_nama', 'kode_bidang.kode as kode_temuan_kode')
+                ->where('lhp.id', $id)
                 ->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn =  '<a href="' . route('lhp.edit', $row->id) . '" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
-                    $btn .= ' <a href="' . route('lhp.show', $row->id) . '" data-toggle="tooltip"   data-original-title="Delete" class="btn btn-sm btn-warning " data-bs-toggle="tooltip" title="Show"><i class="far fa-check-circle"></i></a> |';
-                    $btn .= ' <a href="' . url('lhp/hapus', $row->id) . '" data-toggle="tooltip"  onclick="confirmDelete()" data-original-title="Delete" class="btn btn-sm btn-danger " data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></a>';
+                    $btn =  '<a href="' . route('temuan.edit', $row->id) . '" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
+                    $btn .= ' <a href="' . route('temuan.show', $row->id)  . '" data-toggle="tooltip"  data-original-title="Delete" class="btn btn-sm btn-warning " data-bs-toggle="tooltip" title="Show"><i class="far fa-check-circle"></i></a> |';
+                    $btn .= ' <a href="' . route('temuan.destroy', $row->id)  . '" data-toggle="tooltip"  onclick="confirmDelete()" data-original-title="Delete" class="btn btn-sm btn-danger " data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></a>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
-
-
-
         // get the data item by id
         $data = Lhp::findOrFail($id);
         $klarifikasi = KlarifikasiObrik::find($data->klarifikasi);
-        $tgl_lhp = new DateTime($data->tgl_lhp);
-        $tgl_lhp = $tgl_lhp->format('d  F  Y');
+
         $data = DB::table('lhp')
             ->join('klarifikasi_obrik', 'klarifikasi_obrik.id', '=', 'lhp.klarifikasi')
             ->join('obrik', 'obrik.id', '=', 'lhp.obrik')
             ->select('lhp.*', 'klarifikasi_obrik.nama', 'obrik.nama AS nama_obrik')
             ->where('lhp.id', $id)
             ->first();
+        $tgl_lhp = Carbon::parse($data->tgl_lhp)->isoFormat(' D MMMM Y');
         $dataobrik = DB::table('obrik')->get();
-        $title = 'Detail Obyek Pemeriksaan (Obrik)';
-        return view('lhp.index_temuan', compact('data', 'dataobrik', 'klarifikasi', 'tgl_lhp', 'title', 'request', 'id'));
+        $title = 'Detail Data';
+        return view('lhp.show', compact('data', 'dataobrik', 'klarifikasi', 'tgl_lhp', 'title', 'request', 'id'));
     }
 }

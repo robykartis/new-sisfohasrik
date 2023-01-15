@@ -33,21 +33,23 @@ class ObrikController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn =  '<a href="' . route('pendaftaranobrik.edit', $row->id) . '" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
+                    $btn = '<div class="d-flex justify-content-between">';
+                    $btn .=  '<a href="' . route('pendaftaranobrik.edit', $row->id) . '" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a>';
                     $btn .= ' <a  href="' . url('obrik/hapus', $row->id) . '" data-toggle="tooltip" onclick="confirmDelete()" data-original-title="Delete" class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></a>';
+                    $btn .= '</div>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        $title = 'Daftar Obyek Pemeriksaan (Obrik)';
+        $title = 'List Data';
         return view('obrik.index', compact('klarifikasis', 'request', 'tahun', 'title'));
         // return view('pendaftaran_obrik.index', ['klarifikasis' => $klarifikasis, 'request' => $request, 'tahun' => $tahun]);
     }
     public function create(Request $request)
     {
         $klarifikasi_obriks = DB::table('klarifikasi_obrik')->get();
-        $title = 'Input Daftar Obyek Pemeriksaan (Obrik)';
+        $title = 'Tambah Data';
         return view('obrik.create', compact('klarifikasi_obriks', 'request', 'title'));
     }
     public function store(Request $request)
@@ -78,7 +80,7 @@ class ObrikController extends Controller
 
         // get all klarifikasi obrik
         $klarifikasi_obriks = KlarifikasiObrik::all();
-        $title = 'Edit Daftar Obyek Pemeriksaan (Obrik)';
+        $title = 'Edit Data';
         return view('obrik.edit', compact('data', 'klarifikasi_obriks', 'request', 'title'));
     }
 

@@ -1,6 +1,6 @@
 @extends('layouts.v1.app')
 @section('title')
-    User Show
+    Detail Pengguna
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -35,7 +35,7 @@
                     </div>
                     <div class="d-flex align-items-center justify-content-around mt-5 gap-3">
                         <div class="text-center">
-                            <a href="{{ route('users.index') }}" class="btn btn-primary">Back</a>
+                            <a href="{{ route('users.index') }}" class="btn btn-primary">Kembali</a>
                         </div>
                     </div>
                 </div>
