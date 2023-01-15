@@ -36,7 +36,6 @@
 
 @section('content')
     <section class="content">
-
         <!-- Default box -->
         <div class="card card-warning">
             <div class="card-header ">

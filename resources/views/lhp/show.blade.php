@@ -12,15 +12,24 @@
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
 
-    <style type="text/css">
-        th {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+    <style>
+        .container {
+            width: 100%;
+            border-collapse: collapse;
         }
 
-        table.dataTable td.child {
+        .item {
+            width: 25%;
             text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .text {
+            width: 75%;
+            text-align: left;
+            padding: 8px;
+            border: 1px solid #ddd;
         }
     </style>
 @endpush
@@ -38,37 +47,44 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="invoice p-3 mb-3">
+                <div class="card-body pb-0">
                     <!-- title row -->
                     <div class="row">
-                        <div class="col-12">
-                            <h4>
-                                <small class="float-right">Date: {{ $tgl_lhp }}</small>
-                            </h4>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- info row -->
-                    <div class="row invoice-info">
-                        <div class="col-sm-4 invoice-col">
-                            <address>
-                                <strong>Tahun
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                    {{ $data->tahun }} </strong><br>
-                                <strong>No LHP
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                    {{ $data->no_lhp }} </strong><br>
-                                <strong>Nama Obrik
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                    {{ $data->nama_obrik }} </strong><br>
-                                <strong>Klarifikasi Obrik &nbsp;&nbsp;:
-                                    {{ $data->nama }}
-                                </strong><br>
-                            </address>
-                        </div>
-                    </div>
-                    <!-- /.row -->
+                        <div class="col-12 col-sm-6 col-md-12 d-flex align-items-stretch flex-column">
+                            <div class="card bg-light d-flex flex-fill">
+                                <div class="card-header text-muted border-bottom-0">
 
+                                </div>
+                                <div class="card-body pt-0">
+                                    <div class="table-responsive">
+                                        <table class="container">
+                                            <tr>
+                                                <td class="item">Tahun</td>
+                                                <td class="text"> {{ $data->tahun }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="item">No LHP</td>
+                                                <td class="text"> {{ $data->nama }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="item">Nama Obrik</td>
+                                                <td class="text"> {{ $data->no_lhp }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="item">Klarifikasi Obrik</td>
+                                                <td class="text"> {{ $data->nama_obrik }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="item">Tanggal LHP</td>
+                                                <td class="text"> {{ $tgl_lhp }}</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                     <!-- Table row -->
                     <div class="row">
                         <div class="col-12 table-responsive">
