@@ -15,25 +15,24 @@ class PenyebabController extends Controller
 
     public function index(Request $request, $id)
     {
-        // $data = $request->id;
-        // $data = DB::table('sebab')
-        //     ->select('id', 'no_sebab', 'urian_sebab', 'kode_sebab',)
-        //     ->get();
-        // dd($data);
+
         if ($request->ajax()) {
             $data = $request->id;
             $data = DB::table('sebab')
                 ->join('kode_sebab', 'sebab.kode_sebab', '=', 'kode_sebab.id')
-                ->select('sebab.id', 'sebab.no_sebab', 'sebab.uraian_sebab', 'kode_sebab.kode as nama_kode')
+                ->select('sebab.id', 'sebab.no_sebab', 'kode_sebab.kode as nama_kode')
                 ->get();
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn =  '<a href="' . route('penyebab.edit', $row->id) . '" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
-                    $btn .= ' <a href="' . route('penyebab.show', $row->id) . '" data-toggle="tooltip"   data-original-title="Delete" class="btn btn-sm btn-warning " data-bs-toggle="tooltip" title="Show"><i class="far fa-check-circle"></i></a> |';
+                    $btn = '<div class="d-flex justify-content-between">';
+                    $btn .=  '<a href="' . route('penyebab.edit', $row->id) . '" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a>|';
+                    $btn .= ' <a href="' . route('penyebab.show', $row->id) . '" data-toggle="tooltip"   data-original-title="Delete" class="btn btn-sm btn-warning " data-bs-toggle="tooltip" title="Show"><i class="far fa-check-circle"></i></a>|';
                     $btn .= ' <a href="' . url('penyebab/hapus', $row->id) . '" data-toggle="tooltip"  onclick="confirmDelete()" data-original-title="Delete" class="btn btn-sm btn-danger " data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></a>';
+                    $btn .= '</div>';
                     return $btn;
                 })
+
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -121,56 +120,125 @@ class PenyebabController extends Controller
         return redirect()->route('penyebab.index', $request->id_temuan)->with('success', 'Tambah Data Berhasil');
     }
 
-    public function stoe(Request $request)
+
+
+    public function show(Request $request, $id)
     {
-        $penyebab = new Penyebab;
-        $penyebab->id_temuan = $request->id_temuan;
-        $penyebab->no_sebab = $request->no_sebab;
-        $penyebab->uraian_sebab = $request->uraian_sebab;
-        $penyebab->kode_sebab = $request->kode_sebab;
-        $penyebab['created_by'] = auth()->user()->level;
-        $penyebab->save();
-        dd($penyebab);
-        // $data = $request->validate([
-        //     'id_temuan' => 'required',
-        //     'no_sebab' => 'required',
-        //     'uraian_sebab' => 'required',
-        //     'kode_sebab' => 'required',
-        // ]);
+        $penyebab = Penyebab::findOrfail($id);
+        $temuan = DB::table('sebab')
+            ->join('temuan', 'sebab.id_temuan', '=', 'temuan.id')
+            ->join('kode_sebab', 'sebab.kode_sebab', '=', 'kode_sebab.id')
+            ->select('sebab.*', 'temuan.id', 'temuan.no_temuan', 'temuan.id_lhp', 'kode_sebab.nama as kod_sebab')
+            ->where('temuan.id', $penyebab->id_temuan)
+            ->first();
+        $temuan_detail = DB::table('temuan')
+            ->join('kode_temuan', 'temuan.kode_temuan', '=', 'kode_temuan.id')
+            ->join('kode_bidang', 'temuan.bidang_temuan', '=', 'kode_bidang.id')
+            ->select('temuan.*', 'kode_temuan.kode as kode_temuan', 'kode_bidang.nama as kode_bidang')
+            ->where('temuan.id', $temuan->id)
+            ->first();
+        $lhp_detail = DB::table('lhp')
+            ->join('klarifikasi_obrik', 'klarifikasi_obrik.id', '=', 'lhp.klarifikasi')
+            ->join('obrik', 'obrik.id', '=', 'lhp.obrik')
+            ->select('lhp.*', 'klarifikasi_obrik.nama', 'obrik.nama AS nama_obrik')
+            ->where('lhp.id', $temuan->id_lhp)
+            ->first();
         // dd($data);
-        // try {
-        //     $data['id_temuan'] = $request->id;
-        //     $data['created_by'] = auth()->user()->level;
-        //     Penyebab::create($data);
-        //     return redirect()->route('lhp.show', $request->id_temuan)->with('success', 'Tambah Data Berhasil');
-        // } catch (\Illuminate\Database\QueryException $e) {
-        //     return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data ke database.');
-        // } catch (\Exception $e) {
-        //     return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data.');
-        // }
+        $tgl_lhp = Carbon::parse($lhp_detail->tgl_lhp)->isoFormat(' D MMMM Y');
+        // dd($data);
+        $title = 'Penyebab Penyimpangan';
+        return view(
+            'penyebab.show',
+            compact(
+                'lhp_detail',
+                'tgl_lhp',
+                'temuan_detail',
+                'penyebab',
+                'temuan',
+                'title',
+                'request'
+            )
+        );
     }
 
 
-    public function show($id)
+    public function edit(Request $request, $id)
     {
-        //
-    }
-
-
-    public function edit($id)
-    {
-        //
+        $penyebab = Penyebab::findOrfail($id);
+        $sebab = DB::table('sebab')
+            ->join('temuan', 'sebab.id_temuan', '=', 'temuan.id')
+            ->join('kode_sebab', 'sebab.kode_sebab', '=', 'kode_sebab.id')
+            ->select('sebab.*', 'temuan.id', 'temuan.no_temuan', 'temuan.id_lhp', 'kode_sebab.kode')
+            ->where('temuan.id', $penyebab->id_temuan)
+            ->where('sebab.id', $penyebab->id)
+            ->first();
+        $temuan_detail = DB::table('temuan')
+            ->join('kode_temuan', 'temuan.kode_temuan', '=', 'kode_temuan.id')
+            ->join('kode_bidang', 'temuan.bidang_temuan', '=', 'kode_bidang.id')
+            ->select('temuan.*', 'kode_temuan.kode as kode_temuan', 'kode_bidang.nama as kode_bidang')
+            ->where('temuan.id', $sebab->id)
+            ->first();
+        $lhp_detail = DB::table('lhp')
+            ->join('klarifikasi_obrik', 'klarifikasi_obrik.id', '=', 'lhp.klarifikasi')
+            ->join('obrik', 'obrik.id', '=', 'lhp.obrik')
+            ->select('lhp.*', 'klarifikasi_obrik.nama', 'obrik.nama AS nama_obrik')
+            ->where('lhp.id', $sebab->id_lhp)
+            ->first();
+        $kode_sebab_detail = DB::table('kode_sebab') // mengambil data kode sebab
+            ->select('kode_sebab.*')
+            ->where('kode_sebab.id', $penyebab->kode_sebab)
+            ->first();
+        $kode_sebab = DB::table('sebab')
+            ->join('kode_sebab', 'sebab.kode_sebab', '=', 'kode_sebab.id')
+            ->select('kode_sebab.*')
+            ->where('sebab.id', $penyebab->id)
+            ->get();
+        // dd($data);
+        $tgl_lhp = Carbon::parse($lhp_detail->tgl_lhp)->isoFormat(' D MMMM Y');
+        $kode_sebab = KodeSebab::all();
+        // dd($data);
+        $title = 'Penyebab Penyimpangan';
+        return view(
+            'penyebab.edit',
+            compact(
+                'lhp_detail',
+                'tgl_lhp',
+                'temuan_detail',
+                'penyebab',
+                'kode_sebab',
+                'sebab',
+                'title',
+                'request'
+            )
+        );
     }
 
 
     public function update(Request $request, $id)
     {
-        //
+        // dd($request);
+        $data = $request->validate([
+            'id_temuan' => 'required',
+            'no_sebab' => 'required',
+            'uraian_sebab' => 'required',
+            'kode_sebab' => 'required',
+        ]);
+        $penyebab = Penyebab::findOrFail($id);
+        $penyebab->id_temuan = $request->id_temuan;
+        $penyebab->no_sebab = $request->no_sebab;
+        $penyebab->uraian_sebab = $request->uraian_sebab;
+        $penyebab->kode_sebab = $request->kode_sebab;
+        $penyebab->created_by = auth()->user()->level;
+        $penyebab->save();
+
+        return redirect()->route('penyebab.index', $request->id_temuan)->with('success', 'Edit Data Berhasil');
     }
 
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $penyebab = Penyebab::findOrfail($id);
+        $penyebab->delete();
+        return redirect()->back()->withInput()->with('success', 'Data berhasil dihapus');
     }
 }

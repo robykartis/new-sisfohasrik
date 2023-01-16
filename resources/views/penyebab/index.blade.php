@@ -121,8 +121,7 @@
                                     <th class="nowrap text-overflow">No</th>
                                     <th class="nowrap text-overflow">No Sebab</th>
                                     <th class="nowrap text-overflow">Kode Sebab</th>
-                                    <th class="nowrap text-overflow">Uraian Sebab</th>
-                                    <th class="nowrap text-overflow">Aksi</th>
+                                    <th class="nowrap text-overflow" style="width: 15%">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -135,7 +134,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                <a href="" class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('temuan.show', $id) }}" class="btn btn-secondary">Kembali</a>
             </div>
             <!-- /.card-footer -->
         </div>
@@ -157,7 +156,6 @@
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-
 
     <script type="text/javascript">
         function confirmDelete() {
@@ -227,13 +225,7 @@
                             $(td).css('word-break', 'break-all');
                         }
                     },
-                    {
-                        data: 'uraian_sebab',
-                        name: 'uraian_sebab',
-                        createdCell: function(td, cellData, rowData, row, col) {
-                            $(td).css('word-break', 'break-all');
-                        }
-                    },
+
                     {
                         data: 'action',
                         name: 'action',

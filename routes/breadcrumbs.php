@@ -129,9 +129,20 @@ Breadcrumbs::for('penyebab.index', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('lhp.index');
     $trail->push('Data', route('penyebab.index', $id));
 });
+// Tambah Penyebab
 Breadcrumbs::for('penyebab.create', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('lhp.index');
     $trail->push('Tambah Data', route('penyebab.index', $id));
+});
+// Penyebab Show
+Breadcrumbs::for('penyebab.show', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('lhp.index');
+    $trail->push('Detail Data', route('penyebab.show', $id));
+});
+// Penyebab Edit
+Breadcrumbs::for('penyebab.edit', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('lhp.index');
+    $trail->push('Edit Data', route('penyebab.edit', $id));
 });
 
 

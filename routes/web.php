@@ -71,11 +71,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('lhp/{id}/temuan/show', [TemuanController::class, 'show'])->name('temuan.show');
         Route::get('lhp/{id}/temuan/delete', [TemuanController::class, 'destroy'])->name('temuan.destroy');
         // Penyebab
+        Route::resource('penyebabtemuan', PenyebabController::class);
         Route::get('temuan/{id}/penyebab', [PenyebabController::class, 'index'])->name('penyebab.index');
         Route::get('temuan/{id}/penyebab/create', [PenyebabController::class, 'create'])->name('penyebab.create');
         Route::post('temuan/penyebab/add', [PenyebabController::class, 'store'])->name('penyebab.store');
         Route::get('temuan/{id}/penyebab/edit', [PenyebabController::class, 'edit'])->name('penyebab.edit');
-        Route::get('temuan/{id}/penyebab/show', [PenyebabController::class, 'show'])->name('penyebab.show');
+        Route::get('temuan/penyebab/{id}/show', [PenyebabController::class, 'show'])->name('penyebab.show');
+        Route::patch('temuan/penyebab/{id}/update', [PenyebabController::class, 'update'])->name('penyebab.update');
+        Route::get('penyebab/hapus/{id}', [PenyebabController::class, 'destroy'])->name('penyebab.destroy');
     });
 
 
