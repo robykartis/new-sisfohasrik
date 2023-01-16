@@ -72,6 +72,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('lhp/{id}/temuan/delete', [TemuanController::class, 'destroy'])->name('temuan.destroy');
         // Penyebab
         Route::get('temuan/{id}/penyebab', [PenyebabController::class, 'index'])->name('penyebab.index');
+        Route::get('temuan/{id}/penyebab/create', [PenyebabController::class, 'create'])->name('penyebab.create');
+        Route::post('temuan/penyebab/add', [PenyebabController::class, 'store'])->name('penyebab.store');
         Route::get('temuan/{id}/penyebab/edit', [PenyebabController::class, 'edit'])->name('penyebab.edit');
         Route::get('temuan/{id}/penyebab/show', [PenyebabController::class, 'show'])->name('penyebab.show');
     });

@@ -5,6 +5,9 @@
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
 @endsection
+@push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
+@endpush
 @section('content')
     <section class="content">
         <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
@@ -21,15 +24,25 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="inputName">Nama</label>
-                                            <input type="text" name="name" class="form-control"
-                                                placeholder="Masukan Nama">
+                                            <input type="text" value="{{ old('name') }}" name="name"
+                                                class="form-control" placeholder="Masukan Nama">
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="inputName">Email</label>
-                                            <input type="email" name="email" class="form-control"
-                                                placeholder="Masukan Email">
+                                            <input type="email" value="{{ old('email') }}" name="email"
+                                                class="form-control" placeholder="Masukan Email">
+                                            @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -45,13 +58,23 @@
                                                 <option value="operator">Operator</option>
                                                 <option value="readonly">Read Only</option>
                                             </select>
+                                            @error('level')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="inputName">Nip</label>
-                                            <input type="text" name="nip" class="form-control"
-                                                placeholder="Masukan Nip">
+                                            <input type="text" value="{{ old('nip') }}" name="nip"
+                                                class="form-control" placeholder="Masukan Nip">
+                                            @error('nip')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -63,6 +86,11 @@
                                             <label for="inputName">Password</label>
                                             <input type="password" name="password" class="form-control"
                                                 placeholder="Masukan Password">
+                                            @error('password')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -75,7 +103,6 @@
                                                     <label class="custom-file-label" for="exampleInputFile">Choose
                                                         file</label>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -127,6 +154,49 @@
     <script>
         $(function() {
             bsCustomFileInput.init();
+        });
+    </script>
+    <script>
+        $('form').submit(function(e) {
+            e.preventDefault();
+            var name = $('input[name="name"]').val();
+            var email = $('input[name="email"]').val();
+            var level = $('selecl[name="level"]').val();
+            var nip = $('input[name="nip"]').val();
+            var image = $('input[name="image"]').val();
+            var password = $('input[name="password"]').val();
+            if (name == '') {
+                toastr.error('User name harus di isi');
+                $('input[name="name"]').focus();
+                return;
+            }
+            if (email == '') {
+                toastr.error('Email harus di isi');
+                $('input[name="email"]').focus();
+                return;
+            }
+            if ($('select[name="level"]')[0].selectedIndex == 0) {
+                toastr.error('Level Akun harus di pilih');
+                $('select[name="level"]').focus();
+                return;
+            }
+            if (nip == '') {
+                toastr.error('Nip harus di isi');
+                $('input[name="nip"]').focus();
+                return;
+            }
+            if (password == '') {
+                toastr.error('Password harus di isi');
+                $('input[name="password"]').focus();
+                return;
+            }
+            if (image == '') {
+                toastr.error('Silahkan Upload Foto');
+                $('input[name="image"]').focus();
+                return;
+            }
+
+            $(this).unbind('submit').submit();
         });
     </script>
 @endpush

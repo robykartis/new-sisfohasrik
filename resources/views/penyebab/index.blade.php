@@ -41,7 +41,7 @@
             <div class="card-header ">
                 <h3 class="card-title">{{ $title }}</h3>
                 <div class="card-tools">
-                    <a href="{{ route('temuan.create', $id) }}" class="btn btn-success btn-sm" title="Add">
+                    <a href="{{ route('penyebab.create', $id) }}" class="btn btn-success btn-sm" title="Add">
                         <i class="fas fa-plus"></i>
                     </a>
                 </div>
@@ -221,8 +221,8 @@
                         }
                     },
                     {
-                        data: 'kode_sebab',
-                        name: 'kode_sebab',
+                        data: 'nama_kode',
+                        name: 'nama_kode',
                         createdCell: function(td, cellData, rowData, row, col) {
                             $(td).css('word-break', 'break-all');
                         }
