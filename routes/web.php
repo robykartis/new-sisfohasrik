@@ -17,6 +17,7 @@ use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PendaftaranObrikController;
 use App\Http\Controllers\PenyebabController;
 use App\Http\Controllers\ReadonlyController;
+use App\Http\Controllers\RekomendasiController;
 use App\Http\Controllers\TemuanController;
 use App\Http\Controllers\UserAkunController;
 use Illuminate\Support\Facades\Auth;
@@ -79,6 +80,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('temuan/penyebab/{id}/show', [PenyebabController::class, 'show'])->name('penyebab.show');
         Route::patch('temuan/penyebab/{id}/update', [PenyebabController::class, 'update'])->name('penyebab.update');
         Route::get('penyebab/hapus/{id}', [PenyebabController::class, 'destroy'])->name('penyebab.destroy');
+
+        // Rekomendasi
+        Route::get('temuan/{id}/rekomendasi', [RekomendasiController::class, 'index'])->name('rekomendasi.index');
+        Route::get('temuan/{id}/rekomendasi/create', [RekomendasiController::class, 'create'])->name('rekomendasi.create');
+        Route::post('temuan/rekomendasi/add', [RekomendasiController::class, 'store'])->name('rekomendasi.store');
+        Route::get('temuan/{id}/rekomendasi/edit', [RekomendasiController::class, 'edit'])->name('rekomendasi.edit');
+        Route::get('temuan/rekomendasi/{id}/show', [RekomendasiController::class, 'show'])->name('rekomendasi.show');
+        Route::patch('temuan/rekomendasi/{id}/update', [RekomendasiController::class, 'update'])->name('rekomendasi.update');
+        Route::patch('rekomendasi/hapus/{id}', [RekomendasiController::class, 'index'])->name('rekomendasi.destroy');
     });
 
 

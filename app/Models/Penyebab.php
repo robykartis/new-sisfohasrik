@@ -9,6 +9,13 @@ class Penyebab extends Model
 {
     protected $table = 'sebab';
     protected $fillable = [
-        'id_temuan', 'no_sebab', 'uraian_sebab', 'kode_sebab', 'created_by'
+        'id_temuan',
+        'no_sebab',
+        'uraian_sebab',
+        'kode_sebab',
+        'created_by',
+        'created_by_id',
+        'updated_by',
+        'updated_by_id'
     ];
 }

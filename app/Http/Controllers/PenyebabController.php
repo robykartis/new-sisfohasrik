@@ -109,15 +109,25 @@ class PenyebabController extends Controller
             'kode_sebab' => 'required',
         ]);
 
-        $penyebab = new Penyebab;
-        $penyebab->id_temuan = $request->id_temuan;
-        $penyebab->no_sebab = $request->no_sebab;
-        $penyebab->uraian_sebab = $request->uraian_sebab;
-        $penyebab->kode_sebab = $request->kode_sebab;
-        $penyebab->created_by = auth()->user()->level;
-        $penyebab->save();
+        try {
+            $penyebab = new Penyebab;
+            $penyebab->id_temuan = $request->id_temuan;
+            $penyebab->no_sebab = $request->no_sebab;
+            $penyebab->uraian_sebab = $request->uraian_sebab;
+            $penyebab->kode_sebab = $request->kode_sebab;
+            $kode = Penyebab::find($request->id);
+            if (!$kode) {
+                $penyebab['created_by'] = auth()->user()->level;
+                $penyebab['created_by_id'] = auth()->user()->id;
+            }
+            $penyebab['updated_by'] = auth()->user()->name;
+            $penyebab['updated_by_id'] = auth()->user()->id;
+            $penyebab->save();
 
-        return redirect()->route('penyebab.index', $request->id_temuan)->with('success', 'Tambah Data Berhasil');
+            return redirect()->route('penyebab.index', $request->id_temuan)->with('success', 'Tambah Data Berhasil');
+        } catch (\Throwable $e) {
+            echo $e->getMessage();
+        }
     }
 
 
@@ -223,15 +233,25 @@ class PenyebabController extends Controller
             'uraian_sebab' => 'required',
             'kode_sebab' => 'required',
         ]);
-        $penyebab = Penyebab::findOrFail($id);
-        $penyebab->id_temuan = $request->id_temuan;
-        $penyebab->no_sebab = $request->no_sebab;
-        $penyebab->uraian_sebab = $request->uraian_sebab;
-        $penyebab->kode_sebab = $request->kode_sebab;
-        $penyebab->created_by = auth()->user()->level;
-        $penyebab->save();
+        try {
+            $penyebab = Penyebab::findOrFail($id);
+            $penyebab->id_temuan = $request->id_temuan;
+            $penyebab->no_sebab = $request->no_sebab;
+            $penyebab->uraian_sebab = $request->uraian_sebab;
+            $penyebab->kode_sebab = $request->kode_sebab;
+            $kode = Penyebab::find($request->id);
+            if (!$kode) {
+                $penyebab['created_by'] = auth()->user()->level;
+                $penyebab['created_by_id'] = auth()->user()->id;
+            }
+            $penyebab['updated_by'] = auth()->user()->name;
+            $penyebab['updated_by_id'] = auth()->user()->id;
+            $penyebab->save();
 
-        return redirect()->route('penyebab.index', $request->id_temuan)->with('success', 'Edit Data Berhasil');
+            return redirect()->route('penyebab.index', $request->id_temuan)->with('success', 'Edit Data Berhasil');
+        } catch (\Throwable $e) {
+            echo $e->getMessage();
+        }
     }
 
 

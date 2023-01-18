@@ -100,7 +100,13 @@ class LhpController extends Controller
             $lhp->no_lhp = $request->no_lhp;
             $lhp->obrik = $request->obrik;
             $lhp->tgl_lhp = $request->tgl_lhp;
-            $lhp['created_by'] = auth()->user()->level;
+            $kode = Lhp::find($request->id);
+            if (!$kode) {
+                $lhp['created_by'] = auth()->user()->level;
+                $lhp['created_by_id'] = auth()->user()->id;
+            }
+            $lhp['updated_by'] = auth()->user()->name;
+            $lhp['updated_by_id'] = auth()->user()->id;
             $lhp->save();
             return redirect()->route('lhp.index')->with('success', 'Tambah Data Berhasil');
         } catch (\Exception $e) {
@@ -135,9 +141,15 @@ class LhpController extends Controller
             'tgl_lhp' => 'required',
         ]);
         try {
-            $request['created_by'] = auth()->user()->level;
-            $obrik = Lhp::find($id);
-            $obrik->update([
+            $lhp = Lhp::find($id);
+            $kode = Lhp::find($request->id);
+            if (!$kode) {
+                $lhp['created_by'] = auth()->user()->level;
+                $lhp['created_by_id'] = auth()->user()->id;
+            }
+            $lhp['updated_by'] = auth()->user()->name;
+            $lhp['updated_by_id'] = auth()->user()->id;
+            $lhp->update([
                 'tahun' => $request->tahun,
                 'klarifikasi' => $request->klarifikasi,
                 'no_lhp' => $request->no_lhp,

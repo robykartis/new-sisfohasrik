@@ -134,7 +134,8 @@
                                             title="Penyebab">
                                             Penyebab
                                         </a>
-                                        <a href="{{ route('lhp.create') }}" class="btn btn-success btn-sm" title="Add">
+                                        <a href="{{ route('rekomendasi.index', $temuan->id) }}"
+                                            class="btn btn-success btn-sm" title="Add">
                                             Rekomendasi
                                         </a>
                                         <a href="{{ route('lhp.create') }}" class="btn btn-success btn-sm" title="Add">

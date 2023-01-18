@@ -8,5 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Lhp extends Model
 {
     protected $table = 'lhp';
-    protected $fillable = ['no_lhp', 'tgl_lhp', 'tahun', 'klarifikasi', 'obrik', 'created_by'];
+    protected $fillable = [
+        'no_lhp',
+        'tgl_lhp',
+        'tahun',
+        'klarifikasi',
+        'obrik',
+        'created_by',
+        'created_by_id',
+        'updated_by',
+        'updated_by_id'
+    ];
 }

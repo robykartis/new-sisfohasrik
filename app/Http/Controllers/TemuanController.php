@@ -60,14 +60,15 @@ class TemuanController extends Controller
         ]);
 
         try {
-            // dd($request);
+            $kode = Temuan::find($request->id);
+            if (!$kode) {
+                $data['created_by'] = auth()->user()->level;
+                $data['created_by_id'] = auth()->user()->id;
+            }
+            $data['updated_by'] = auth()->user()->name;
+            $data['updated_by_id'] = auth()->user()->id;
             $data['id_temuan'] = $request->kode_temuan;
             $data['urian_temuan'] = $request->uraian_temuan;
-            $data['created_by'] = auth()->user()->level;
-            // $title = 'Detail Obyek Pemeriksaan (Obrik)';
-            // return view('temuan.index', compact('title'));
-            // $request['created_by'] = auth()->user()->level;
-            // dd($data);
             Temuan::create($data);
             return redirect()->route('lhp.show', $request->id_lhp)->with('success', 'Tambah Data Berhasil');
         } catch (\Exception $e) {
@@ -148,11 +149,13 @@ class TemuanController extends Controller
             $temuan = Temuan::find($request->id);
             $data['id_temuan'] = $request->kode_temuan;
             $data['urian_temuan'] = $request->uraian_temuan;
-            $data['created_by'] = auth()->user()->level;
-            // $title = 'Detail Obyek Pemeriksaan (Obrik)';
-            // return view('temuan.index', compact('title'));
-            // $request['created_by'] = auth()->user()->level;
-            // dd($data);
+            $kode = Temuan::find($request->id);
+            if (!$kode) {
+                $data['created_by'] = auth()->user()->level;
+                $data['created_by_id'] = auth()->user()->id;
+            }
+            $data['updated_by'] = auth()->user()->name;
+            $data['updated_by_id'] = auth()->user()->id;
             $temuan->update($data);
             return redirect()->route('lhp.show', $request->id_lhp)->with('success', 'Tambah Data Berhasil');
         } catch (\Exception $e) {

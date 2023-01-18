@@ -65,7 +65,10 @@ class KodeTemuanController extends Controller
      */
     public function store(Request $request)
     {
-        $data = ['kode' => $request->kode,        'nama' => $request->nama,];
+        $data = [
+            'kode' => $request->kode,
+            'nama' => $request->nama,
+        ];
 
         $kode = KodeTemuan::find($request->kode_id);
         if (!$kode) {

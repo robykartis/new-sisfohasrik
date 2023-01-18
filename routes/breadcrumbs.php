@@ -144,6 +144,16 @@ Breadcrumbs::for('penyebab.edit', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('lhp.index');
     $trail->push('Edit Data', route('penyebab.edit', $id));
 });
+// Rekomendasi Index
+Breadcrumbs::for('rekomendasi.index', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('lhp.index');
+    $trail->push('Data', route('rekomendasi.index', $id));
+});
+// Rekomendasi Index
+Breadcrumbs::for('rekomendasi.create', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('lhp.index');
+    $trail->push('Tambah Data', route('rekomendasi.create', $id));
+});
 
 
 // =======================END HALAMAN ADMIN========================//

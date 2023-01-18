@@ -17,12 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('id_temuan');
             $table->string('no_rekomendasi');
-            $table->text('urian_rekomendasi');
+            $table->text('uraian_rekomendasi');
             $table->string('kode_rekomendasi');
             $table->string('status_tlhp');
             $table->string('tgl_tlhp')->nullable();
             $table->string('kode_tlhp')->nullable();
-            $table->string('urian_tlhp')->nullable();
+            $table->string('uraian_tlhp')->nullable();
             $table->string('created_by');
             $table->string('created_by_id');
             $table->string('updated_by')->nullable();
