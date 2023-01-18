@@ -18,7 +18,10 @@ return new class extends Migration
             $table->string('kode');
             $table->string('golongan');
             $table->string('pangkat');
-            $table->string('create_by');
+            $table->string('created_by');
+            $table->string('created_by_id');
+            $table->string('updated_by')->nullable();
+            $table->string('updated_by_id')->nullable();
             $table->timestamps();
         });
     }

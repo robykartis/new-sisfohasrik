@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css">
 
     <style type="text/css">
+        .form-control:focus {
+            border-color: red;
+        }
+
+
         th {
             white-space: nowrap;
             overflow: hidden;
@@ -114,6 +119,10 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+
+
+
     <script type="text/javascript">
         function confirmDelete() {
             if (!confirm("Are You Sure to delete this"))
@@ -229,14 +238,19 @@
             $('#saveBtn').click(function(e) {
                 e.preventDefault();
                 $(this).html('Sending..');
-
+                if (document.getElementById("kode").value == "") {
+                    toastr.error("Kode harus diisi");
+                    return;
+                } else if (document.getElementById("nama").value == "") {
+                    toastr.error("Nama harus diisi");
+                    return;
+                }
                 $.ajax({
                     data: $('#dataForm').serialize(),
                     url: "{{ route('bidangtemuan.store') }}",
                     type: "POST",
                     dataType: 'json',
                     success: function(data) {
-                        // Tambahkan toastr untuk menampilkan pesan sukses
                         if ($('#saveBtn').val() == 'Save') {
                             toastr.success('Data berhasil ditambahkan.', 'Sukses', {
                                 timeOut: 5000
@@ -249,7 +263,6 @@
                         $('#dataForm').trigger("reset");
                         $('#ajaxModel').modal('hide');
                         table.draw();
-
                     },
                     error: function(data) {
                         console.log('Error:', data);

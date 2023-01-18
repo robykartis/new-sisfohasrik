@@ -229,7 +229,13 @@
             $('#saveBtn').click(function(e) {
                 e.preventDefault();
                 $(this).html('Sending..');
-
+                if (document.getElementById("kode").value == "") {
+                    toastr.error("Kode harus diisi");
+                    return;
+                } else if (document.getElementById("nama").value == "") {
+                    toastr.error("Nama harus diisi");
+                    return;
+                }
                 $.ajax({
                     data: $('#dataForm').serialize(),
                     url: "{{ route('klarifikasiobrik.store') }}",

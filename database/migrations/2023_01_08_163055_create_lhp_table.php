@@ -23,6 +23,9 @@ return new class extends Migration
             $table->string('jns_pemeriksaan')->nullable();
             $table->string('uraian')->nullable();
             $table->string('created_by')->nullable();
+            $table->string('created_by_id');
+            $table->string('updated_by')->nullable();
+            $table->string('updated_by_id')->nullable();
             $table->timestamps();
         });
     }

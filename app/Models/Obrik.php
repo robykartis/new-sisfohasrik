@@ -10,6 +10,14 @@ class Obrik extends Model
     protected $table = 'obrik';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'tahun', 'klarifikasi', 'kode', 'induk', 'nama', 'created_by'
+        'tahun',
+        'klarifikasi',
+        'kode',
+        'induk',
+        'nama',
+        'created_by',
+        'created_by_id',
+        'updated_by',
+        'updated_by_id'
     ];
 }

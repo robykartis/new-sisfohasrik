@@ -64,13 +64,20 @@ class ObrikController extends Controller
         ]);
 
         try {
-            $request['created_by'] = auth()->user()->level;
+
+            $kode = Obrik::find($request->id);
+            if (!$kode) {
+                $request['created_by'] = auth()->user()->level;
+                $request['created_by_id'] = auth()->user()->id;
+            }
+            $request['updated_by'] = auth()->user()->name;
+            $request['updated_by_id'] = auth()->user()->id;
             Obrik::create($request->all());
             return redirect()->route('pendaftaranobrik.index')->with('success', 'Tambah Data Berhasil');
         } catch (\Exception $e) {
             // echo $e->getMessage();
             // die;
-            return redirect()->route('pendaftaranobrik.index')->with('error', 'Terjadi kesalahan saat menyimpan data.');
+            return redirect()->route('pendaftaranobrik.create')->with('error', 'Terjadi kesalahan saat menyimpan data.');
         }
     }
     public function edit(Request $request, $id)
@@ -94,19 +101,28 @@ class ObrikController extends Controller
         //     'induk' => 'required?',
         //     'nama' => 'required?',
         // ]);
+        try {
+            $obrik = Obrik::find($id);
+            $kode = Obrik::find($request->id);
+            if (!$kode) {
+                $obrik['created_by'] = auth()->user()->level;
+                $obrik['created_by_id'] = auth()->user()->id;
+            }
+            $obrik['updated_by'] = auth()->user()->name;
+            $obrik['updated_by_id'] = auth()->user()->id;
 
-
-        $request['created_by'] = auth()->user()->level;
-        $obrik = Obrik::find($id);
-        $obrik->update([
-            'tahun' => $request->tahun,
-            'kode' => $request->kode,
-            'nama' => $request->nama,
-            'klarifikasi' => $request->klarifikasi,
-            'induk' => $request->induk,
-        ]);
-        // dd($obrik);
-        return redirect()->route('pendaftaranobrik.index')->with('success', 'Update Data Berhasil');
+            $obrik->update([
+                'tahun' => $request->tahun,
+                'kode' => $request->kode,
+                'nama' => $request->nama,
+                'klarifikasi' => $request->klarifikasi,
+                'induk' => $request->induk,
+            ]);
+            // dd($obrik);
+            return redirect()->route('pendaftaranobrik.index')->with('success', 'Update Data Berhasil');
+        } catch (\Throwable $th) {
+            return redirect()->route('pendaftaranobrik.edit')->with('error', 'Terjadi kesalahan saat menyimpan data.');
+        }
     }
 
 

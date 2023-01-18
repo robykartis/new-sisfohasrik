@@ -44,18 +44,24 @@ class KodePenyebabController extends Controller
 
     public function store(Request $request)
     {
+        $data = ['kode' => $request->kode,        'nama' => $request->nama,];
+
+        $kode = KodeSebab::find($request->kode_id);
+        if (!$kode) {
+            $data['created_by'] = auth()->user()->level;
+            $data['created_by_id'] = auth()->user()->id;
+        }
+        $data['updated_by'] = auth()->user()->name;
+        $data['updated_by_id'] = auth()->user()->id;
+
         KodeSebab::updateOrCreate(
             [
                 'id' => $request->kode_id
             ],
-            [
-                'kode' => $request->kode,
-                'nama' => $request->nama,
-                'create_by' => auth()->user()->level,
-            ]
+            $data
         );
 
-        return response()->json(['success' => ' saved successfully.']);
+        return response()->json(['success' => 'Kode sebab saved successfully.']);
     }
 
 

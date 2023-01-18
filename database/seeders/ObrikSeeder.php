@@ -22,6 +22,7 @@ class ObrikSeeder extends Seeder
             'nama' => 'Obrik 1',
             'induk' => 'Obrik Utama',
             'created_by' => 'admin',
+            'created_by_id' => 1,
         ]);
 
         DB::table('obrik')->insert([
@@ -31,6 +32,7 @@ class ObrikSeeder extends Seeder
             'nama' => 'Obrik 2',
             'induk' => 'Obrik Utama',
             'created_by' => 'admin',
+            'created_by_id' => 1,
         ]);
 
         DB::table('obrik')->insert([
@@ -40,6 +42,7 @@ class ObrikSeeder extends Seeder
             'nama' => 'Obrik 3',
             'induk' => 'Obrik Utama',
             'created_by' => 'admin',
+            'created_by_id' => 1,
         ]);
     }
 }

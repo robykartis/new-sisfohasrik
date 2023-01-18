@@ -40,11 +40,7 @@
         <div class="card card-warning">
             <div class="card-header ">
                 <h3 class="card-title">{{ $title }}</h3>
-                <div class="card-tools">
-                    <a href="{{ route('penyebab.create', $id) }}" class="btn btn-success btn-sm" title="Add">
-                        <i class="fas fa-plus"></i>
-                    </a>
-                </div>
+
             </div>
             <div class="card-body pb-0">
                 <div class="row">
@@ -114,29 +110,45 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-12 table-responsive">
-                        <table class="table table-striped data-table">
-                            <thead>
-                                <tr>
-                                    <th class="nowrap text-overflow">No</th>
-                                    <th class="nowrap text-overflow">No Sebab</th>
-                                    <th class="nowrap text-overflow">Kode Sebab</th>
-                                    <th class="nowrap text-overflow" style="width: 15%">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                    <div class="card col-12">
+                        <div class="card-header">
+                            <h3 class="card-title"><b>Data Penyebab</b></h3>
+                            <div class="card-tools">
+                                <a href="{{ route('penyebab.create', $id) }}" class="btn btn-success btn-sm"
+                                    title="Add">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped data-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="nowrap text-overflow">No</th>
+                                            <th class="nowrap text-overflow">No Sebab</th>
+                                            <th class="nowrap text-overflow">Kode Sebab</th>
+                                            <th class="nowrap text-overflow" style="width: 15%">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                            </tbody>
-                        </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                    <!-- /.col -->
                 </div>
+
+
+                <!-- /.col -->
             </div>
-            <!-- /.card-body -->
-            <div class="card-footer">
-                <a href="{{ route('temuan.show', $id) }}" class="btn btn-secondary">Kembali</a>
-            </div>
-            <!-- /.card-footer -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <a href="{{ route('temuan.show', $id) }}" class="btn btn-secondary">Kembali</a>
+        </div>
+        <!-- /.card-footer -->
         </div>
         <!-- /.card -->
     </section>

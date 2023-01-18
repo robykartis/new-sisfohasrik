@@ -18,21 +18,24 @@ class KodeTemuanSeeder extends Seeder
         DB::table('kode_temuan')->insert([
             'kode' => 'BDG01',
             'nama' => 'Temuan Keuangan',
-            'create_by' => 'admin',
+            'created_by' => 'admin',
+            'created_by_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         DB::table('kode_temuan')->insert([
             'kode' => 'BDG02',
             'nama' => 'Temuan Kesehatan',
-            'create_by' => 'admin',
+            'created_by' => 'admin',
+            'created_by_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         DB::table('kode_temuan')->insert([
             'kode' => 'BDG03',
             'nama' => 'Temuan Pendidikan',
-            'create_by' => 'admin',
+            'created_by' => 'admin',
+            'created_by_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

@@ -20,23 +20,18 @@ class UserAkunController extends Controller
     public function index(Request $request, User $user)
     {
         // $users = DB::table('users')->paginate(2);
-
         if ($request->ajax()) {
             $data = User::select('id', 'name',  'level', 'email', 'nip')->get();
             return Datatables::of($data)
                 ->addIndexColumn()
-
                 ->addColumn('action', function ($row) {
-
                     $btn = '<a href="' . route('users.edit', $row->id) . '"class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a> |';
                     $btn = $btn . '<a href="' . url('users/hapus', $row->id) . '" onclick="confirmDelete()"class="btn btn-sm btn-danger" data-bs-toggle="tooltip" title="Delete"><i class="fa fa-fw fa-times"></i></a>';
-
                     return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-
         $title = 'Daftar Pengguna Aplikasi';
         return view(
             'user.index',
@@ -48,7 +43,6 @@ class UserAkunController extends Controller
         );
     }
 
-
     public function create()
     {
         $title = 'Tambah Pengguna Apllikasi';
@@ -56,7 +50,6 @@ class UserAkunController extends Controller
             'title' => $title
         ]);
     }
-
 
     public function store(Request $request)
     {
@@ -68,25 +61,30 @@ class UserAkunController extends Controller
             'password' => 'required',
             'level' => 'required',
         ]);
+        try {
+            $image = $request->file('image');
+            $file_name = rand(1000, 9999) . $image->getClientOriginalName();
 
-        $image = $request->file('image');
-        $file_name = rand(1000, 9999) . $image->getClientOriginalName();
+            $img = Image::make($image->path());
+            $img->resize('180', '120')
+                ->save(public_path('images/akun/smal') . '/small_' . $file_name);
+            $image->move('images/akun', $file_name);
 
-        $img = Image::make($image->path());
-        $img->resize('180', '120')
-            ->save(public_path('images/akun/smal') . '/small_' . $file_name);
-        $image->move('images/akun', $file_name);
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->nip = $request->nip;
+            $user->level = $request->level;
+            $user->password = Hash::make($request->password);
+            $user->image = $file_name;
+            $user->save();
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->nip = $request->nip;
-        $user->level = $request->level;
-        $user->password = Hash::make($request->password);
-        $user->image = $file_name;
-        $user->save();
-
-        return redirect('users')->with('success', 'Tambah Data Berhasil');
+            return redirect('users')->with('success', 'Tambah Data Berhasil');
+        } catch (\Illuminate\Database\QueryException $e) {
+            if ($e->errorInfo[1] == 1062) {
+                return back()->with('error', 'Email Sudah Terdaftar')->withInput();
+            }
+        }
     }
 
 

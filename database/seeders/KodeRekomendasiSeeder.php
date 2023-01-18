@@ -18,21 +18,24 @@ class KodeRekomendasiSeeder extends Seeder
         DB::table('kode_rekomendasi')->insert([
             'kode' => 'BDG01',
             'nama' => 'Kode Rekomendasi Keuangan',
-            'create_by' => 'admin',
+            'created_by' => 'admin',
+            'created_by_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         DB::table('kode_rekomendasi')->insert([
             'kode' => 'BDG02',
             'nama' => 'Kode Rekomendasi Kesehatan',
-            'create_by' => 'admin',
+            'created_by' => 'admin',
+            'created_by_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         DB::table('kode_rekomendasi')->insert([
             'kode' => 'BDG03',
             'nama' => 'Kode Rekomendasi Pendidikan',
-            'create_by' => 'admin',
+            'created_by' => 'admin',
+            'created_by_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

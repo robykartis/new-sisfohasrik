@@ -62,20 +62,45 @@ class BidangTemuanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // public function store(Request $request)
+    // {
+    //     KodeBidang::updateOrCreate(
+    //         [
+    //             'id' => $request->kode_id
+    //         ],
+    //         [
+    //             'kode' => $request->kode,
+    //             'nama' => $request->nama,
+    //             'created_by' => auth()->user()->level,
+    //             'updated_by' => auth()->user()->name,
+    //         ]
+    //     );
+
+    //     return response()->json(['success' => 'Kode temuan saved successfully.']);
+    // }
     public function store(Request $request)
     {
+
+
+        $data = [
+            'kode' => $request->kode,
+            'nama' => $request->nama,
+        ];
+        $kode = KodeBidang::find($request->kode_id);
+        if (!$kode) {
+            $data['created_by'] = auth()->user()->level;
+            $data['created_by_id'] = auth()->user()->id;
+        }
+        $data['updated_by'] = auth()->user()->name;
+        $data['updated_by_id'] = auth()->user()->id;
+
         KodeBidang::updateOrCreate(
             [
                 'id' => $request->kode_id
             ],
-            [
-                'kode' => $request->kode,
-                'nama' => $request->nama,
-                'create_by' => auth()->user()->level,
-            ]
+            $data
         );
-
-        return response()->json(['success' => 'Kode temuan saved successfully.']);
+        return response()->json(['success' => 'Kode bidang temuan saved successfully.']);
     }
 
     /**

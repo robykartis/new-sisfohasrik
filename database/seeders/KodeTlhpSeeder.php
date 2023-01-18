@@ -18,21 +18,24 @@ class KodeTlhpSeeder extends Seeder
         DB::table('kode_tlhp')->insert([
             'kode' => 'BDG01',
             'nama' => 'Kode Tlhp Keuangan',
-            'create_by' => 'admin',
+            'created_by' => 'admin',
+            'created_by_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         DB::table('kode_tlhp')->insert([
             'kode' => 'BDG02',
             'nama' => 'Kode Tlhp Kesehatan',
-            'create_by' => 'admin',
+            'created_by' => 'admin',
+            'created_by_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         DB::table('kode_tlhp')->insert([
             'kode' => 'BDG03',
             'nama' => 'Kode Tlhp Pendidikan',
-            'create_by' => 'admin',
+            'created_by' => 'admin',
+            'created_by_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

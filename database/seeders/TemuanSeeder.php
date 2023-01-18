@@ -29,6 +29,7 @@ class TemuanSeeder extends Seeder
             'jml_snd_drh' => '100000',
             'keterangan' => 'Keterangan Temuan Keuangan 1',
             'created_by' => 'admin',
+            'created_by_id' => 1,
         ]);
 
         DB::table('temuan')->insert([
@@ -45,6 +46,7 @@ class TemuanSeeder extends Seeder
             'jml_snd_drh' => '150000',
             'keterangan' => 'Keterangan Temuan Procurement 2',
             'created_by' => 'admin',
+            'created_by_id' => 1,
         ]);
 
         DB::table('temuan')->insert([
@@ -61,6 +63,7 @@ class TemuanSeeder extends Seeder
             'jml_snd_drh' => '200000',
             'keterangan' => 'Keterangan Temuan SDM 3',
             'created_by' => 'admin',
+            'created_by_id' => 1,
         ]);
     }
 }

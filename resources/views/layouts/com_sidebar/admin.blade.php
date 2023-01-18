@@ -106,6 +106,8 @@
                 'temuan.index',
                 'temuan.show',
                 'penyebab.index',
+                'penyebab.create',
+                'penyebab.show',
             ]) }}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>

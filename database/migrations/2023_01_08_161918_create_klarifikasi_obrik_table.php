@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('kode');
             $table->string('nama');
-            $table->string('create_by');
+            $table->string('created_by');
+            $table->string('created_by_id');
+            $table->string('updated_by')->nullable();
+            $table->string('updated_by_id')->nullable();
             $table->timestamps();
         });
     }

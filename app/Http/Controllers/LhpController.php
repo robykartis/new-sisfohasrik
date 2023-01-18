@@ -199,7 +199,8 @@ class LhpController extends Controller
             ->first();
         $tgl_lhp = Carbon::parse($data->tgl_lhp)->isoFormat(' D MMMM Y');
         $dataobrik = DB::table('obrik')->get();
-        $title = 'Detail Data';
-        return view('lhp.show', compact('data', 'dataobrik', 'klarifikasi', 'tgl_lhp', 'title', 'request', 'id'));
+        $title = 'Detail Data LHP';
+        $title_temuan = 'Data Temuan';
+        return view('lhp.show', compact('data', 'dataobrik', 'klarifikasi', 'tgl_lhp', 'title', 'title_temuan', 'request', 'id'));
     }
 }

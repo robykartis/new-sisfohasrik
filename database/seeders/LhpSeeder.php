@@ -24,6 +24,7 @@ class LhpSeeder extends Seeder
             'jns_pemeriksaan' => 'Pemeriksaan Keuangan',
             'uraian' => 'Uraian Pemeriksaan Keuangan',
             'created_by' => 'admin',
+            'created_by_id' => 1,
         ]);
 
         DB::table('lhp')->insert([
@@ -35,6 +36,7 @@ class LhpSeeder extends Seeder
             'jns_pemeriksaan' => 'Pemeriksaan Procurement',
             'uraian' => 'Uraian Pemeriksaan Procurement',
             'created_by' => 'admin',
+            'created_by_id' => 1,
         ]);
 
         DB::table('lhp')->insert([
@@ -46,6 +48,7 @@ class LhpSeeder extends Seeder
             'jns_pemeriksaan' => 'Pemeriksaan SDM',
             'uraian' => 'Uraian Pemeriksaan SDM',
             'created_by' => 'admin',
+            'created_by_id' => 1,
         ]);
     }
 }
