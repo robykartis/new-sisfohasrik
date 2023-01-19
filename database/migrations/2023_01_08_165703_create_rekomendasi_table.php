@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('no_rekomendasi');
             $table->text('uraian_rekomendasi');
             $table->string('kode_rekomendasi');
-            $table->string('status_tlhp');
+            $table->enum('status_tlhp', ['S', 'B', 'D'])->default('B');
             $table->string('tgl_tlhp')->nullable();
             $table->string('kode_tlhp')->nullable();
             $table->string('uraian_tlhp')->nullable();

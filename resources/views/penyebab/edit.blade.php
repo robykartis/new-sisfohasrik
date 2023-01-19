@@ -220,7 +220,9 @@
     <script>
         $(function() {
             // Summernote
-            $('#summernote').summernote()
+            $('#summernote').summernote({
+                height: '400px'
+            })
             $('#summernote1').summernote()
         })
     </script>
@@ -235,27 +237,6 @@
         }
     </script>
 
-    <script>
-        $(document).ready(function() {
-            toastr.options.timeOut = 10000;
-            @if (Session::has('error'))
-                toastr.error('{{ Session::get('error') }}');
-            @elseif (Session::has('success'))
-                toastr.success('{{ Session::get('success') }}');
-            @endif
-        });
-    </script>
-    {{-- Action Tambah Data --}}
-    <script>
-        $(document).ready(function() {
-            toastr.options.timeOut = 10000;
-            @if (Session::has('error'))
-                toastr.error('{{ Session::get('error') }}');
-            @elseif (Session::has('success'))
-                toastr.success('{{ Session::get('success') }}');
-            @endif
-        });
-    </script>
     <script>
         $(function() {
             bsCustomFileInput.init();

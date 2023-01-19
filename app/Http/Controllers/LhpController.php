@@ -156,7 +156,7 @@ class LhpController extends Controller
                 'obrik' => $request->obrik,
                 'tgl_lhp' => $request->tgl_lhp,
             ]);
-            return redirect()->route('lhp.index')->with('success', 'Update Data Berhasil');
+            return redirect()->route('lhp.index')->flash('success', 'Update Data Berhasil');
         } catch (\Throwable $th) {
             // echo $e->getMessage();
             // die;

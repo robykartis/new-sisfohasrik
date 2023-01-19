@@ -242,8 +242,8 @@
                         }
                     },
                     {
-                        data: 'status_tlhp',
-                        name: 'status_tlhp',
+                        data: 'status_tlhp_string',
+                        name: 'status_tlhp_string',
                         createdCell: function(td, cellData, rowData, row, col) {
                             $(td).css('word-break', 'break-all');
                         }

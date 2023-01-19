@@ -126,8 +126,9 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="inputName">No Rekomendasi</label>
-                                            <input type="text" value="{{ old('no_rekomendasi') }}" name="no_rekomendasi"
-                                                class="form-control" placeholder="Masukan No Penyebab">
+                                            <input type="text" value="{{ $data_rekomendasi->no_rekomendasi }}"
+                                                name="no_rekomendasi" class="form-control"
+                                                placeholder="Masukan No Penyebab">
                                             @error('no_rekomendasi')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -139,10 +140,10 @@
                                         <div class="form-group">
                                             <label for="inputStatus">Kode Rekomendasi</label>
                                             <select name="kode_rekomendasi" class="form-control custom-select">
-                                                <option selected disabled>Pilih Kode Rekomendasi</option>
                                                 @foreach ($kod_rekomendasi as $kod)
-                                                    <option value="{{ $kod->id }}">{{ $kod->kode }} -
-                                                        {{ $kod->nama }}</option>
+                                                    <option value="{{ $kod->id }}"
+                                                        {{ $kod->id == $data_rekomendasi->kode_rekomendasi ? 'selected' : '' }}>
+                                                        {{ $kod->kode }} - {{ $kod->nama }}</option>
                                                 @endforeach
                                             </select>
                                             @error('kode_rekomendasi')
@@ -160,7 +161,7 @@
                                         <div class="form-group">
                                             <label class="form-label " for="one-ecom-product-price">Uraian
                                                 Rekomendasi</label>
-                                            <textarea id="summernote" class="form-control" name="uraian_rekomendasi">{{ old('uraian_rekomendasi') }}</textarea>
+                                            <textarea id="summernote" class="form-control" name="uraian_rekomendasi">{{ $data_rekomendasi->uraian_rekomendasi }}</textarea>
                                             @error('uraian_rekomendasi')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -181,8 +182,18 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="inputName">Tanggal TLHP</label>
-                                            <input type="date" value="{{ old('tgl_tlhp') }}" name="tgl_tlhp"
-                                                class="form-control" placeholder="Masukan Tanggal TLHP">
+                                            <input type="text" value="{{ $tgl_rekomendasi }}" name="tgl_tlhp" readonly
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="inputStatus"><span class="text-danger"><small>
+                                                        Rubah
+                                                        Tanggal Jika Diperlukan</small></span></label>
+                                            <input type="date"
+                                                value="{{ date('Y-m-d', strtotime($data_rekomendasi->tgl_tlhp)) }}"
+                                                name="tgl_tlhp" class="form-control">
                                             @error('tgl_tlhp')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -190,14 +201,16 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="inputStatus">Status TLHP</label>
                                             <select name="status_tlhp" class="form-control custom-select">
-                                                <option selected disabled>Pilih Status TLHP</option>
-                                                <option value="B">Belum</option>
-                                                <option value="S">Selesai</option>
-                                                <option value="D">Dalam Proses</option>
+                                                <option value="B" {{ $status_tlhp == 'B' ? 'selected' : '' }}>Belum
+                                                </option>
+                                                <option value="S" {{ $status_tlhp == 'S' ? 'selected' : '' }}>Selesai
+                                                </option>
+                                                <option value="D" {{ $status_tlhp == 'D' ? 'selected' : '' }}>Dalam
+                                                    Proses</option>
                                             </select>
                                             @error('status_tlhp')
                                                 <span class="invalid-feedback" role="alert">
@@ -211,10 +224,10 @@
                                         <div class="form-group">
                                             <label for="inputStatus">Kode TLHP</label>
                                             <select name="kode_tlhp" class="form-control custom-select">
-                                                <option selected disabled>Pilih Kode Rekomendasi</option>
                                                 @foreach ($kod_tlhp as $kodtlhp)
-                                                    <option value="{{ $kodtlhp->id }}">{{ $kodtlhp->kode }} -
-                                                        {{ $kodtlhp->nama }}</option>
+                                                    <option value="{{ $kodtlhp->id }}"
+                                                        {{ $kodtlhp->id == $data_rekomendasi->kode_tlhp ? 'selected' : '' }}>
+                                                        {{ $kodtlhp->kode }} - {{ $kodtlhp->nama }}</option>
                                                 @endforeach
                                             </select>
                                             @error('kode_tlhp')
@@ -231,7 +244,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="form-label " for="one-ecom-product-price">Uraian TLHP</label>
-                                            <textarea id="summernote1" class="form-control" name="uraian_tlhp">{{ old('uraian_tlhp') }}</textarea>
+                                            <textarea id="summernote1" class="form-control" name="uraian_tlhp">{{ $data_rekomendasi->uraian_tlhp }}</textarea>
                                             @error('uraian_tlhp')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -273,8 +286,12 @@
     <script>
         $(function() {
             // Summernote
-            $('#summernote').summernote()
-            $('#summernote1').summernote()
+            $('#summernote').summernote({
+                height: '200px'
+            })
+            $('#summernote1').summernote({
+                height: '200px'
+            })
         })
     </script>
 

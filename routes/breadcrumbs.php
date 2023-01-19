@@ -149,10 +149,15 @@ Breadcrumbs::for('rekomendasi.index', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('lhp.index');
     $trail->push('Data', route('rekomendasi.index', $id));
 });
-// Rekomendasi Index
+// Rekomendasi Create
 Breadcrumbs::for('rekomendasi.create', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('lhp.index');
     $trail->push('Tambah Data', route('rekomendasi.create', $id));
+});
+// Rekomendasi Edit
+Breadcrumbs::for('rekomendasi.edit', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('lhp.index');
+    $trail->push('Edit Data', route('rekomendasi.edit', $id));
 });
 
 
