@@ -17,11 +17,15 @@ class PenyebabController extends Controller
     {
 
         if ($request->ajax()) {
-            $data = $request->id;
+            $temuan = $request->id;
             $data = DB::table('sebab')
                 ->join('kode_sebab', 'sebab.kode_sebab', '=', 'kode_sebab.id')
+                ->join('temuan', 'sebab.id_temuan', '=', 'temuan.id')
                 ->select('sebab.id', 'sebab.no_sebab', 'kode_sebab.kode as nama_kode')
+                ->where('sebab.id_temuan', $temuan)
                 ->get();
+            // ->orderBy('sebab.no_sebab', 'desc') // mengurut data (asc: dari rendah ke tinggi, desc: dari tinggi ke rendah)
+            // ->where('sebab.id_temuan', $request->segment(2)) //uri segment untuk menangkap url yang (2) berdasarkan url yang ada
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {

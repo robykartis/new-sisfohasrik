@@ -35,7 +35,7 @@ class RekomendasiController extends Controller
         //     ->get();
         // dd($data);
         if ($request->ajax()) {
-            $data = $request->id;
+            $temuan = $request->id;
             $status_tlhp = [
                 'S' => 'Selesai',
                 'B' => 'Belum',
@@ -45,6 +45,7 @@ class RekomendasiController extends Controller
                 ->join('temuan', 'rekomendasi.id_temuan', '=', 'temuan.id')
                 ->join('kode_rekomendasi', 'rekomendasi.kode_rekomendasi', '=', 'kode_rekomendasi.id')
                 ->join('kode_tlhp', 'rekomendasi.kode_tlhp', '=', 'kode_tlhp.id')
+                ->where('rekomendasi.id_temuan', $temuan)
                 ->select(
                     'rekomendasi.*',
                     'kode_rekomendasi.kode as kod_rekomendasi',
@@ -58,7 +59,7 @@ class RekomendasiController extends Controller
                 ->get();
             return Datatables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function ($row) {
+                ->addColumn('action', function ($row,) {
                     $btn = '<div class="d-flex justify-content-between">';
                     $btn .=  '<a href="' . route('rekomendasi.edit', $row->id) . '" class="btn btn-sm btn-info" data-bs-toggle="tooltip" title="Edit"><i class="fa fa-fw fa-pencil-alt"></i></a>|';
                     $btn .= ' <a href="' . route('rekomendasi.show', $row->id) . '" data-toggle="tooltip"   data-original-title="Delete" class="btn btn-sm btn-warning " data-bs-toggle="tooltip" title="Show"><i class="far fa-check-circle"></i></a>|';
@@ -204,7 +205,7 @@ class RekomendasiController extends Controller
      */
     public function edit(Request $request, $id)
     {
-        $data_rekomendasi = Rekomendasi::findOrFail($id);
+        $data_rekomendasi = Rekomendasi::find($id);
         $temuan = Temuan::findOrFail($id);
         // dd($temuan);
         $data = DB::table('lhp')
@@ -266,8 +267,10 @@ class RekomendasiController extends Controller
      * @param  \App\Models\Rekomendasi  $rekomendasi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Rekomendasi $rekomendasi)
+    public function destroy(Rekomendasi $rekomendasi, $id)
     {
-        //
+        $penyebab = Rekomendasi::findOrfail($id);
+        $penyebab->delete();
+        return redirect()->back()->withInput()->with('success', 'Data berhasil dihapus');
     }
 }

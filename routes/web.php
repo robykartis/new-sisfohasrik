@@ -88,7 +88,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('temuan/rekomendasi/{id}/edit', [RekomendasiController::class, 'edit'])->name('rekomendasi.edit');
         Route::get('temuan/rekomendasi/{id}/show', [RekomendasiController::class, 'show'])->name('rekomendasi.show');
         Route::patch('temuan/rekomendasi/{id}/update', [RekomendasiController::class, 'update'])->name('rekomendasi.update');
-        Route::patch('rekomendasi/hapus/{id}', [RekomendasiController::class, 'index'])->name('rekomendasi.destroy');
+        Route::get('rekomendasi/hapus/{id}', [RekomendasiController::class, 'destroy'])->name('rekomendasi.destroy');
     });
 
 
