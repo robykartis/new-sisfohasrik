@@ -125,9 +125,10 @@
                                 <table class="table table-striped data-table">
                                     <thead>
                                         <tr>
-                                            <th class="nowrap text-overflow">No</th>
-                                            <th class="nowrap text-overflow">No Sebab</th>
-                                            <th class="nowrap text-overflow">Kode Sebab</th>
+                                            <th class="nowrap text-overflow" style="width: 5%">No</th>
+                                            <th class="nowrap text-overflow" style="width: 20%">No Sebab</th>
+                                            <th class="nowrap text-overflow" style="width: 15%">Kode Sebab</th>
+                                            <th class="nowrap text-overflow">Uraian Sebab</th>
                                             <th class="nowrap text-overflow" style="width: 15%">Aksi</th>
                                         </tr>
                                     </thead>
@@ -234,6 +235,13 @@
                     {
                         data: 'nama_kode',
                         name: 'nama_kode',
+                        createdCell: function(td, cellData, rowData, row, col) {
+                            $(td).css('word-break', 'break-all');
+                        }
+                    },
+                    {
+                        data: 'uraian_sebab',
+                        name: 'uraian_sebab',
                         createdCell: function(td, cellData, rowData, row, col) {
                             $(td).css('word-break', 'break-all');
                         }

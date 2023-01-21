@@ -141,7 +141,7 @@ class LhpController extends Controller
             'tgl_lhp' => 'required',
         ]);
         try {
-            $lhp = Lhp::find($id);
+            $lhp = Lhp::findOrFail($id);
             $kode = Lhp::find($request->id);
             if (!$kode) {
                 $lhp['created_by'] = auth()->user()->level;
@@ -156,11 +156,11 @@ class LhpController extends Controller
                 'obrik' => $request->obrik,
                 'tgl_lhp' => $request->tgl_lhp,
             ]);
-            return redirect()->route('lhp.index')->flash('success', 'Update Data Berhasil');
-        } catch (\Throwable $th) {
-            // echo $e->getMessage();
+            return redirect()->route('lhp.index')->with('success', 'Update Data Berhasil');
+        } catch (\Throwable $e) {
+            echo $e->getMessage();
             // die;
-            return redirect()->route('lhp.edit')->with('error', 'Terjadi kesalahan saat menyimpan data.');
+            // return redirect()->route('lhp.edit', $lhp->id)->with('error', 'Terjadi kesalahan saat menyimpan data.');
         }
     }
 

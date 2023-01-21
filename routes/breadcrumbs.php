@@ -154,6 +154,11 @@ Breadcrumbs::for('rekomendasi.create', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('lhp.index');
     $trail->push('Tambah Data', route('rekomendasi.create', $id));
 });
+// Rekomendasi Create
+Breadcrumbs::for('rekomendasi.show', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('lhp.index');
+    $trail->push('Detail Data', route('rekomendasi.show', $id));
+});
 // Rekomendasi Edit
 Breadcrumbs::for('rekomendasi.edit', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('lhp.index');

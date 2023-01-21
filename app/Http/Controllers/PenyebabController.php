@@ -21,7 +21,7 @@ class PenyebabController extends Controller
             $data = DB::table('sebab')
                 ->join('kode_sebab', 'sebab.kode_sebab', '=', 'kode_sebab.id')
                 ->join('temuan', 'sebab.id_temuan', '=', 'temuan.id')
-                ->select('sebab.id', 'sebab.no_sebab', 'kode_sebab.kode as nama_kode')
+                ->select('sebab.*', 'kode_sebab.kode as nama_kode')
                 ->where('sebab.id_temuan', $temuan)
                 ->get();
             // ->orderBy('sebab.no_sebab', 'desc') // mengurut data (asc: dari rendah ke tinggi, desc: dari tinggi ke rendah)
@@ -37,7 +37,7 @@ class PenyebabController extends Controller
                     return $btn;
                 })
 
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'uraian_sebab'])
                 ->make(true);
         }
         $temuan = Temuan::find($id);
