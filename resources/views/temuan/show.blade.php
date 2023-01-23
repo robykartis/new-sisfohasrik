@@ -138,10 +138,12 @@
                                             class="btn btn-success btn-sm" title="Add">
                                             Rekomendasi
                                         </a>
-                                        <a href="{{ route('lhp.create') }}" class="btn btn-success btn-sm" title="Add">
+                                        <a href="{{ route('tindaklanjut.index', $temuan->id) }}"
+                                            class="btn btn-success btn-sm" title="Add">
                                             Tindak Lanjut
                                         </a>
-                                        <a href="{{ route('lhp.create') }}" class="btn btn-success btn-sm" title="Add">
+                                        <a href="{{ route('penarikanrnd.index', $temuan->id) }}"
+                                            class="btn btn-success btn-sm" title="Add">
                                             Penarikan RND
                                         </a>
                                     </div>

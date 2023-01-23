@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('tahun')->nullable();
             $table->string('obrik')->nullable();
             $table->string('klarifikasi')->nullable();
-            $table->timestamp('tgl_lhp');
+            $table->date('tgl_lhp');
             $table->string('jns_pemeriksaan')->nullable();
             $table->string('uraian')->nullable();
             $table->string('created_by')->nullable();

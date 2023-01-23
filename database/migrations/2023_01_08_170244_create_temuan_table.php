@@ -22,10 +22,10 @@ return new class extends Migration
             $table->string('judul_temuan');
             $table->text('urian_temuan');
             $table->string('kode_temuan'); //ini menampung kode temuan di table kode_temuan mengambil data field kode
-            $table->string('jml_rnd_neg')->nullable();
-            $table->string('jml_rnd_drh')->nullable();
-            $table->string('jml_snd_neg')->nullable();
-            $table->string('jml_snd_drh')->nullable();
+            $table->decimal('jml_rnd_neg', 13, 0)->nullable();
+            $table->decimal('jml_rnd_drh', 13, 0)->nullable();
+            $table->decimal('jml_snd_neg', 13, 0)->nullable();
+            $table->decimal('jml_snd_drh', 13, 0)->nullable();
             $table->string('keterangan')->nullable();
             $table->string('created_by');
             $table->string('created_by_id');

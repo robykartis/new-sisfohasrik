@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('id_temuan');
             $table->string('jns_kerugian');
-            $table->string('tgl_penarikan');
-            $table->string('jml_penarikan_neg')->nullable();
-            $table->string('jml_penarikan_drh')->nullable();
+            $table->date('tgl_penarikan');
+            $table->decimal('jml_penarikan_neg', 13, 0)->nullable();
+            $table->decimal('jml_penarikan_drh', 13, 0)->nullable();
             $table->text('keterangan')->nullable();
             $table->string('created_by');
             $table->string('created_by_id');

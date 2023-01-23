@@ -250,8 +250,9 @@
     <script>
         $(function() {
             // Summernote
-            $('#summernote').summernote()
-            $('#summernote1').summernote()
+            $('#summernote').summernote({
+                height: '200px'
+            })
         })
     </script>
     <script>

@@ -14,11 +14,13 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\LhpController;
 use App\Http\Controllers\ObrikController;
 use App\Http\Controllers\OperatorController;
+use App\Http\Controllers\PenarikanrndController;
 use App\Http\Controllers\PendaftaranObrikController;
 use App\Http\Controllers\PenyebabController;
 use App\Http\Controllers\ReadonlyController;
 use App\Http\Controllers\RekomendasiController;
 use App\Http\Controllers\TemuanController;
+use App\Http\Controllers\TindaklanjutController;
 use App\Http\Controllers\UserAkunController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -89,6 +91,20 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('temuan/rekomendasi/{id}/show', [RekomendasiController::class, 'show'])->name('rekomendasi.show');
         Route::patch('temuan/rekomendasi/{id}/update', [RekomendasiController::class, 'update'])->name('rekomendasi.update');
         Route::get('rekomendasi/hapus/{id}', [RekomendasiController::class, 'destroy'])->name('rekomendasi.destroy');
+
+        // Tindak Lanjut
+        Route::get('temuan/{id}/tindaklanjut', [TindaklanjutController::class, 'index'])->name('tindaklanjut.index');
+        Route::get('temuan/tindaklanjut/{id}/edit', [TindaklanjutController::class, 'edit'])->name('tindaklanjut.edit');
+        Route::get('temuan/tindaklanjut/{id}/show', [TindaklanjutController::class, 'show'])->name('tindaklanjut.show');
+        Route::patch('temuan/tindaklanjut/{id}/update', [TindaklanjutController::class, 'update'])->name('tindaklanjut.update');
+
+        // Penarikan Rnd
+        Route::get('temuan/{id}/penarikanrnd', [PenarikanrndController::class, 'index'])->name('penarikanrnd.index');
+        Route::get('temuan/{id}/penarikanrnd/create', [PenarikanrndController::class, 'create'])->name('penarikanrnd.create');
+        Route::post('penarikanrnd/add', [PenarikanrndController::class, 'store'])->name('penarikanrnd.store');
+        Route::get('temuan/penarikanrnd/{id}/edit', [PenarikanrndController::class, 'edit'])->name('penarikanrnd.edit');
+        Route::get('temuan/penarikanrnd/{id}/show', [PenarikanrndController::class, 'show'])->name('penarikanrnd.show');
+        Route::patch('temuan/penarikanrnd/{id}/update', [PenarikanrndController::class, 'update'])->name('penarikanrnd.update');
     });
 
 

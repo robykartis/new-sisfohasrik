@@ -247,7 +247,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                <a href="{{ route('temuan.index', $request->id) }}" class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('rekomendasi.index', $temuan->id) }}" class="btn btn-secondary">Kembali</a>
                 <button type="submit" class="btn btn-success float-right">Simpan</button>
             </div>
             </form>
@@ -273,8 +273,12 @@
     <script>
         $(function() {
             // Summernote
-            $('#summernote').summernote()
-            $('#summernote1').summernote()
+            $('#summernote').summernote({
+                height: '200px'
+            })
+            $('#summernote1').summernote({
+                height: '200px'
+            })
         })
     </script>
 
@@ -314,28 +318,52 @@
             bsCustomFileInput.init();
         });
     </script>
-    {{-- <script>
+    <script>
         $('form').submit(function(e) {
             e.preventDefault();
-            var no_sebab = $('input[name="no_sebab"]').val();
-            var kode_sebab = $('selecl[name="kode_sebab"]').val();
-            var uraian_sebab = $('textarea[name="uraian_sebab"]').val();
-            if (no_sebab == '') {
-                toastr.error('No penyebab name harus di isi');
-                $('input[name="no_sebab"]').focus();
+            var no_rekomendasi = $('input[name="no_rekomendasi"]').val();
+            var kode_rekomendasi = $('seleclt[name="kode_rekomendasi"]').val();
+            var uraian_rekomendasi = $('textarea[name="uraian_rekomendasi"]').val();
+            var tgl_tlhp = $('input[name="tgl_tlhp"]').val();
+            var status_tlhp = $('select[name="status_tlhp"]').val();
+            var kode_tlhp = $('select[name="kode_tlhp"]').val();
+            var uraian_tlhp = $('textarea[name="uraian_tlhp"]').val();
+            if (no_rekomendasi == '') {
+                toastr.error('No rekomendasi name harus di isi');
+                $('input[name="no_rekomendasi"]').focus();
                 return;
             }
-            if ($('select[name="kode_sebab"]')[0].selectedIndex == 0) {
-                toastr.error('Kode penyebab harus dipilih');
-                $('select[name="kode_sebab"]').focus();
+            if ($('select[name="kode_rekomendasi"]')[0].selectedIndex == 0) {
+                toastr.error('Kode rekomendasi harus dipilih');
+                $('select[name="kode_rekomendasi"]').focus();
                 return;
             }
-            if (uraian_sebab == '') {
-                toastr.error('Uraian penyebab harus diisi');
-                $('textarea[name="uraian_sebab"]').focus();
+            if (uraian_rekomendasi == '') {
+                toastr.error('Uraian rekomendasi harus diisi');
+                $('textarea[name="uraian_rekomendasi"]').focus();
+                return;
+            }
+            if (tgl_tlhp == '') {
+                toastr.error('Tanggal tlhp harus di isi');
+                $('input[name="tgl_tlhp"]').focus();
+                return;
+            }
+            if ($('select[name="status_tlhp"]')[0].selectedIndex == 0) {
+                toastr.error('Status TLHP harus dipilih');
+                $('select[name="status_tlhp"]').focus();
+                return;
+            }
+            if ($('select[name="kode_tlhp"]')[0].selectedIndex == 0) {
+                toastr.error('Kode TLHP harus dipilih');
+                $('select[name="kode_tlhp"]').focus();
+                return;
+            }
+            if (uraian_tlhp == '') {
+                toastr.error('Uraian TLHP harus diisi');
+                $('textarea[name="uraian_tlhp"]').focus();
                 return;
             }
             $(this).unbind('submit').submit();
         });
-    </script> --}}
+    </script>
 @endpush

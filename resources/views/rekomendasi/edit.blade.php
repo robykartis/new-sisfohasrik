@@ -141,10 +141,11 @@
                                         <div class="form-group">
                                             <label for="inputStatus">Kode Rekomendasi</label>
                                             <select name="kode_rekomendasi" class="form-control custom-select">
-                                                @foreach ($kod_rekomendasi as $kod)
-                                                    <option value="{{ $kod->id }}"
-                                                        {{ $kod->id_rekomendasi == $data_rekomendasi->kode_rekomendasi ? 'selected' : '' }}>
-                                                        {{ $kod->kode }} - {{ $kod->nama }}</option>
+                                                <option selected disabled>Pilih Kode Rekomendasi</option>
+                                                @foreach ($kod_rekomendasi as $kode)
+                                                    <option value="{{ $kode->id }}"
+                                                        {{ $kode->id == $data_rekomendasi->kode_rekomendasi ? 'selected' : '' }}>
+                                                        {{ $kode->kode }} - {{ $kode->nama }}</option>
                                                 @endforeach
                                             </select>
                                             @error('kode_rekomendasi')
@@ -180,18 +181,17 @@
                             <div class="col-md-12 col-lg-12">
                                 <div class="row mb-2">
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="inputName">Tanggal TLHP</label>
                                             <input type="text" name="tgl_tlhp" value="{{ $data_tgl_tlhp }}" readonly
                                                 class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="inputStatus"><span class="text-danger"><small>
-                                                        Rubah
-                                                        Tanggal Jika Diperlukan</small></span></label>
+                                                        Tanggal TLHP </small></span></label>
                                             <input type="date"
                                                 value="{{ date('Y-m-d', strtotime($data_rekomendasi->tgl_tlhp)) }}"
                                                 name="tgl_tlhp" class="form-control">
@@ -206,16 +206,13 @@
                                         <div class="form-group">
                                             <label for="inputStatus">Status TLHP</label>
                                             <select name="status_tlhp" class="form-control custom-select">
-                                                <option value="B" {{ $status_tlhp == 'Belum' ? 'selected' : '' }}>
-                                                    Belum
-                                                </option>
-                                                <option value="S" {{ $status_tlhp == 'Selesai' ? 'selected' : '' }}>
-                                                    Selesai
-                                                </option>
-                                                <option value="D"
-                                                    {{ $status_tlhp == 'Dalam Proses' ? 'selected' : '' }}>
-                                                    Dalam
-                                                    Proses</option>
+                                                @foreach ($status_tlhp as $key => $value)
+                                                    @if (in_array($key, ['S', 'B', 'D']))
+                                                        <option value="{{ $key }}"
+                                                            {{ old('status_tlhp', $data_rekomendasi->status_tlhp) == $key ? 'selected' : '' }}>
+                                                            {{ $value }}</option>
+                                                    @endif
+                                                @endforeach
                                             </select>
                                             @error('status_tlhp')
                                                 <span class="invalid-feedback" role="alert">
@@ -229,10 +226,12 @@
                                         <div class="form-group">
                                             <label for="inputStatus">Kode TLHP</label>
                                             <select name="kode_tlhp" class="form-control custom-select">
-                                                @foreach ($kod_tlhp as $kodtlhp)
-                                                    <option value="{{ $kodtlhp->id }}"
-                                                        {{ $kodtlhp->id == $data_rekomendasi->kode_tlhp ? 'selected' : '' }}>
-                                                        {{ $kodtlhp->kode }} - {{ $kodtlhp->nama }}</option>
+
+                                                <option selected disabled>Pilih Kode Rekomendasi</option>
+                                                @foreach ($kod_tlhp as $kode)
+                                                    <option value="{{ $kode->id }}"
+                                                        {{ $kode->id == $data_rekomendasi->kode_tlhp ? 'selected' : '' }}>
+                                                        {{ $kode->kode }} - {{ $kode->nama }}</option>
                                                 @endforeach
                                             </select>
                                             @error('kode_tlhp')
@@ -325,6 +324,49 @@
     <script>
         $(function() {
             bsCustomFileInput.init();
+        });
+    </script>
+    <script>
+        $('form').submit(function(e) {
+            e.preventDefault();
+            var no_rekomendasi = $('input[name="no_rekomendasi"]').val();
+            var kode_rekomendasi = $('seleclt[name="kode_rekomendasi"]').val();
+            var uraian_rekomendasi = $('textarea[name="uraian_rekomendasi"]').val();
+            var tgl_tlhp = $('input[name="tgl_tlhp"]').val();
+            var kode_tlhp = $('select[name="kode_tlhp"]').val();
+            var uraian_tlhp = $('textarea[name="uraian_tlhp"]').val();
+            if (no_rekomendasi == '') {
+                toastr.error('No rekomendasi name harus di isi');
+                $('input[name="no_rekomendasi"]').focus();
+                return;
+            }
+            if ($('select[name="kode_rekomendasi"]')[0].selectedIndex == 0) {
+                toastr.error('Kode rekomendasi harus dipilih');
+                $('select[name="kode_rekomendasi"]').focus();
+                return;
+            }
+            if (uraian_rekomendasi == '') {
+                toastr.error('Uraian rekomendasi harus diisi');
+                $('textarea[name="uraian_rekomendasi"]').focus();
+                return;
+            }
+            if (tgl_tlhp == '') {
+                toastr.error('Tanggal tlhp harus di isi');
+                $('input[name="tgl_tlhp"]').focus();
+                return;
+            }
+
+            if ($('select[name="kode_tlhp"]')[0].selectedIndex == 0) {
+                toastr.error('Kode TLHP harus dipilih');
+                $('select[name="kode_tlhp"]').focus();
+                return;
+            }
+            if (uraian_tlhp == '') {
+                toastr.error('Uraian TLHP harus diisi');
+                $('textarea[name="uraian_tlhp"]').focus();
+                return;
+            }
+            $(this).unbind('submit').submit();
         });
     </script>
 @endpush

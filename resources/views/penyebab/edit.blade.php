@@ -221,9 +221,9 @@
         $(function() {
             // Summernote
             $('#summernote').summernote({
-                height: '400px'
+                height: '200px'
             })
-            $('#summernote1').summernote()
+
         })
     </script>
 
@@ -240,6 +240,30 @@
     <script>
         $(function() {
             bsCustomFileInput.init();
+        });
+    </script>
+    <script>
+        $('form').submit(function(e) {
+            e.preventDefault();
+            var no_sebab = $('input[name="no_sebab"]').val();
+            var kode_sebab = $('selecl[name="kode_sebab"]').val();
+            var uraian_sebab = $('textarea[name="uraian_sebab"]').val();
+            if (no_sebab == '') {
+                toastr.error('No penyebab name harus di isi');
+                $('input[name="no_sebab"]').focus();
+                return;
+            }
+            if ($('select[name="kode_sebab"]')[0].selectedIndex == 0) {
+                toastr.error('Kode penyebab harus dipilih');
+                $('select[name="kode_sebab"]').focus();
+                return;
+            }
+            if (uraian_sebab == '') {
+                toastr.error('Uraian penyebab harus diisi');
+                $('textarea[name="uraian_sebab"]').focus();
+                return;
+            }
+            $(this).unbind('submit').submit();
         });
     </script>
 @endpush

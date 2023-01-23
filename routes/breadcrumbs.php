@@ -164,7 +164,31 @@ Breadcrumbs::for('rekomendasi.edit', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('lhp.index');
     $trail->push('Edit Data', route('rekomendasi.edit', $id));
 });
-
+// Tindak Lanjut Index
+Breadcrumbs::for('tindaklanjut.index', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('lhp.index');
+    $trail->push('Data', route('tindaklanjut.index', $id));
+});
+// Tindak Lanjut Show
+Breadcrumbs::for('tindaklanjut.show', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('lhp.index');
+    $trail->push('Detail Data', route('tindaklanjut.show', $id));
+});
+// Tindak Lanjut Edit
+Breadcrumbs::for('tindaklanjut.edit', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('lhp.index');
+    $trail->push('Edit Data', route('tindaklanjut.edit', $id));
+});
+// Penarikan RND Index
+Breadcrumbs::for('penarikanrnd.index', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('lhp.index');
+    $trail->push('Data', route('penarikanrnd.index', $id));
+});
+// Penarikan RND Index
+Breadcrumbs::for('penarikanrnd.create', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('lhp.index');
+    $trail->push('Data', route('penarikanrnd.create', $id));
+});
 
 // =======================END HALAMAN ADMIN========================//
 

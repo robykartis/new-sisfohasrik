@@ -14,6 +14,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.1",
+        "nesbot/carbon": "^2.65",
         "yajra/laravel-datatables-oracle": "~9.0",
         "yoeunes/toastr": "^2.1"
     },

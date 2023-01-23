@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Tambah Data
+    Edit Data
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -44,7 +44,7 @@
         <!-- Default box -->
         <div class="card card-warning">
             <div class="card-header ">
-                <h3 class="card-title">{{ $title }}</h3>
+                <h3 class="card-title">Edit</h3>
                 <div class="card-tools">
 
                 </div>
@@ -54,30 +54,30 @@
                     <div class="col-12 col-sm-6 col-md-12 d-flex align-items-stretch flex-column">
                         <div class="card bg-light d-flex flex-fill">
                             <div class="card-header text-muted border-bottom-0">
-                                {{ $title_lhp }} - ID = {{ $data->id }}
+                                LHP - ID = {{ $data->lhp_id }}
                             </div>
                             <div class="card-body pt-0">
                                 <div class="table-responsive">
                                     <table class="container">
                                         <tr>
                                             <td class="item">Tahun</td>
-                                            <td class="text"> {{ $data->tahun }}</td>
+                                            <td class="text"> {{ $data->lhp_tahun }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Klarifikasi Obrik</td>
-                                            <td class="text"> {{ $data->nama }}</td>
+                                            <td class="text"> {{ $data->klarifikasi_obrik_nama }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">No LHP</td>
-                                            <td class="text"> {{ $data->no_lhp }}</td>
+                                            <td class="text"> {{ $data->lhp_no }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Nama Obrik</td>
-                                            <td class="text"> {{ $data->nama_obrik }}</td>
+                                            <td class="text"> {{ $data->obrik_nama }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Tanggal LHP</td>
-                                            <td class="text"> {{ $tgl_lhp }}</td>
+                                            <td class="text"> {{ $data_tgl_lhp }}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -87,26 +87,26 @@
                     <div class="col-12 col-sm-6 col-md-12 d-flex align-items-stretch flex-column">
                         <div class="card bg-light d-flex flex-fill">
                             <div class="card-header text-muted border-bottom-0">
-                                {{ $title_temuan }} - ID = {{ $temuan->id }}
+                                Temuan - ID = {{ $data->temuan_id }}
                             </div>
                             <div class="card-body pt-0">
                                 <div class="table-responsive">
                                     <table class="container">
                                         <tr>
                                             <td class="item">No Temuan</td>
-                                            <td class="text"> {{ $temuan->no_temuan }}</td>
+                                            <td class="text"> {{ $data->temuan_no }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Judul Temuan</td>
-                                            <td class="text"> {{ $temuan->judul_temuan }}</td>
+                                            <td class="text"> {{ $data->temuan_judul }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Kode Temuan</td>
-                                            <td class="text"> {{ $kode->nama }}</td>
+                                            <td class="text"> {{ $data->kod_temuan }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Bidang</td>
-                                            <td class="text"> {{ $kode->bidang }}</td>
+                                            <td class="text"> {{ $data->bidang_temuan }}</td>
                                         </tr>
 
                                     </table>
@@ -114,38 +114,97 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12 col-sm-6 col-md-12 d-flex align-items-stretch flex-column">
+                        <div class="card bg-light d-flex flex-fill">
+                            <div class="card-header text-muted border-bottom-0">
+                                Rekomendasi - ID = {{ $data_rekomendasi->id }}
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="table-responsive">
+                                    <table class="container">
+                                        <tr>
+                                            <td class="item">No </td>
+                                            <td class="text"> {{ $data_rekomendasi->no_rekomendasi }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="item">Kode Rekomendasi</td>
+                                            <td class="text"> {{ $kod_rekomendasi->kode_rekomendasi_kode }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="item">Uraian Rekomendasi</td>
+                                            <td class="text"> {{ $data->kod_temuan }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <form method="POST" action="{{ route('penyebab.store', $id) }}">
+                <form method="POST" action="{{ route('tindaklanjut.update', $data_rekomendasi->id) }}">
                     @csrf
+                    @method('PATCH')
                     <div class="row">
                         <div class="col-12">
                             <div class="col-md-12 col-lg-12">
                                 <div class="row mb-2">
-                                    <input type="hidden" name="id_temuan" value="{{ $temuan->id }}" class="form-control"
-                                        readonly>
-                                    <div class="col-md-6">
+                                    <input type="hidden" name="id_temuan" value="{{ $data_rekomendasi->id_temuan }}"
+                                        class="form-control" readonly>
+                                    <input type="hidden" name="id" value="{{ $data_rekomendasi->id }}"
+                                        class="form-control" readonly>
+                                    <div class="col-md-2">
                                         <div class="form-group">
-                                            <label for="inputName">No Penyebab</label>
-                                            <input type="text" value="{{ old('no_sebab') }}" name="no_sebab"
-                                                class="form-control" placeholder="Masukan No Penyebab">
-                                            @error('no_sebab')
+                                            <label for="inputName">Tanggal TLHP</label>
+                                            <input type="text" name="tgl_tlhp" value="{{ $data_tgl_tlhp }}" readonly
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="inputStatus"><span class="text-danger"><small>
+                                                        Tanggal TLHP </small></span></label>
+                                            <input type="date"
+                                                value="{{ date('Y-m-d', strtotime($data_rekomendasi->tgl_tlhp)) }}"
+                                                name="tgl_tlhp" class="form-control">
+                                            @error('tgl_tlhp')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <div class="form-group">
-                                            <label for="inputStatus">Kode Penyebab</label>
-                                            <select id="inputStatus" name="kode_sebab" class="form-control custom-select">
-                                                <option selected disabled>Pilih Kode Penyebab</option>
-                                                @foreach ($kode_sebab as $kode)
-                                                    <option value="{{ $kode->id }}">{{ $kode->kode }} -
-                                                        {{ $kode->nama }}</option>
+                                            <label for="inputStatus">Status TLHP</label>
+                                            <select name="status_tlhp" class="form-control custom-select">
+                                                @foreach ($status_tlhp as $key => $value)
+                                                    @if (in_array($key, ['S', 'B', 'D']))
+                                                        <option value="{{ $key }}"
+                                                            {{ old('status_tlhp', $data_rekomendasi->status_tlhp) == $key ? 'selected' : '' }}>
+                                                            {{ $value }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
-                                            @error('kode_sebab')
+                                            @error('status_tlhp')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label for="inputStatus">Kode TLHP</label>
+                                            <select name="kode_tlhp" class="form-control custom-select">
+
+                                                <option selected disabled>Pilih Kode Rekomendasi</option>
+                                                @foreach ($kod_tlhp as $kode)
+                                                    <option value="{{ $kode->id }}"
+                                                        {{ $kode->id == $data_rekomendasi->kode_tlhp ? 'selected' : '' }}>
+                                                        {{ $kode->kode }} - {{ $kode->nama }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('kode_tlhp')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -158,9 +217,9 @@
                                 <div class="row mb-2">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="form-label " for="one-ecom-product-price">Uraian Penyebab</label>
-                                            <textarea id="summernote" class="form-control" name="uraian_sebab">{{ old('uraian_sebab') }}</textarea>
-                                            @error('uraian_sebab')
+                                            <label class="form-label " for="one-ecom-product-price">Uraian TLHP</label>
+                                            <textarea id="summernote1" class="form-control" name="uraian_tlhp">{{ $data_rekomendasi->uraian_tlhp }}</textarea>
+                                            @error('uraian_tlhp')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -175,8 +234,9 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                <a href="{{ route('penyebab.index', $request->id) }}" class="btn btn-secondary">Kembali</a>
-                <button type="submit" class="btn btn-success float-right">Simpan</button>
+                <a href="{{ route('tindaklanjut.index', $data_rekomendasi->id_temuan) }}"
+                    class="btn btn-secondary">Kembali</a>
+                <button type="submit" class="btn btn-success float-right">Update</button>
             </div>
             </form>
             <!-- /.card-footer -->
@@ -204,6 +264,9 @@
             $('#summernote').summernote({
                 height: '200px'
             })
+            $('#summernote1').summernote({
+                height: '200px'
+            })
         })
     </script>
 
@@ -217,16 +280,6 @@
         }
     </script>
 
-    <script>
-        $(document).ready(function() {
-            toastr.options.timeOut = 10000;
-            @if (Session::has('error'))
-                toastr.error('{{ Session::get('error') }}');
-            @elseif (Session::has('success'))
-                toastr.success('{{ Session::get('success') }}');
-            @endif
-        });
-    </script>
     {{-- Action Tambah Data --}}
     <script>
         $(document).ready(function() {
@@ -246,22 +299,24 @@
     <script>
         $('form').submit(function(e) {
             e.preventDefault();
-            var no_sebab = $('input[name="no_sebab"]').val();
-            var kode_sebab = $('selecl[name="kode_sebab"]').val();
-            var uraian_sebab = $('textarea[name="uraian_sebab"]').val();
-            if (no_sebab == '') {
-                toastr.error('No penyebab name harus di isi');
-                $('input[name="no_sebab"]').focus();
+            var tgl_tlhp = $('input[name="tgl_tlhp"]').val();
+            var kode_tlhp = $('select[name="kode_tlhp"]').val();
+            var uraian_tlhp = $('textarea[name="uraian_tlhp"]').val();
+
+            if (tgl_tlhp == '') {
+                toastr.error('Tanggal tlhp harus di isi');
+                $('input[name="tgl_tlhp"]').focus();
                 return;
             }
-            if ($('select[name="kode_sebab"]')[0].selectedIndex == 0) {
-                toastr.error('Kode penyebab harus dipilih');
-                $('select[name="kode_sebab"]').focus();
+
+            if ($('select[name="kode_tlhp"]')[0].selectedIndex == 0) {
+                toastr.error('Kode TLHP harus dipilih');
+                $('select[name="kode_tlhp"]').focus();
                 return;
             }
-            if (uraian_sebab == '') {
-                toastr.error('Uraian penyebab harus diisi');
-                $('textarea[name="uraian_sebab"]').focus();
+            if (uraian_tlhp == '') {
+                toastr.error('Uraian TLHP harus diisi');
+                $('textarea[name="uraian_tlhp"]').focus();
                 return;
             }
             $(this).unbind('submit').submit();
