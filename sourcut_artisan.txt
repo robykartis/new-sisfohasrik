@@ -1,0 +1,6 @@
+    alias paserve='php artisan serve'
+	alias pacontroller='php artisan make:controller'
+	alias pamodel='php artisan make:model'
+	alias pamigratef='php artisan migrate:fresh'
+	alias paoptimize='php artisan optimize:clear'
+	alias paseed='php artisan db:seed'

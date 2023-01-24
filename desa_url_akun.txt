@@ -1,0 +1,108 @@
+DESA = DESA TUNGKAL UTARA
+URL = https://tungkalutara.utara.satudatapariamankota.id/
+EMAIL = desa_tungkalutara@gmail.com
+PASSWORD = desa_tungkalutara123
+
+
+DESA = DESA TUNGKAL SELATAN
+URL = https://tungkalselatan.utara.satudatapariamankota.id/
+EMAIL = desa_tungkalselatan@gmail.com
+PASSWORD = desa_tungkalselatan123
+
+
+DESA = DESA TANJUNG SABAR
+URL = https://tanjungsabar.utara.satudatapariamankota.id/
+EMAIL = desa_tanjungsabar@gmail.com
+PASSWORD = desa_tanjungsabar123
+
+
+DESA = DESA SUNGAI RAMBAI
+URL = https://sungairambai.utara.satudatapariamankota.id/
+EMAIL = desa_sungairambai@gmail.com
+PASSWORD = desa_sungairambai123
+
+
+DESA = DESA SINTUK
+URL = https://sintuk.utara.satudatapariamankota.id/
+EMAIL = desa_sintuk@gmail.com
+PASSWORD = desa_sintuk123
+
+
+DESA = DESA SIKAPAK BARAT
+URL = https://sikapakbarat.utara.satudatapariamankota.id/
+EMAIL = desa_sikapakbarat@gmail.com
+PASSWORD = desa_sikapakbarat123
+
+
+DESA = DESA SIKAPAK TIMUR
+URL = https://siikapaktimur.utara.satudatapariamankota.id/
+EMAIL = desa_sikapaktimur@gmail.com
+PASSWORD = desa_sikapaktimur123
+
+
+DESA = DESA PADANG BIRIK BIRIK
+URL = https://padangbirikbirik.utara.satudatapariamankota.id/
+EMAIL = desa_padangbirikbirik@gmail.com
+PASSWORD = desa_padangbirikbirik123
+
+
+DESA = DESA NARAS HILIR
+URL = https://narashilir.utara.satudatapariamankota.id/
+EMAIL = desa_narashilir@gmail.com
+PASSWORD = desa_narashilir123
+
+
+DESA = DESA NARAS I
+URL = https://naras.utara.satudatapariamankota.id/
+EMAIL = desa_naras1@gmail.com
+PASSWORD = desa_naras1123
+
+
+DESA = DESA MANGGUNG
+URL = https://mangguang.utara.satudatapariamankota.id/
+EMAIL = desa_manggung@gmail.com
+PASSWORD = desa_manggung123
+
+
+DESA = KAMPUNG GADANG
+URL = https://kampunggadang.timur.satudatapariamankota.id/
+EMAIL = desa_kampunggadang@gmail.com
+PASSWORD = desa_kampunggadang123
+
+
+DESA = KELURAHAN JALAN KERETA API
+URL = https://jalankeretaapi.tengah.satudatapariamankota.id/
+EMAIL = kelurahan_jalan_kreta_api@gmail.com
+PASSWORD = kreta_api_123
+
+
+DESA = DESA CUBADAK AIR UTARA
+URL = https://cubadakairutara.utara.satudatapariamankota.id/
+EMAIL = desa_cubadakairutara@gmail.com
+PASSWORD = desa_cubadakairutara123
+
+
+DESA = DESA CUBADAK AIR SELATAN
+URL = https://cubadakairselatan.utara.satudatapariamankota.id/
+EMAIL = desa_cubadakairselatan@gmail.com
+PASSWORD = desa_cubadakairselatan123
+
+
+DESA = DESA CUBADAK AIR
+URL = https://cubadakair.utara.satudatapariamankota.id/
+EMAIL = desa_cubadakair@gmail.com
+PASSWORD = desa_cubadakair123
+
+
+DESA = DESA BALAI NARAS
+URL = https://balainaras.utara.satudatapariamankota.id/
+EMAIL = desa_balainaras@gmail.com
+PASSWORD = desa_balainaras123
+
+
+DESA = DESA AMPALU
+URL = https://ampalu.utara.satudatapariamankota.id/
+EMAIL = desa_ampalu@gmail.com
+PASSWORD = desa_ampalu123
+
+

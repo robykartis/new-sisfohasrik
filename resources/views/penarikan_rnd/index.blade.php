@@ -86,26 +86,26 @@
                     <div class="col-12 col-sm-6 col-md-12 d-flex align-items-stretch flex-column">
                         <div class="card bg-light d-flex flex-fill">
                             <div class="card-header text-muted border-bottom-0">
-                                {{ $title_lhp }} - ID = {{ $data->id }}
+                                {{ $title_lhp }} - ID = {{ $data_lhp->id }}
                             </div>
                             <div class="card-body pt-0">
                                 <div class="table-responsive">
                                     <table class="container">
                                         <tr>
                                             <td class="item">Tahun</td>
-                                            <td class="text"> {{ $data->tahun }}</td>
+                                            <td class="text"> {{ $data_lhp->tahun }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Klarifikasi Obrik</td>
-                                            <td class="text"> {{ $data->nama }}</td>
+                                            <td class="text"> {{ $data_lhp->nama }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">No LHP</td>
-                                            <td class="text"> {{ $data->no_lhp }}</td>
+                                            <td class="text"> {{ $data_lhp->no_lhp }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Nama Obrik</td>
-                                            <td class="text"> {{ $data->nama_obrik }}</td>
+                                            <td class="text"> {{ $data_lhp->nama_obrik }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Tanggal LHP</td>
@@ -134,11 +134,11 @@
                                         </tr>
                                         <tr>
                                             <td class="item">Kode Temuan</td>
-                                            <td class="text"> {{ $kode->nama }}</td>
+                                            <td class="text"> {{ $data_temuan->nama }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Bidang</td>
-                                            <td class="text"> {{ $kode->bidang }}</td>
+                                            <td class="text"> {{ $data_temuan->bidang }}</td>
                                         </tr>
 
                                     </table>
@@ -179,21 +179,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
-
-
                                         <tr>
-                                            <td>{{ $data_rnd->jml_rnd_neg }}</td>
-                                            <td>ss</td>
-                                            <td>sfs</td>
+                                            <td>{{ $temuan->jml_rnd_neg }}</td>
+                                            <td>{{ $tarik_neg }}</td>
+                                            <td>{{ $sisa_neg }}</td>
 
-                                            <td>{{ $data_rnd->jml_rnd_drh }}</td>
-                                            <td>Baris 1, Kolom 2</td>
-                                            <td>Baris 1, Kolom 3</td>
+                                            <td>{{ $temuan->jml_rnd_drh }}</td>
+                                            <td>{{ $tarik_drh }}</td>
+                                            <td>{{ $sisa_drh }}</td>
 
-                                            <td>{{ $nilai_total_kerugian }}</td>
-                                            <td>Baris 1, Kolom 2</td>
-                                            <td>Baris 1, Kolom 3</td>
+                                            <td>{{ $total_kerugian }}</td>
+                                            <td>{{ $tot_tarik }}</td>
+                                            <td>{{ $tot_sisa }}</td>
                                         </tr>
 
                                         {{-- <tr>
@@ -236,34 +233,35 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($data_penarikan as $data)
+                                        @foreach ($data_penarikan as $key => $data)
                                             <tr>
-                                                <td>1</td>
-                                                @if (isset($data->tgl_penarikan))
-                                                    <td>{{ \Illuminate\Support\Carbon::parse($data->tgl_penarikan)->isoFormat('D MMMM Y') }}
-                                                    </td>
-                                                @else
-                                                    <td>{{ 'Tanggal tidak tersedia' }}</td>
-                                                @endif
-                                                <td>{{ isset($data->jml_penarikan_neg) ? $data->jml_penarikan_neg : ' tidak tersedia data penarikan NEG' }}
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>
+                                                    {{ \Illuminate\Support\Carbon::parse($data->tgl_penarikan)->isoFormat('D MMMM Y') }}
                                                 </td>
-                                                <td>{{ isset($data->jml_penarikan_drh) ? $data->jml_penarikan_drh : ' tidak tersedia data penarikan DRH' }}
+
+                                                <td>{{ $data->jml_penarikan_neg }}
                                                 </td>
-                                                <td>{{ isset($data->keterangan) ? $data->keterangan : 'keterangan tidak tersedia' }}
+                                                <td>{{ $data->jml_penarikan_drh }}
+                                                </td>
+                                                <td>{{ $data->keterangan }}
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('penarikanrnd.edit', $data->id) }}">Edit</a> |
+                                                    <a href="{{ route('penarikanrnd.edit', $data->id) }}">Edit</a>
+                                                    |
                                                     <a href="">Detail</a> |
                                                     <a href="">Hapus</a>
                                                 </td>
                                             </tr>
                                         @endforeach
 
+
+
                                         <tr>
 
                                             <td colspan="2"><b>TOTAL</b></td>
-                                            <td><b>123</b></td>
-                                            <td><b>123</b></td>
+                                            <td><b>{{ $tarik_neg }}</b></td>
+                                            <td><b>{{ $tarik_drh }}</b></td>
                                             <td colspan="2"><b></b></td>
 
                                         </tr>

@@ -19,18 +19,17 @@ class PenarikanrndController extends Controller
     public function index(Request $request, $id)
     {
 
-
         $temuan = Temuan::find($id);
-        $data = DB::table('lhp')
+        $data_lhp = DB::table('lhp')
             ->join('klarifikasi_obrik', 'klarifikasi_obrik.id', '=', 'lhp.klarifikasi')
             ->join('obrik', 'obrik.id', '=', 'lhp.obrik')
             ->select('lhp.*', 'klarifikasi_obrik.nama', 'obrik.nama AS nama_obrik')
             ->where('lhp.id', $temuan->id_lhp)
             ->first();
         // dd($temuan);
-        $tgl_lhp = Carbon::parse($data->tgl_lhp)->isoFormat(' D MMMM Y');
+        $tgl_lhp = Carbon::parse($data_lhp->tgl_lhp)->isoFormat(' D MMMM Y');
 
-        $kode = DB::table('temuan')
+        $data_temuan = DB::table('temuan')
             ->join('kode_temuan', 'temuan.kode_temuan', '=', 'kode_temuan.id')
             ->join('kode_bidang', 'temuan.bidang_temuan', '=', 'kode_bidang.id')
             ->select('kode_temuan.nama', 'kode_bidang.nama as bidang')
@@ -38,47 +37,49 @@ class PenarikanrndController extends Controller
             ->where('kode_bidang.id', $temuan->bidang_temuan)
             ->first();
 
-
-
-        $id_temuan = $temuan->id;
         $data_penarikan = DB::table('penarikan_kerugian')
-            ->select('id', 'jml_penarikan_neg', 'jml_penarikan_drh', 'keterangan', 'tgl_penarikan')
-            ->where('id_temuan', $id_temuan)
+            ->select('penarikan_kerugian.*', 'id', 'jml_penarikan_neg', 'jml_penarikan_drh', 'keterangan', 'tgl_penarikan')
+            ->where('id_temuan', $temuan->id)
             ->get();
-        // dd($data_penarikan);
 
+        // Data Hasil Temuan
+        $kerugian_neg = $temuan->jml_rnd_neg;
+        $kerugian_drh = $temuan->jml_rnd_drh;
+        $total_kerugian = $kerugian_neg + $kerugian_drh;
+        // dd($total_kerugian);
 
-        $data_rnd = DB::table('penarikan_kerugian')
-            ->join('temuan', 'penarikan_kerugian.id_temuan', '=', 'temuan.id')
-            ->select('penarikan_kerugian.*', 'temuan.jml_rnd_neg', 'temuan.jml_rnd_drh')
-            ->where('temuan.id', $temuan->id)
-            ->first();
+        // Total Ditarik
+        $tarik_neg = $data_penarikan->sum('jml_penarikan_neg');
+        $tarik_drh = $data_penarikan->sum('jml_penarikan_drh');
+        $tot_tarik = $tarik_neg + $tarik_drh;
+        // dd($tarik_neg);
 
-        $penarikan_neg = $data_rnd->jml_rnd_neg;
-        $penarikan_drh = $data_rnd->jml_rnd_drh;
-        $nilai_total_kerugian = $penarikan_neg + $penarikan_drh;
-
-
-
-
-        // dd($nilai_total_kerugian);
+        $tot_sisa = $total_kerugian - $tot_tarik;
+        // dd($tot_sisa);
+        $sisa_neg = $kerugian_neg - $tarik_neg;
+        $sisa_drh = $kerugian_drh - $tarik_drh;
 
         $title_lhp = 'Data LHP';
         $title_temuan = 'Data Temuan';
         $title = 'Penarikan Kerugian Negara/Daerah (RND)';
         return view('penarikan_rnd.index', compact(
-            'data_rnd',
-            'data_penarikan',
-            'nilai_total_kerugian',
+            'title',
             'title_lhp',
             'title_temuan',
-            'kode',
-            'data',
+            'data_lhp',
+            'data_temuan',
             'tgl_lhp',
-            'title',
-            'request',
+            'temuan',
             'id',
-            'temuan'
+
+            'total_kerugian',
+            'data_penarikan',
+            'tot_tarik',
+            'tot_sisa',
+            'tarik_neg',
+            'tarik_drh',
+            'sisa_neg',
+            'sisa_drh',
         ));
     }
 
