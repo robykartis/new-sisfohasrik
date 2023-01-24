@@ -58,9 +58,10 @@ class PenarikanrndController extends Controller
 
         $id_temuan = $temuan->id;
         $data_penarikan = DB::table('penarikan_kerugian')
-            ->select('jml_penarikan_neg', 'jml_penarikan_drh', 'keterangan')
+            ->select('id', 'jml_penarikan_neg', 'jml_penarikan_drh', 'keterangan', 'tgl_penarikan')
             ->where('id_temuan', $id_temuan)
             ->get();
+        // dd($data_penarikan);
 
 
         $data_rnd = DB::table('penarikan_kerugian')
@@ -68,10 +69,11 @@ class PenarikanrndController extends Controller
             ->select('penarikan_kerugian.*', 'temuan.jml_rnd_neg', 'temuan.jml_rnd_drh')
             ->where('temuan.id', $temuan->id)
             ->first();
-        $data_tgl_penarikan = Carbon::parse($data_rnd->tgl_penarikan)->isoFormat(' D MMMM Y');
+
         $penarikan_neg = $data_rnd->jml_rnd_neg;
         $penarikan_drh = $data_rnd->jml_rnd_drh;
         $nilai_total_kerugian = $penarikan_neg + $penarikan_drh;
+
 
 
 
@@ -81,7 +83,6 @@ class PenarikanrndController extends Controller
         $title_temuan = 'Data Temuan';
         $title = 'Penarikan Kerugian Negara/Daerah (RND)';
         return view('penarikan_rnd.index', compact(
-            'data_tgl_penarikan',
             'data_rnd',
             'data_penarikan',
             'nilai_total_kerugian',
@@ -191,15 +192,73 @@ class PenarikanrndController extends Controller
         //
     }
 
-    public function edit(Penarikanrnd $penarikanrnd)
+    public function edit(Request $request, $id)
     {
-        //
+        $data_penarikanrnd = Penarikanrnd::findOrFail($id);
+        $data = Lhp::join('temuan', 'lhp.id', '=', 'temuan.id_lhp')
+            ->join('klarifikasi_obrik', 'lhp.klarifikasi', '=', 'klarifikasi_obrik.id')
+            ->join('obrik', 'lhp.obrik', '=', 'obrik.id')
+            ->join('kode_bidang', 'temuan.bidang_temuan', '=', 'kode_bidang.id')
+            ->join('kode_temuan', 'temuan.kode_temuan', '=', 'kode_temuan.id')
+            ->select(
+                'klarifikasi_obrik.nama AS klarifikasi_obrik_nama',
+                'obrik.nama AS obrik_nama',
+                DB::raw("DATE_FORMAT(lhp.tgl_lhp, '%d %M %Y') as tgl_lhp"),
+                'lhp.id as lhp_id',
+                'lhp.no_lhp as lhp_no',
+                'lhp.tahun as lhp_tahun',
+                'temuan.id as temuan_id',
+                'temuan.no_temuan as temuan_no',
+                'temuan.judul_temuan as temuan_judul',
+                'kode_bidang.nama as bidang_temuan',
+                'kode_temuan.nama as kod_temuan',
+            )
+            ->where('temuan.id', $data_penarikanrnd->id_temuan)->first();
+        $data_tgl_lhp = Carbon::parse($data->tgl_lhp)->isoFormat(' D MMMM Y');
+
+        return view('penarikan_rnd.edit', compact(
+            'data_penarikanrnd',
+            'data',
+            'data_tgl_lhp',
+            'request',
+        ));
     }
 
 
-    public function update(Request $request, Penarikanrnd $penarikanrnd)
+    public function update(Request $request, $id)
     {
-        //
+
+        $data = $request->validate([
+            'id' => 'required',
+            'id_temuan' => 'required',
+            'tgl_penarikan' => 'required',
+            'jml_penarikan_neg' => 'required',
+            'jml_penarikan_drh' => 'required',
+            'keterangan' => 'required',
+        ]);
+        // dd($data);
+
+        try {
+            $data =  Penarikanrnd::findOrFail($id);
+            $data->id_temuan = $request->id_temuan;
+            $data->tgl_penarikan = $request->tgl_penarikan;
+            $data->jml_penarikan_neg = $request->jml_penarikan_neg;
+            $data->jml_penarikan_drh = $request->jml_penarikan_drh;
+            $data->keterangan = $request->keterangan;
+            $kode = Penarikanrnd::find($request->id);
+            if (!$kode) {
+                $data['created_by'] = auth()->user()->level;
+                $data['created_by_id'] = auth()->user()->id;
+            }
+            $data['updated_by'] = auth()->user()->name;
+            $data['updated_by_id'] = auth()->user()->id;
+            $data['jns_kerugian'] = 'RND';
+            $data->save();
+
+            return redirect()->route('penarikanrnd.index', $request->id_temuan)->with('success', 'Tambah Data Berhasil');
+        } catch (\Throwable $e) {
+            echo $e->getMessage();
+        }
     }
 
     /**

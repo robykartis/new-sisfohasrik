@@ -116,19 +116,33 @@
                     </div>
 
                 </div>
-                <form method="POST" action="{{ route('penarikanrnd.store') }}">
+                <form method="POST" action="{{ route('penarikanrnd.update', $data_penarikanrnd->id) }}">
                     @csrf
+                    @method('PATCH')
                     <div class="row">
                         <div class="col-12">
                             <div class="col-md-12 col-lg-12">
                                 <div class="row mb-2">
-                                    <input type="hidden" name="id_temuan" value="{{ $data_temuan->id }}"
+                                    <input type="hidden" name="id_temuan" value="{{ $data_penarikanrnd->id_temuan }}"
+                                        class="form-control" readonly>
+                                    <input type="hidden" name="id" value="{{ $data_penarikanrnd->id }}"
                                         class="form-control" readonly>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label class="form-label " for="one-ecom-product-price">Tanggal
-                                                Penarikan</label>
-                                            <input type="date" value="" name="tgl_penarikan" class="form-control">
+                                            <label for="inputName">Tanggal Penarikan</label>
+                                            <input type="text"
+                                                value="{{ \Illuminate\Support\Carbon::parse($data_penarikanrnd->tgl_penarikan)->isoFormat('D MMMM Y') }}"
+                                                readonly class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="form-label " for="one-ecom-product-price"><span
+                                                    class="text-danger"><small>
+                                                        Rubah Tanggal Jika Diperlukan</small></span></label>
+                                            <input type="date"
+                                                value="{{ date('Y-m-d', strtotime($data_penarikanrnd->tgl_penarikan)) }}"
+                                                name="tgl_penarikan" class="form-control">
                                             @error('tgl_penarikan')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -136,12 +150,13 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
+
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="form-label " for="one-ecom-product-price">Jumlah Penarikan
                                                 Negara</label>
-                                            <input type="number" value="" name="jml_penarikan_neg"
-                                                class="form-control">
+                                            <input type="number" value="{{ $data_penarikanrnd->jml_penarikan_neg }}"
+                                                name="jml_penarikan_neg" class="form-control">
                                             @error('jml_penarikan_neg')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -149,12 +164,12 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="form-label " for="one-ecom-product-price">Jumlah Penarikan
                                                 Daerah</label>
-                                            <input type="number" value="" name="jml_penarikan_drh"
-                                                class="form-control">
+                                            <input type="number" value="{{ $data_penarikanrnd->jml_penarikan_drh }}"
+                                                name="jml_penarikan_drh" class="form-control">
                                             @error('jml_penarikan_drh')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -170,7 +185,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label class="form-label " for="one-ecom-product-price">Keterangan</label>
-                                            <textarea class="form-control" name="keterangan"></textarea>
+                                            <textarea class="form-control" name="keterangan">{{ $data_penarikanrnd->keterangan }}</textarea>
                                             @error('keterangan')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -186,7 +201,8 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                <a href="{{ route('tindaklanjut.index', $data_temuan->id) }}" class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('penarikanrnd.index', $data_penarikanrnd->id_temuan) }}"
+                    class="btn btn-secondary">Kembali</a>
                 <button type="submit" class="btn btn-success float-right">Simpan</button>
             </div>
             </form>

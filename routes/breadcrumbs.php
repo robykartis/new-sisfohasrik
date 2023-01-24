@@ -184,10 +184,15 @@ Breadcrumbs::for('penarikanrnd.index', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('lhp.index');
     $trail->push('Data', route('penarikanrnd.index', $id));
 });
-// Penarikan RND Index
+// Penarikan RND Create
 Breadcrumbs::for('penarikanrnd.create', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('lhp.index');
-    $trail->push('Data', route('penarikanrnd.create', $id));
+    $trail->push('Tambah Data', route('penarikanrnd.create', $id));
+});
+// Penarikan RND Edit
+Breadcrumbs::for('penarikanrnd.edit', function (BreadcrumbTrail $trail, $id) {
+    $trail->parent('lhp.index');
+    $trail->push('Edit Data', route('penarikanrnd.edit', $id));
 });
 
 // =======================END HALAMAN ADMIN========================//

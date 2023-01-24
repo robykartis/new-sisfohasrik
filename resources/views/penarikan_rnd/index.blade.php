@@ -222,7 +222,7 @@
                                 <table class="table-data" border="1">
                                     <thead>
                                         <tr>
-                                            <th colspan="6" style="text-align: center;">Rincian Penarikan RND
+                                            <th colspan="7" style="text-align: center;">Rincian Penarikan RND
                                             </th>
 
                                         </tr>
@@ -232,19 +232,30 @@
                                             <th style="text-align: center;">Jumlah Penarikan Negara</th>
                                             <th style="text-align: center;" style="width: 5%">Jumlah Penarikan Daerah</th>
                                             <th style="text-align: center;" style="width: 40%">Keterangan</th>
+                                            <th style="text-align: center;" style="width: 5%">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
                                         @foreach ($data_penarikan as $data)
                                             <tr>
                                                 <td>1</td>
-                                                <td><a
-                                                        href="">{{ Carbon::parse($data->tgl_penarikan)->format('d F Y') }}</a>
+                                                @if (isset($data->tgl_penarikan))
+                                                    <td>{{ \Illuminate\Support\Carbon::parse($data->tgl_penarikan)->isoFormat('D MMMM Y') }}
+                                                    </td>
+                                                @else
+                                                    <td>{{ 'Tanggal tidak tersedia' }}</td>
+                                                @endif
+                                                <td>{{ isset($data->jml_penarikan_neg) ? $data->jml_penarikan_neg : ' tidak tersedia data penarikan NEG' }}
                                                 </td>
-                                                <td>{{ $data->jml_penarikan_neg }}</td>
-                                                <td>{{ $data->jml_penarikan_drh }}</td>
-                                                <td>{{ $data->keterangan }}</td>
+                                                <td>{{ isset($data->jml_penarikan_drh) ? $data->jml_penarikan_drh : ' tidak tersedia data penarikan DRH' }}
+                                                </td>
+                                                <td>{{ isset($data->keterangan) ? $data->keterangan : 'keterangan tidak tersedia' }}
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('penarikanrnd.edit', $data->id) }}">Edit</a> |
+                                                    <a href="">Detail</a> |
+                                                    <a href="">Hapus</a>
+                                                </td>
                                             </tr>
                                         @endforeach
 
