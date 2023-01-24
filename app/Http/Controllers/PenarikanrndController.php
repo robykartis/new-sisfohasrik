@@ -19,23 +19,7 @@ class PenarikanrndController extends Controller
     public function index(Request $request, $id)
     {
 
-        // $data = DB::table('rekomendasi')
-        //     ->join('temuan', 'rekomendasi.id_temuan', '=', 'temuan.id')
-        //     ->join('kode_rekomendasi', 'rekomendasi.kode_rekomendasi', '=', 'kode_rekomendasi.id')
-        //     ->join('kode_tlhp', 'rekomendasi.kode_tlhp', '=', 'kode_tlhp.id')
-        //     ->where('rekomendasi.id_temuan', $temuan)
-        //     ->select(
-        //         'rekomendasi.*',
-        //         'kode_rekomendasi.kode as kod_rekomendasi',
-        //         'kode_tlhp.kode as kod_tlhp',
-        //         DB::raw("CASE status_tlhp 
-        //     WHEN 'S' THEN 'Selesai'
-        //     WHEN 'B' THEN 'Belum'
-        //     WHEN 'D' THEN 'Dalam Proses'
-        //     END as status_tlhp_string")
-        //     )
-        //     ->get();
-        // dd($temuan);
+
         $temuan = Temuan::find($id);
         $data = DB::table('lhp')
             ->join('klarifikasi_obrik', 'klarifikasi_obrik.id', '=', 'lhp.klarifikasi')
