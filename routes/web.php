@@ -15,6 +15,7 @@ use App\Http\Controllers\LhpController;
 use App\Http\Controllers\ObrikController;
 use App\Http\Controllers\OperatorController;
 use App\Http\Controllers\PenarikanrndController;
+use App\Http\Controllers\PenarikansndController;
 use App\Http\Controllers\PendaftaranObrikController;
 use App\Http\Controllers\PenyebabController;
 use App\Http\Controllers\ReadonlyController;
@@ -106,6 +107,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('temuan/penarikanrnd/{id}/show', [PenarikanrndController::class, 'show'])->name('penarikanrnd.show');
         Route::patch('temuan/penarikanrnd/{id}/update', [PenarikanrndController::class, 'update'])->name('penarikanrnd.update');
         Route::get('penarikanrnd/hapus/{id}', [PenarikanrndController::class, 'destroy'])->name('penarikanrnd.destroy');
+
+        // Penarikan Snd
+        Route::get('temuan/{id}/penarikansnd', [PenarikansndController::class, 'index'])->name('penarikansnd.index');
+        Route::get('temuan/{id}/penarikansnd/create', [PenarikansndController::class, 'create'])->name('penarikansnd.create');
+        Route::post('penarikansnd/add', [PenarikansndController::class, 'store'])->name('penarikansnd.store');
+        Route::get('temuan/penarikansnd/{id}/edit', [PenarikansndController::class, 'edit'])->name('penarikansnd.edit');
+        Route::get('temuan/penarikansnd/{id}/show', [PenarikansndController::class, 'show'])->name('penarikansnd.show');
+        Route::patch('temuan/penarikansnd/{id}/update', [PenarikansndController::class, 'update'])->name('penarikansnd.update');
+        Route::get('penarikansnd/hapus/{id}', [PenarikansndController::class, 'destroy'])->name('penarikansnd.destroy');
     });
 
 

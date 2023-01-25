@@ -146,7 +146,7 @@
                                             class="btn btn-success btn-sm" title="Add">
                                             Penarikan RND
                                         </a>
-                                        <a href="{{ route('penarikanrnd.index', $temuan->id) }}"
+                                        <a href="{{ route('penarikansnd.index', $temuan->id) }}"
                                             class="btn btn-success btn-sm" title="Add">
                                             Penarikan SND
                                         </a>
