@@ -153,53 +153,56 @@
 
                             </div>
                             <div class="card-body pt-3">
-                                <table class="table-data" border="1">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="3" style="text-align: center;">Total Kerugian Negara (Rp.)
-                                            </th>
-                                            <th colspan="3" style="text-align: center;">Total Kerugian Daerah (Rp.)
-                                            </th>
-                                            <th colspan="3" style="text-align: center;">Total Kerugian Negara +
-                                                Daerah (Rp.)</th>
-                                        </tr>
-                                        <tr>
-                                            <th style="text-align: center;">Nilai</th>
-                                            <th style="text-align: center;">Ditarik</th>
-                                            <th style="text-align: center;">Sisa</th>
-
-                                            <th style="text-align: center;">Nilai</th>
-                                            <th style="text-align: center;">Ditarik</th>
-                                            <th style="text-align: center;">Sisa</th>
-
-                                            <th style="text-align: center;">Nilai</th>
-                                            <th style="text-align: center;">Ditarik</th>
-                                            <th style="text-align: center;">Sisa</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>{{ $temuan->jml_rnd_neg }}</td>
-                                            <td>{{ $tarik_neg }}</td>
-                                            <td>{{ $sisa_neg }}</td>
-
-                                            <td>{{ $temuan->jml_rnd_drh }}</td>
-                                            <td>{{ $tarik_drh }}</td>
-                                            <td>{{ $sisa_drh }}</td>
-
-                                            <td>{{ $total_kerugian }}</td>
-                                            <td>{{ $tot_tarik }}</td>
-                                            <td>{{ $tot_sisa }}</td>
-                                        </tr>
-
-                                        {{-- <tr>
-                                                <td>Tidak ada data yang ditemukan</td>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th colspan="3" style="text-align: center;">Total Kerugian Negara (Rp.)
+                                                </th>
+                                                <th colspan="3" style="text-align: center;">Total Kerugian Daerah (Rp.)
+                                                </th>
+                                                <th colspan="3" style="text-align: center;">Total Kerugian Negara +
+                                                    Daerah (Rp.)</th>
                                             </tr>
-                                        --}}
+                                            <tr>
+                                                <th style="text-align: center;">Nilai</th>
+                                                <th style="text-align: center;">Ditarik</th>
+                                                <th style="text-align: center;">Sisa</th>
 
-                                    </tbody>
-                                </table>
+                                                <th style="text-align: center;">Nilai</th>
+                                                <th style="text-align: center;">Ditarik</th>
+                                                <th style="text-align: center;">Sisa</th>
+
+                                                <th style="text-align: center;">Nilai</th>
+                                                <th style="text-align: center;">Ditarik</th>
+                                                <th style="text-align: center;">Sisa</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{ $temuan->jml_rnd_neg }}</td>
+                                                <td>{{ $tarik_neg }}</td>
+                                                <td>{{ $sisa_neg }}</td>
+
+                                                <td>{{ $temuan->jml_rnd_drh }}</td>
+                                                <td>{{ $tarik_drh }}</td>
+                                                <td>{{ $sisa_drh }}</td>
+
+                                                <td>{{ $total_kerugian }}</td>
+                                                <td>{{ $tot_tarik }}</td>
+                                                <td>{{ $tot_sisa }}</td>
+                                            </tr>
+
+                                            {{-- <tr>
+                                                    <td>Tidak ada data yang ditemukan</td>
+                                                </tr>
+                                            --}}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
 
                             </div>
                         </div>
@@ -216,62 +219,57 @@
                                 </div>
                             </div>
                             <div class="card-body pt-3">
-                                <table class="table-data" border="1">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="7" style="text-align: center;">Rincian Penarikan RND
-                                            </th>
-
-                                        </tr>
-                                        <tr>
-                                            <th style="text-align: center;">No</th>
-                                            <th style="text-align: center;">Tanggal Penarikan</th>
-                                            <th style="text-align: center;">Jumlah Penarikan Negara</th>
-                                            <th style="text-align: center;" style="width: 5%">Jumlah Penarikan Daerah</th>
-                                            <th style="text-align: center;" style="width: 40%">Keterangan</th>
-                                            <th style="text-align: center;" style="width: 5%">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($data_penarikan as $key => $data)
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <thead class="thead-light">
                                             <tr>
-                                                <td>{{ $key + 1 }}</td>
-                                                <td>
-                                                    {{ \Illuminate\Support\Carbon::parse($data->tgl_penarikan)->isoFormat('D MMMM Y') }}
-                                                </td>
-
-                                                <td>{{ $data->jml_penarikan_neg }}
-                                                </td>
-                                                <td>{{ $data->jml_penarikan_drh }}
-                                                </td>
-                                                <td>{{ $data->keterangan }}
-                                                </td>
-                                                <td>
-                                                    <a href="{{ route('penarikanrnd.edit', $data->id) }}">Edit</a>
-                                                    |
-                                                    <a href="">Detail</a> |
-                                                    <a href="">Hapus</a>
-                                                </td>
+                                                <th colspan="7" style="text-align: center;">Rincian Penarikan RND
+                                                </th>
                                             </tr>
-                                        @endforeach
-
-
-
-                                        <tr>
-
-                                            <td colspan="2"><b>TOTAL</b></td>
-                                            <td><b>{{ $tarik_neg }}</b></td>
-                                            <td><b>{{ $tarik_drh }}</b></td>
-                                            <td colspan="2"><b></b></td>
-
+                                            <tr>
+                                                <th style="text-align: center;">No</th>
+                                                <th style="text-align: center;">Tanggal Penarikan</th>
+                                                <th style="text-align: center;">Jumlah Penarikan Negara</th>
+                                                <th style="text-align: center;">Jumlah Penarikan Daerah</th>
+                                                <th style="text-align: center;">Keterangan</th>
+                                                <th style="text-align: center;">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data_penarikan as $key => $data)
+                                                <tr>
+                                                    <td>{{ $key + 1 }}</td>
+                                                    <td>
+                                                        {{ \Illuminate\Support\Carbon::parse($data->tgl_penarikan)->isoFormat('D MMMM Y') }}
+                                                    </td>
+                                                    <td>{{ $data->jml_penarikan_neg }}
+                                                    </td>
+                                                    <td>{{ $data->jml_penarikan_drh }}
+                                                    </td>
+                                                    <td>{{ $data->keterangan }}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ route('penarikanrnd.edit', $data->id) }}">Edit</a>|
+                                                        <a href="{{ route('penarikanrnd.show', $data->id) }}"">Detail</a>|
+                                                        <a onclick="confirmDelete()"
+                                                            href="{{ route('penarikanrnd.destroy', $data->id) }}"">Hapus</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                            <tr>
+                                                <td colspan="2"><b>TOTAL</b></td>
+                                                <td><b>{{ $tarik_neg }}</b></td>
+                                                <td><b>{{ $tarik_drh }}</b></td>
+                                                <td colspan="2"><b></b></td>
+                                            </tr>
+                                            {{-- <tr>
+                                            <td>Tidak ada data yang ditemukan</td>
                                         </tr>
-                                        {{-- <tr>
-                                                <td>Tidak ada data yang ditemukan</td>
-                                            </tr>
-                                        --}}
+                                    --}}
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
 
                             </div>
                         </div>

@@ -112,87 +112,122 @@ Breadcrumbs::for('lhp.show', function (BreadcrumbTrail $trail, $id) {
 // Tambah Temuan
 Breadcrumbs::for('temuan.create', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('lhp.index');
-    $trail->push('Tambah Data', route('temuan.create', $id));
+    $trail->push('Tambah Temuan', route('temuan.create', $id));
 });
 // Edit Temuan
 Breadcrumbs::for('temuan.edit', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('lhp.index');
-    $trail->push('Edit Data', route('temuan.edit', $id));
+    $trail->push('Edit Temuan', route('temuan.edit', $id));
 });
 // Temuan Show
 Breadcrumbs::for('temuan.show', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('lhp.index');
-    $trail->push('Detail Data', route('temuan.show', $id));
+    $trail->push('Detail Temuan', route('temuan.show', $id));
 });
-// Penyebab 
-Breadcrumbs::for('penyebab.index', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('lhp.index');
-    $trail->push('Data', route('penyebab.index', $id));
+//Penyebab
+Breadcrumbs::for('penyebab.index', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Penyebab', route('penyebab.index', $id));
 });
 // Tambah Penyebab
-Breadcrumbs::for('penyebab.create', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('lhp.index');
-    $trail->push('Tambah Data', route('penyebab.index', $id));
+Breadcrumbs::for('penyebab.create', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Tambah Penyebab', route('penyebab.create', $id));
 });
 // Penyebab Show
-Breadcrumbs::for('penyebab.show', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('lhp.index');
-    $trail->push('Detail Data', route('penyebab.show', $id));
+Breadcrumbs::for('penyebab.show', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Detail Penyebab', route('penyebab.show', $id));
 });
 // Penyebab Edit
-Breadcrumbs::for('penyebab.edit', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('lhp.index');
-    $trail->push('Edit Data', route('penyebab.edit', $id));
+Breadcrumbs::for('penyebab.edit', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Edit Penyebab', route('penyebab.edit', $id));
 });
 // Rekomendasi Index
-Breadcrumbs::for('rekomendasi.index', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('lhp.index');
-    $trail->push('Data', route('rekomendasi.index', $id));
+Breadcrumbs::for('rekomendasi.index', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Data Rekomendasi', route('rekomendasi.index', $id));
 });
 // Rekomendasi Create
-Breadcrumbs::for('rekomendasi.create', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('lhp.index');
-    $trail->push('Tambah Data', route('rekomendasi.create', $id));
+Breadcrumbs::for('rekomendasi.create', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Tambah Rekomendasi', route('rekomendasi.create', $id));
 });
-// Rekomendasi Create
-Breadcrumbs::for('rekomendasi.show', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('lhp.index');
-    $trail->push('Detail Data', route('rekomendasi.show', $id));
+// Rekomendasi Show
+Breadcrumbs::for('rekomendasi.show', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Detail Rekomendasi', route('rekomendasi.show', $id));
 });
 // Rekomendasi Edit
-Breadcrumbs::for('rekomendasi.edit', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('lhp.index');
-    $trail->push('Edit Data', route('rekomendasi.edit', $id));
+Breadcrumbs::for('rekomendasi.edit', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Edit Rekomendasi', route('rekomendasi.edit', $id));
 });
 // Tindak Lanjut Index
-Breadcrumbs::for('tindaklanjut.index', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('lhp.index');
-    $trail->push('Data', route('tindaklanjut.index', $id));
+Breadcrumbs::for('tindaklanjut.index', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Data Tindak Lanjut', route('tindaklanjut.index', $id));
 });
 // Tindak Lanjut Show
-Breadcrumbs::for('tindaklanjut.show', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('lhp.index');
-    $trail->push('Detail Data', route('tindaklanjut.show', $id));
+Breadcrumbs::for('tindaklanjut.show', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Detail Tindak Lanjut', route('tindaklanjut.show', $id));
 });
 // Tindak Lanjut Edit
-Breadcrumbs::for('tindaklanjut.edit', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('lhp.index');
-    $trail->push('Edit Data', route('tindaklanjut.edit', $id));
+Breadcrumbs::for('tindaklanjut.edit', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Edit Tindak Lanjut', route('tindaklanjut.edit', $id));
 });
 // Penarikan RND Index
-Breadcrumbs::for('penarikanrnd.index', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('lhp.index');
-    $trail->push('Data', route('penarikanrnd.index', $id));
+Breadcrumbs::for('penarikanrnd.index', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Data Penarikan RND', route('penarikanrnd.index', $id));
 });
 // Penarikan RND Create
-Breadcrumbs::for('penarikanrnd.create', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('lhp.index');
-    $trail->push('Tambah Data', route('penarikanrnd.create', $id));
+Breadcrumbs::for('penarikanrnd.create', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Tambah Penarikan RND', route('penarikanrnd.create', $id));
 });
 // Penarikan RND Edit
-Breadcrumbs::for('penarikanrnd.edit', function (BreadcrumbTrail $trail, $id) {
-    $trail->parent('lhp.index');
-    $trail->push('Edit Data', route('penarikanrnd.edit', $id));
+Breadcrumbs::for('penarikanrnd.edit', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Edit Penarikan RND', route('penarikanrnd.edit', $id));
+});
+// Penarikan RND Edit
+Breadcrumbs::for('penarikanrnd.show', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Edit Penarikan RND', route('penarikanrnd.show', $id));
 });
 
 // =======================END HALAMAN ADMIN========================//

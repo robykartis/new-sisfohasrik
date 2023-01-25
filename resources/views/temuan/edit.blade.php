@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Tambah Temuan
+    Edit Temuan
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}

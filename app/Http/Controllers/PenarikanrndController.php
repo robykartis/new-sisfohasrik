@@ -172,9 +172,39 @@ class PenarikanrndController extends Controller
     }
 
 
-    public function show(Penarikanrnd $penarikanrnd)
+    public function show(Request $request, $id)
     {
-        //
+        $data_penarikanrnd = Penarikanrnd::findOrFail($id);
+        $data = Lhp::join('temuan', 'lhp.id', '=', 'temuan.id_lhp')
+            ->join('klarifikasi_obrik', 'lhp.klarifikasi', '=', 'klarifikasi_obrik.id')
+            ->join('obrik', 'lhp.obrik', '=', 'obrik.id')
+            ->join('kode_bidang', 'temuan.bidang_temuan', '=', 'kode_bidang.id')
+            ->join('kode_temuan', 'temuan.kode_temuan', '=', 'kode_temuan.id')
+            ->select(
+                'klarifikasi_obrik.nama AS klarifikasi_obrik_nama',
+                'obrik.nama AS obrik_nama',
+                DB::raw("DATE_FORMAT(lhp.tgl_lhp, '%d %M %Y') as tgl_lhp"),
+                'lhp.id as lhp_id',
+                'lhp.no_lhp as lhp_no',
+                'lhp.tahun as lhp_tahun',
+                'temuan.id as temuan_id',
+                'temuan.no_temuan as temuan_no',
+                'temuan.judul_temuan as temuan_judul',
+                'kode_bidang.nama as bidang_temuan',
+                'kode_temuan.nama as kod_temuan',
+            )
+            ->where('temuan.id', $data_penarikanrnd->id_temuan)->first();
+        $data_tgl_lhp = Carbon::parse($data->tgl_lhp)->isoFormat(' D MMMM Y');
+
+        $tgl_penarikanrnd = Carbon::parse($data_penarikanrnd->tgl_penarikan)->isoFormat('D MMMM Y');
+
+        return view('penarikan_rnd.show', compact(
+            'tgl_penarikanrnd',
+            'data_penarikanrnd',
+            'data',
+            'data_tgl_lhp',
+            'request',
+        ));
     }
 
     public function edit(Request $request, $id)
@@ -252,8 +282,10 @@ class PenarikanrndController extends Controller
      * @param  \App\Models\Penarikanrnd  $penarikanrnd
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Penarikanrnd $penarikanrnd)
+    public function destroy($id)
     {
-        //
+        $penarikan = Penarikanrnd::findOrfail($id);
+        $penarikan->delete();
+        return redirect()->back()->withInput()->with('success', 'Data berhasil dihapus');
     }
 }

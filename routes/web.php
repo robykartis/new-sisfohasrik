@@ -105,6 +105,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('temuan/penarikanrnd/{id}/edit', [PenarikanrndController::class, 'edit'])->name('penarikanrnd.edit');
         Route::get('temuan/penarikanrnd/{id}/show', [PenarikanrndController::class, 'show'])->name('penarikanrnd.show');
         Route::patch('temuan/penarikanrnd/{id}/update', [PenarikanrndController::class, 'update'])->name('penarikanrnd.update');
+        Route::get('penarikanrnd/hapus/{id}', [PenarikanrndController::class, 'destroy'])->name('penarikanrnd.destroy');
     });
 
 
