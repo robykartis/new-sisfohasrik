@@ -128,11 +128,12 @@
                                         </tr>
                                         <tr>
                                             <td class="item">Jumlah Penarikan Negara</td>
-                                            <td class="text">Rp. {{ $data_penarikanrnd->jml_penarikan_neg }}</td>
+                                            <td class="text mask-money">{{ $data_penarikanrnd->jml_penarikan_neg }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Jumlah Penarikan Daerah</td>
-                                            <td class="text">Rp. {{ $data_penarikanrnd->jml_penarikan_drh }}</td>
+                                            <td class="text mask-money">{{ $data_penarikanrnd->jml_penarikan_drh }}
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="item">Keterangan</td>
@@ -174,7 +175,23 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-
+    <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
+    <script type="text/javascript">
+        if ($(".mask-money").length) {
+            $(".mask-money").inputmask('decimal', {
+                'rightAlign': false,
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': true,
+                'allowMinus': false,
+                //'prefix': 'Rp. ',
+                // 'placeholder': ''
+            });
+        }
+    </script>
 
     <script type="text/javascript">
         function confirmDelete() {

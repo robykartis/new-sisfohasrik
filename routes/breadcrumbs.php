@@ -243,6 +243,13 @@ Breadcrumbs::for('penarikansnd.create', function ($trail, $id) {
     $trail->push('Temuan', route('temuan.show', $id));
     $trail->push('Tambah Penarikan SND', route('penarikansnd.create', $id));
 });
+// Penarikan SND Edit
+Breadcrumbs::for('penarikansnd.edit', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Tambah Penarikan SND', route('penarikansnd.edit', $id));
+});
 // =======================END HALAMAN ADMIN========================//
 
 

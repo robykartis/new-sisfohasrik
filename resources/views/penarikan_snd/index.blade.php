@@ -180,17 +180,17 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>{{ $temuan->jml_rnd_neg }}</td>
-                                                <td>{{ $tarik_neg }}</td>
-                                                <td>{{ $sisa_neg }}</td>
+                                                <td class="mask-money">{{ $temuan->jml_snd_neg }}</td>
+                                                <td class="mask-money">{{ $tarik_neg }}</td>
+                                                <td class="mask-money">{{ $sisa_neg }}</td>
 
-                                                <td>{{ $temuan->jml_rnd_drh }}</td>
-                                                <td>{{ $tarik_drh }}</td>
-                                                <td>{{ $sisa_drh }}</td>
+                                                <td class="mask-money">{{ $temuan->jml_snd_drh }}</td>
+                                                <td class="mask-money">{{ $tarik_drh }}</td>
+                                                <td class="mask-money">{{ $sisa_drh }}</td>
 
-                                                <td>{{ $total_kerugian }}</td>
-                                                <td>{{ $tot_tarik }}</td>
-                                                <td>{{ $tot_sisa }}</td>
+                                                <td class="mask-money">{{ $total_kerugian }}</td>
+                                                <td class="mask-money">{{ $tot_tarik }}</td>
+                                                <td class="mask-money">{{ $tot_sisa }}</td>
                                             </tr>
 
                                             {{-- <tr>
@@ -222,7 +222,7 @@
                                     <table class="table table-striped table-bordered table-hover">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th colspan="7" style="text-align: center;">Rincian Penarikan RND
+                                                <th colspan="7" style="text-align: center;">Rincian Penarikan SND
                                                 </th>
                                             </tr>
                                             <tr>
@@ -241,24 +241,24 @@
                                                     <td>
                                                         {{ \Illuminate\Support\Carbon::parse($data->tgl_penarikan)->isoFormat('D MMMM Y') }}
                                                     </td>
-                                                    <td>{{ $data->jml_penarikan_neg }}
+                                                    <td class="mask-money">{{ $data->jml_penarikan_neg }}
                                                     </td>
-                                                    <td>{{ $data->jml_penarikan_drh }}
+                                                    <td class="mask-money">{{ $data->jml_penarikan_drh }}
                                                     </td>
                                                     <td>{{ $data->keterangan }}
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('penarikanrnd.edit', $data->id) }}">Edit</a>|
-                                                        <a href="{{ route('penarikanrnd.show', $data->id) }}"">Detail</a>|
+                                                        <a href="{{ route('penarikansnd.edit', $data->id) }}">Edit</a>|
+                                                        <a href="{{ route('penarikansnd.show', $data->id) }}"">Detail</a>|
                                                         <a onclick="confirmDelete()"
-                                                            href="{{ route('penarikanrnd.destroy', $data->id) }}"">Hapus</a>
+                                                            href="{{ route('penarikansnd.destroy', $data->id) }}"">Hapus</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                             <tr>
                                                 <td colspan="2"><b>TOTAL</b></td>
-                                                <td><b>{{ $tarik_neg }}</b></td>
-                                                <td><b>{{ $tarik_drh }}</b></td>
+                                                <td class="mask-money"><b>{{ $tarik_neg }}</b></td>
+                                                <td class="mask-money"><b>{{ $tarik_drh }}</b></td>
                                                 <td colspan="2"><b></b></td>
                                             </tr>
                                             {{-- <tr>
@@ -301,7 +301,23 @@
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-
+    <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
+    <script type="text/javascript">
+        if ($(".mask-money").length) {
+            $(".mask-money").inputmask('decimal', {
+                'rightAlign': false,
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': true,
+                'allowMinus': false,
+                //'prefix': 'Rp. ',
+                // 'placeholder': ''
+            });
+        }
+    </script>
     <script type="text/javascript">
         function confirmDelete() {
             if (!confirm("Are You Sure to delete this"))

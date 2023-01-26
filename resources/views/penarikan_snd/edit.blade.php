@@ -116,7 +116,7 @@
                     </div>
 
                 </div>
-                <form method="POST" action="{{ route('penarikanrnd.update', $data_penarikanrnd->id) }}">
+                <form method="POST" action="{{ route('penarikansnd.update', $data_penarikanrnd->id) }}">
                     @csrf
                     @method('PATCH')
                     <div class="row">
@@ -150,34 +150,44 @@
                                             @enderror
                                         </div>
                                     </div>
-
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="form-label " for="one-ecom-product-price">Jumlah Penarikan
-                                                Negara</label>
-                                            <input type="number" value="{{ $data_penarikanrnd->jml_penarikan_neg }}"
-                                                name="jml_penarikan_neg" class="form-control">
-                                            @error('jml_penarikan_neg')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                            <h5 class="mb-2">Jumlah Penarikan
+                                                Negara</h5>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Rp. </span>
+                                                </div>
+                                                <input type="text" value="{{ $data_penarikanrnd->jml_penarikan_neg }}"
+                                                    name="jml_penarikan_neg" class="form-control mask-money">
+                                                @error('jml_penarikan_neg')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <!-- /input-group -->
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="form-label " for="one-ecom-product-price">Jumlah Penarikan
-                                                Daerah</label>
-                                            <input type="number" value="{{ $data_penarikanrnd->jml_penarikan_drh }}"
-                                                name="jml_penarikan_drh" class="form-control">
-                                            @error('jml_penarikan_drh')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                            <h5 class="mb-2">Jumlah Penarikan
+                                                Daerah</h5>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Rp. </span>
+                                                </div>
+                                                <input type="text" value="{{ $data_penarikanrnd->jml_penarikan_drh }}"
+                                                    class="form-control mask-money" name="jml_penarikan_drh">
+                                                @error('jml_penarikan_drh')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <!-- /input-group -->
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12">
@@ -201,7 +211,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                <a href="{{ route('penarikanrnd.index', $data_penarikanrnd->id_temuan) }}"
+                <a href="{{ route('penarikansnd.index', $data_penarikanrnd->id_temuan) }}"
                     class="btn btn-secondary">Kembali</a>
                 <button type="submit" class="btn btn-success float-right">Simpan</button>
             </div>
@@ -228,7 +238,24 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
 
+    <script>
+        if ($(".mask-money").length) {
+            $(".mask-money").inputmask('decimal', {
+                'rightAlign': false,
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': true,
+                'allowMinus': false,
+                //'prefix': 'Rp. ',
+                // 'placeholder': ''
+            });
+        }
+    </script>
 
     <script type="text/javascript">
         function confirmDelete() {

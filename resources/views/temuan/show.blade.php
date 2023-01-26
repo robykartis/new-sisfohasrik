@@ -102,19 +102,19 @@
                                         </tr>
                                         <tr>
                                             <td class="item">Jumlah Kerugian Negara</td>
-                                            <td class="text"> {{ $temuan->jml_rnd_neg }}</td>
+                                            <td class="text mask-money"> {{ $temuan->jml_rnd_neg }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Jumlah Setor Negara</td>
-                                            <td class="text"> {{ $temuan->jml_snd_neg }}</td>
+                                            <td class="text mask-money"> {{ $temuan->jml_snd_neg }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Jumlah Kerugian Daerah</td>
-                                            <td class="text">{{ $temuan->jml_rnd_drh }}</td>
+                                            <td class="text mask-money">{{ $temuan->jml_rnd_drh }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Jumlah Setor Daerah</td>
-                                            <td class="text"> {{ $temuan->jml_snd_drh }}</td>
+                                            <td class="text mask-money"> {{ $temuan->jml_snd_drh }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Keterangan</td>
@@ -168,6 +168,23 @@
 @endsection
 @push('js')
     <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
+    <script type="text/javascript">
+        if ($(".mask-money").length) {
+            $(".mask-money").inputmask('decimal', {
+                'rightAlign': false,
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': true,
+                'allowMinus': false,
+                //'prefix': 'Rp. ',
+                // 'placeholder': ''
+            });
+        }
+    </script>
     <script>
         $(function() {
             // Summernote

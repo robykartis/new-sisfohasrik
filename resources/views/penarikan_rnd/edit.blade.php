@@ -243,15 +243,9 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+
     <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
-
-
-    <script type="text/javascript">
-        function confirmDelete() {
-            if (!confirm("Are You Sure to delete this"))
-                event.preventDefault();
-        }
-    </script>
     <script type="text/javascript">
         if ($(".mask-money").length) {
             $(".mask-money").inputmask('decimal', {
@@ -268,6 +262,14 @@
             });
         }
     </script>
+
+    <script type="text/javascript">
+        function confirmDelete() {
+            if (!confirm("Are You Sure to delete this"))
+                event.preventDefault();
+        }
+    </script>
+
 
     {{-- Action Tambah Data --}}
     <script>

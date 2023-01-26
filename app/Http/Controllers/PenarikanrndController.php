@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Type\Decimal;
 
 class PenarikanrndController extends Controller
@@ -40,6 +41,7 @@ class PenarikanrndController extends Controller
         $data_penarikan = DB::table('penarikan_kerugian')
             ->select('penarikan_kerugian.*', 'id', 'jml_penarikan_neg', 'jml_penarikan_drh', 'keterangan', 'tgl_penarikan')
             ->where('id_temuan', $temuan->id)
+            ->where('jns_kerugian', '=', 'RND')
             ->get();
 
         // Data Hasil Temuan
@@ -138,17 +140,49 @@ class PenarikanrndController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
+        // $data = $request->validate([
+        //     'id_temuan' => 'required',
+        //     'tgl_penarikan' => 'required',
+        //     'jml_penarikan_neg' => 'required',
+        //     'jml_penarikan_drh' => 'required',
+        //     'keterangan' => 'required',
+        // ]);
 
-        $data = $request->validate([
-            'id_temuan' => 'required',
-            'tgl_penarikan' => 'required',
-            'jml_penarikan_neg' => 'required',
-            'jml_penarikan_drh' => 'required',
-            'keterangan' => 'required',
-        ]);
-        // dd($data);
+        //         $data = Validator::make(
+        //             $request->all(),
+        //             [
+        //                 'id_temuan' => 'required',
+        //                 'tgl_penarikan' => 'required',
+        //                 'jml_penarikan_neg' => 'required',
+        //                 'jml_penarikan_drh' => 'required',
+        //                 'keterangan' => 'required',
+        //             ],
+
+        //         );
+
+        //         if ($data->fails()) {
+        //             return redirect()->back()->with('error', $data->errors()->first())
+        // }
+        dd($request->jml_penarikan_neg);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id_temuan' => 'required',
+                'tgl_penarikan' => 'required',
+                'jml_penarikan_neg' => 'required',
+                'jml_penarikan_drh' => 'required',
+                'keterangan' => 'required',
+            ],
+
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', $validator->errors()->all(),);
+        }
 
         try {
+
             $data = new Penarikanrnd;
             $data->id_temuan = $request->id_temuan;
             $data->tgl_penarikan = $request->tgl_penarikan;
@@ -163,10 +197,12 @@ class PenarikanrndController extends Controller
             $data['updated_by'] = auth()->user()->name;
             $data['updated_by_id'] = auth()->user()->id;
             $data['jns_kerugian'] = 'RND';
+
             $data->save();
 
             return redirect()->route('penarikanrnd.index', $request->id_temuan)->with('success', 'Tambah Data Berhasil');
         } catch (\Throwable $e) {
+
             echo $e->getMessage();
         }
     }
@@ -242,7 +278,7 @@ class PenarikanrndController extends Controller
 
     public function update(Request $request, $id)
     {
-
+        // dd($request->jml_penarikan_drh);
         $data = $request->validate([
             'id' => 'required',
             'id_temuan' => 'required',

@@ -42,6 +42,15 @@
 @section('content')
     <section class="content">
         <!-- Default box -->
+
+        @if (session()->has('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong></strong> &nbsp;{{ session()->get('error') }}
+                <button type="button" class="close" id="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <div class="card card-warning">
             <div class="card-header ">
                 <h3 class="card-title">Edit</h3>
@@ -49,6 +58,7 @@
 
                 </div>
             </div>
+
             <div class="card-body pb-0">
                 <div class="row">
                     <div class="col-12 col-sm-6 col-md-12 d-flex align-items-stretch flex-column">
@@ -143,7 +153,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Rp. </span>
                                                 </div>
-                                                <input type="text" class="form-control mask-money">
+                                                <input type="text" name="jml_penarikan_neg"
+                                                    class="form-control mask-money">
+
                                                 @error('jml_penarikan_neg')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -222,7 +234,7 @@
     <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script> --}}
     <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
 
 
@@ -234,16 +246,16 @@
     </script>
 
     {{-- Action Tambah Data --}}
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             toastr.options.timeOut = 10000;
-            @if (Session::has('error'))
-                toastr.error('{{ Session::get('error') }}');
+            @if (Session::has('errors'))
+                toastr.error('{{ Session::get('errors') }}');
             @elseif (Session::has('success'))
                 toastr.success('{{ Session::get('success') }}');
             @endif
         });
-    </script>
+    </script> --}}
     <script>
         if ($(".mask-money").length) {
             $(".mask-money").inputmask('decimal', {
@@ -265,7 +277,7 @@
             bsCustomFileInput.init();
         });
     </script>
-    <script>
+    {{-- <script>
         $('form').submit(function(e) {
             e.preventDefault();
             var tgl_penarikan = $('input[name="tgl_penarikan"]').val();
@@ -295,5 +307,5 @@
             }
             $(this).unbind('submit').submit();
         });
-    </script>
+    </script> --}}
 @endpush
