@@ -126,8 +126,7 @@
                                         class="form-control" readonly>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label class="form-label " for="one-ecom-product-price">Tanggal
-                                                Penarikan</label>
+                                            <h5 class="mb-2">Tanggal Penarikan</h5>
                                             <input type="date" value="" name="tgl_penarikan" class="form-control">
                                             @error('tgl_penarikan')
                                                 <span class="invalid-feedback" role="alert">
@@ -138,28 +137,39 @@
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
-                                            <label class="form-label " for="one-ecom-product-price">Jumlah Penarikan
-                                                Negara</label>
-                                            <input type="text" value="" name="jml_penarikan_neg"
-                                                class="form-control" id="uang" data-mask="Rp. 000.000.000" />
-                                            @error('jml_penarikan_neg')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                            <h5 class="mb-2">Jumlah Penarikan
+                                                Negara</h5>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Rp. </span>
+                                                </div>
+                                                <input type="text" class="form-control mask-money">
+                                                @error('jml_penarikan_neg')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <!-- /input-group -->
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
-                                            <label class="form-label " for="one-ecom-product-price">Jumlah Penarikan
-                                                Daerah</label>
-                                            <input type="number" value="" name="jml_penarikan_drh"
-                                                class="form-control" id="uang" data-mask="Rp. 000.000.000" />
-                                            @error('jml_penarikan_drh')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                            <h5 class="mb-2">Jumlah Penarikan
+                                                Daerah</h5>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Rp. </span>
+                                                </div>
+                                                <input type="text" class="form-control mask-money"
+                                                    name="jml_penarikan_drh">
+                                                @error('jml_penarikan_drh')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <!-- /input-group -->
                                         </div>
                                     </div>
 
@@ -169,7 +179,7 @@
                                 <div class="row mb-2">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="form-label " for="one-ecom-product-price">Keterangan</label>
+                                            <h5 class="mb-2">Keterangan</h5>
                                             <textarea class="form-control" name="keterangan"></textarea>
                                             @error('keterangan')
                                                 <span class="invalid-feedback" role="alert">
@@ -183,6 +193,7 @@
                         </div>
                         <!-- /.col -->
                     </div>
+
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
@@ -212,15 +223,9 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#uang').mask('Rp. 000.000.000', {
-                reverse: true
-            });
-        });
-    </script>
+
     <script type="text/javascript">
         function confirmDelete() {
             if (!confirm("Are You Sure to delete this"))
@@ -240,15 +245,20 @@
         });
     </script>
     <script>
-        $('.money-format').inputmask("currency", {
-            prefix: "",
-            radixPoint: ".",
-            groupSeparator: ",",
-            digits: 2,
-            autoGroup: true,
-            rightAlign: false,
-            removeMaskOnSubmit: true
-        })
+        if ($(".mask-money").length) {
+            $(".mask-money").inputmask('decimal', {
+                'rightAlign': false,
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': true,
+                'allowMinus': false,
+                //'prefix': 'Rp. ',
+                // 'placeholder': ''
+            });
+        }
     </script>
     <script>
         $(function() {

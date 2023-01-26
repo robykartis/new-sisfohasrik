@@ -129,7 +129,7 @@
                                         class="form-control" readonly>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label for="inputName">Tanggal Penarikan</label>
+                                            <h5 class="mb-2">Tanggal Penarikan</h5>
                                             <input type="text"
                                                 value="{{ \Illuminate\Support\Carbon::parse($data_penarikanrnd->tgl_penarikan)->isoFormat('D MMMM Y') }}"
                                                 readonly class="form-control">
@@ -137,9 +137,8 @@
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label class="form-label " for="one-ecom-product-price"><span
-                                                    class="text-danger"><small>
-                                                        Rubah Tanggal Jika Diperlukan</small></span></label>
+                                            <h6 class="mb-2 mt-1"><span class="text-danger"><small>
+                                                        Rubah Tanggal Jika Diperlukan</small></span></h6>
                                             <input type="date"
                                                 value="{{ date('Y-m-d', strtotime($data_penarikanrnd->tgl_penarikan)) }}"
                                                 name="tgl_penarikan" class="form-control">
@@ -153,29 +152,45 @@
 
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="form-label " for="one-ecom-product-price">Jumlah Penarikan
-                                                Negara</label>
-                                            <input type="number" value="{{ $data_penarikanrnd->jml_penarikan_neg }}"
-                                                name="jml_penarikan_neg" class="form-control">
-                                            @error('jml_penarikan_neg')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                            <h5 class="mb-2">Jumlah Penarikan
+                                                Negara</h5>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Rp. </span>
+                                                </div>
+                                                <input type="text" class="form-control mask-money"
+                                                    value="{{ $data_penarikanrnd->jml_penarikan_neg }}"
+                                                    name="jml_penarikan_neg">
+                                                @error('jml_penarikan_neg')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <!-- /input-group -->
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="form-label " for="one-ecom-product-price">Jumlah Penarikan
-                                                Daerah</label>
-                                            <input type="number" value="{{ $data_penarikanrnd->jml_penarikan_drh }}"
-                                                name="jml_penarikan_drh" class="form-control">
-                                            @error('jml_penarikan_drh')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                            <h5 class="mb-2">Jumlah Penarikan
+                                                Daerah</h5>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <span class="input-group-text">Rp. </span>
+                                                </div>
+                                                <input type="text" class="form-control mask-money"
+                                                    value="{{ $data_penarikanrnd->jml_penarikan_drh }}"
+                                                    name="jml_penarikan_drh">
+                                                @error('jml_penarikan_drh')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <!-- /input-group -->
                                         </div>
+
+
                                     </div>
 
                                 </div>
@@ -184,7 +199,7 @@
                                 <div class="row mb-2">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="form-label " for="one-ecom-product-price">Keterangan</label>
+                                            <h5 class="mb-2">Keterangan</h5>
                                             <textarea class="form-control" name="keterangan">{{ $data_penarikanrnd->keterangan }}</textarea>
                                             @error('keterangan')
                                                 <span class="invalid-feedback" role="alert">
@@ -228,12 +243,29 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
 
 
     <script type="text/javascript">
         function confirmDelete() {
             if (!confirm("Are You Sure to delete this"))
                 event.preventDefault();
+        }
+    </script>
+    <script type="text/javascript">
+        if ($(".mask-money").length) {
+            $(".mask-money").inputmask('decimal', {
+                'rightAlign': false,
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': true,
+                'allowMinus': false,
+                //'prefix': 'Rp. ',
+                // 'placeholder': ''
+            });
         }
     </script>
 
