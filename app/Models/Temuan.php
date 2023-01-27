@@ -14,7 +14,7 @@ class Temuan extends Model
         'bidang_temuan',
         'no_temuan',
         'judul_temuan',
-        'urian_temuan',
+        'uraian_temuan',
         'kode_temuan',
         'jml_rnd_neg',
         'jml_rnd_drh',

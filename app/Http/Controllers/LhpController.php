@@ -180,6 +180,7 @@ class LhpController extends Controller
     {
 
         if ($request->ajax()) {
+
             $data = DB::table('temuan')
                 ->join('lhp', 'temuan.id_lhp', '=', 'lhp.id')
                 ->join('kode_bidang', 'temuan.bidang_temuan', '=', 'kode_bidang.id')
@@ -196,7 +197,7 @@ class LhpController extends Controller
                     $btn .= '</div>';
                     return $btn;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['action', 'jml_rnd_neg'])
                 ->make(true);
         }
         // get the data item by id

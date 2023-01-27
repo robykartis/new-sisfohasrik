@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('bidang_temuan'); //ini menampung id table kode_temuan mengabil data field nama
             $table->string('no_temuan');
             $table->string('judul_temuan');
-            $table->text('urian_temuan');
+            $table->text('uraian_temuan');
             $table->string('kode_temuan'); //ini menampung kode temuan di table kode_temuan mengambil data field kode
             $table->decimal('jml_rnd_neg', 13, 0)->nullable();
             $table->decimal('jml_rnd_drh', 13, 0)->nullable();

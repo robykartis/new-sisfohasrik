@@ -142,7 +142,24 @@
     <script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+    <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
 
+    <script>
+        if ($(".mask-money").length) {
+            $(".mask-money").inputmask('decimal', {
+                'rightAlign': false,
+                'alias': 'numeric',
+                'groupSeparator': '.',
+                'autoGroup': true,
+                'digits': 2,
+                'radixPoint': ",",
+                'digitsOptional': true,
+                'allowMinus': false,
+                //'prefix': 'Rp. ',
+                // 'placeholder': ''
+            });
+        }
+    </script>
 
     <script type="text/javascript">
         function confirmDelete() {
@@ -230,14 +247,14 @@
                         data: 'jml_rnd_neg',
                         name: 'jml_rnd_neg',
                         createdCell: function(td, cellData, rowData, row, col) {
-                            $(td).css('word-break', 'break-all');
+                            $(td).css('word-break', 'break-all', 'mask-money');
                         }
                     },
                     {
                         data: 'jml_snd_neg',
                         name: 'jml_snd_neg',
                         createdCell: function(td, cellData, rowData, row, col) {
-                            $(td).css('word-break', 'break-all');
+                            $(td).css('word-break', 'break-all', 'mask-money');
                         }
                     },
                     {
