@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class PenyebabController extends Controller
 {
@@ -106,27 +107,38 @@ class PenyebabController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'id_temuan' => 'required',
-            'no_sebab' => 'required',
-            'uraian_sebab' => 'required',
-            'kode_sebab' => 'required',
-        ]);
+
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id_temuan' => 'required',
+                'no_sebab' => 'required',
+                'uraian_sebab' => 'required',
+                'kode_sebab' => 'required',
+            ],
+
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', $validator->errors()->all(),);
+        }
+
 
         try {
-            $penyebab = new Penyebab;
-            $penyebab->id_temuan = $request->id_temuan;
-            $penyebab->no_sebab = $request->no_sebab;
-            $penyebab->uraian_sebab = $request->uraian_sebab;
-            $penyebab->kode_sebab = $request->kode_sebab;
+            $data = new Penyebab;
+            $data->id_temuan = $request->id_temuan;
+            $data->no_sebab = $request->no_sebab;
+            $data->uraian_sebab = $request->uraian_sebab;
+            $data->kode_sebab = $request->kode_sebab;
             $kode = Penyebab::find($request->id);
             if (!$kode) {
-                $penyebab['created_by'] = auth()->user()->level;
-                $penyebab['created_by_id'] = auth()->user()->id;
+                $data['created_by'] = auth()->user()->level;
+                $data['created_by_id'] = auth()->user()->id;
             }
-            $penyebab['updated_by'] = auth()->user()->name;
-            $penyebab['updated_by_id'] = auth()->user()->id;
-            $penyebab->save();
+            $data['updated_by'] = auth()->user()->name;
+            $data['updated_by_id'] = auth()->user()->id;
+            $data->save();
 
             return redirect()->route('penyebab.index', $request->id_temuan)->with('success', 'Tambah Data Berhasil');
         } catch (\Throwable $e) {
@@ -230,27 +242,34 @@ class PenyebabController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request);
-        $data = $request->validate([
-            'id_temuan' => 'required',
-            'no_sebab' => 'required',
-            'uraian_sebab' => 'required',
-            'kode_sebab' => 'required',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id_temuan' => 'required',
+                'no_sebab' => 'required',
+                'uraian_sebab' => 'required',
+                'kode_sebab' => 'required',
+            ],
+
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', $validator->errors()->all(),);
+        }
         try {
-            $penyebab = Penyebab::findOrFail($id);
-            $penyebab->id_temuan = $request->id_temuan;
-            $penyebab->no_sebab = $request->no_sebab;
-            $penyebab->uraian_sebab = $request->uraian_sebab;
-            $penyebab->kode_sebab = $request->kode_sebab;
+            $data = Penyebab::findOrFail($id);
+            $data->id_temuan = $request->id_temuan;
+            $data->no_sebab = $request->no_sebab;
+            $data->uraian_sebab = $request->uraian_sebab;
+            $data->kode_sebab = $request->kode_sebab;
             $kode = Penyebab::find($request->id);
             if (!$kode) {
-                $penyebab['created_by'] = auth()->user()->level;
-                $penyebab['created_by_id'] = auth()->user()->id;
+                $data['created_by'] = auth()->user()->level;
+                $data['created_by_id'] = auth()->user()->id;
             }
-            $penyebab['updated_by'] = auth()->user()->name;
-            $penyebab['updated_by_id'] = auth()->user()->id;
-            $penyebab->save();
+            $data['updated_by'] = auth()->user()->name;
+            $data['updated_by_id'] = auth()->user()->id;
+            $data->update();
 
             return redirect()->route('penyebab.index', $request->id_temuan)->with('success', 'Edit Data Berhasil');
         } catch (\Throwable $e) {

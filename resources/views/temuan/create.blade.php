@@ -94,25 +94,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-                        {{-- <div class="col-sm-4 invoice-col">
-                            <address>
-                                <strong>Tahun
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                    {{ $data->tahun }} </strong><br>
-                                <strong>No LHP
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                    {{ $data->no_lhp }} </strong><br>
-                                <strong>Nama Obrik
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                    {{ $data->nama_obrik }} </strong><br>
-                                <strong>Klarifikasi Obrik &nbsp;&nbsp;:
-                                    {{ $data->nama }}
-                                </strong><br>
-                            </address>
-                        </div> --}}
                     </div>
                     <hr>
                     <!-- /.row -->
@@ -196,10 +177,8 @@
                             <div class="row mb-2">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="form-label" for="one-ecom-product-price">Uraian Temuan</label>
-                                        <textarea id="summernote" name="uraian_temuan">
-                                            {{ old('uraian_temuan') }}
-                                      </textarea>
+                                        <label class="form-label " for="one-ecom-product-price">Uraian Temuan</label>
+                                        <textarea id="summernote" class="form-control" name="uraian_temuan">{{ old('uraian_temuan') }}</textarea>
                                         @error('uraian_temuan')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -264,13 +243,12 @@
                                             </div>
                                             <input type="text" class="form-control mask-money"
                                                 value="{{ old('jml_rnd_drh') }}" name="jml_rnd_drh">
-                                            @error('jml_rnd_drh')
+                                            @error('jml_rnd_neg')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
-
 
                                     </div>
                                 </div>
@@ -284,18 +262,18 @@
                                             </div>
                                             <input type="text" class="form-control mask-money"
                                                 value="{{ old('jml_snd_drh') }}" name="jml_snd_drh">
-                                            @error('jml_snd_drh')
+                                            @error('jml_snd_neg')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
 
-
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-md-10 col-lg-12">
                             <div class="row mb-2">
                                 <div class="col-md-12">
@@ -366,7 +344,7 @@
             var jml_snd_drh = $('input[name="jml_snd_drh"]').val();
             var judulTemuan = $('textarea[name="judul_temuan"]').val();
             var keterangan = $('textarea[name="keterangan"]').val();
-            var uraianTemuan = $('textarea[name="uraian_temuan"]').val();
+            var uraian_temuan = $('textarea[name="uraian_temuan"]').val();
             var kodeTemuan = $('select[name="kode_temuan"]').val();
             if (noTemuan == '') {
                 toastr.error('No Temuan harus diisi');
@@ -388,7 +366,7 @@
                 $('textarea[name="judul_temuan"]').focus();
                 return;
             }
-            if (uraianTemuan == '') {
+            if (uraian_temuan == '') {
                 toastr.error('Uraian Temuan harus diisi');
                 $('textarea[name="uraian_temuan"]').focus();
                 return;
@@ -398,21 +376,43 @@
                 $('input[name="jml_rnd_neg"]').focus();
                 return;
             }
+            if (jml_rnd_neg.length > 18) {
+                toastr.error('Jumlah Kerugian Negara melebihi batas maksimal (18 karakter)');
+                $('input[name="jml_rnd_neg"]').focus();
+                return;
+            }
             if (jml_snd_neg == '') {
                 toastr.error('Jumlah Setor Negara harus diisi');
                 $('input[name="jml_snd_neg"]').focus();
                 return;
             }
+
+            if (jml_snd_neg.length > 18) {
+                toastr.error('Jumlah Setor Negara melebihi batas maksimal (18 karakter)');
+                $('input[name="jml_snd_neg"]').focus();
+                return;
+            }
             if (jml_rnd_drh == '') {
-                toastr.error('Jumlah Kerugian Daerah harus diisi');
+                toastr.error('Jumlah Kerugian Daerah  harus diisi');
+                $('input[name="jml_rnd_drh"]').focus();
+                return;
+            }
+            if (jml_rnd_drh.length > 18) {
+                toastr.error('Jumlah Kerugian Daerah melebihi batas maksimal (18 karakter)');
                 $('input[name="jml_rnd_drh"]').focus();
                 return;
             }
             if (jml_snd_drh == '') {
-                toastr.error('Jumlah Setor Daerah harus diisi');
+                toastr.error('Jumlah Setor Daerah  harus diisi');
                 $('input[name="jml_snd_drh"]').focus();
                 return;
             }
+            if (jml_snd_drh.length > 18) {
+                toastr.error('Jumlah Setor Daerah melebihi batas maksimal (18 karakter)');
+                $('input[name="jml_snd_drh"]').focus();
+                return;
+            }
+
             if (keterangan == '') {
                 toastr.error('Keterangan harus diisi');
                 $('textarea[name="keterangan"]').focus();

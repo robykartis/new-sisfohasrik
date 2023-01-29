@@ -140,31 +140,6 @@ class PenarikanrndController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-        // $data = $request->validate([
-        //     'id_temuan' => 'required',
-        //     'tgl_penarikan' => 'required',
-        //     'jml_penarikan_neg' => 'required',
-        //     'jml_penarikan_drh' => 'required',
-        //     'keterangan' => 'required',
-        // ]);
-
-        //         $data = Validator::make(
-        //             $request->all(),
-        //             [
-        //                 'id_temuan' => 'required',
-        //                 'tgl_penarikan' => 'required',
-        //                 'jml_penarikan_neg' => 'required',
-        //                 'jml_penarikan_drh' => 'required',
-        //                 'keterangan' => 'required',
-        //             ],
-
-        //         );
-
-        //         if ($data->fails()) {
-        //             return redirect()->back()->with('error', $data->errors()->first())
-        // }
-        dd($request->jml_penarikan_neg);
         $validator = Validator::make(
             $request->all(),
             [
@@ -180,14 +155,15 @@ class PenarikanrndController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->with('error', $validator->errors()->all(),);
         }
-
+        $penarikan_neg = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_penarikan_neg));
+        $penarikan_drh = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_penarikan_drh));
         try {
 
             $data = new Penarikanrnd;
             $data->id_temuan = $request->id_temuan;
             $data->tgl_penarikan = $request->tgl_penarikan;
-            $data->jml_penarikan_neg = $request->jml_penarikan_neg;
-            $data->jml_penarikan_drh = $request->jml_penarikan_drh;
+            $data->jml_penarikan_neg = $penarikan_neg;
+            $data->jml_penarikan_drh = $penarikan_drh;
             $data->keterangan = $request->keterangan;
             $kode = Penarikanrnd::find($request->id);
             if (!$kode) {
@@ -197,7 +173,6 @@ class PenarikanrndController extends Controller
             $data['updated_by'] = auth()->user()->name;
             $data['updated_by_id'] = auth()->user()->id;
             $data['jns_kerugian'] = 'RND';
-
             $data->save();
 
             return redirect()->route('penarikanrnd.index', $request->id_temuan)->with('success', 'Tambah Data Berhasil');
@@ -278,23 +253,31 @@ class PenarikanrndController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request->jml_penarikan_drh);
-        $data = $request->validate([
-            'id' => 'required',
-            'id_temuan' => 'required',
-            'tgl_penarikan' => 'required',
-            'jml_penarikan_neg' => 'required',
-            'jml_penarikan_drh' => 'required',
-            'keterangan' => 'required',
-        ]);
-        // dd($data);
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id_temuan' => 'required',
+                'tgl_penarikan' => 'required',
+                'jml_penarikan_neg' => 'required',
+                'jml_penarikan_drh' => 'required',
+                'keterangan' => 'required',
+            ],
+
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', $validator->errors()->all(),);
+        }
+        $penarikan_neg = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_penarikan_neg));
+        $penarikan_drh = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_penarikan_drh));
 
         try {
             $data =  Penarikanrnd::findOrFail($id);
             $data->id_temuan = $request->id_temuan;
             $data->tgl_penarikan = $request->tgl_penarikan;
-            $data->jml_penarikan_neg = $request->jml_penarikan_neg;
-            $data->jml_penarikan_drh = $request->jml_penarikan_drh;
+            $data->jml_penarikan_neg = $penarikan_neg;
+            $data->jml_penarikan_drh = $penarikan_drh;
             $data->keterangan = $request->keterangan;
             $kode = Penarikanrnd::find($request->id);
             if (!$kode) {
@@ -304,7 +287,7 @@ class PenarikanrndController extends Controller
             $data['updated_by'] = auth()->user()->name;
             $data['updated_by_id'] = auth()->user()->id;
             $data['jns_kerugian'] = 'RND';
-            $data->save();
+            $data->update();
 
             return redirect()->route('penarikanrnd.index', $request->id_temuan)->with('success', 'Tambah Data Berhasil');
         } catch (\Throwable $e) {
@@ -312,12 +295,7 @@ class PenarikanrndController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Penarikanrnd  $penarikanrnd
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         $penarikan = Penarikanrnd::findOrfail($id);

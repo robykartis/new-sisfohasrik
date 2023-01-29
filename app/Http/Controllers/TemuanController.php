@@ -82,10 +82,9 @@ class TemuanController extends Controller
             return redirect()->back()->with('error', $validator->errors()->all(),);
         }
 
-
         $rnd_neg = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_rnd_neg));
-        $rnd_drh = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_rnd_drh));
         $snd_neg = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_snd_neg));
+        $rnd_drh = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_rnd_drh));
         $snd_drh = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_snd_drh));
 
         try {
@@ -98,8 +97,8 @@ class TemuanController extends Controller
             $data->kode_temuan = $request->kode_temuan;
             $data->keterangan = $request->keterangan;
             $data->jml_rnd_neg = $rnd_neg;
+            $data->jml_snd_neg = $snd_neg;
             $data->jml_rnd_drh = $rnd_drh;
-            $data->jml_rnd_neg = $snd_neg;
             $data->jml_snd_drh = $snd_drh;
             $kode = Temuan::find($request->id);
             if (!$kode) {
@@ -115,24 +114,6 @@ class TemuanController extends Controller
         } catch (\Throwable $e) {
             echo $e->getMessage();
         }
-
-
-
-        // try {
-        //     $kode = Temuan::find($request->id);
-        //     if (!$kode) {
-        //         $data['created_by'] = auth()->user()->level;
-        //         $data['created_by_id'] = auth()->user()->id;
-        //     }
-        //     $data['updated_by'] = auth()->user()->name;
-        //     $data['updated_by_id'] = auth()->user()->id;
-        //     $data['id_temuan'] = $request->kode_temuan;
-        //     $data['urian_temuan'] = $request->uraian_temuan;
-        //     Temuan::create($data);
-        //     return redirect()->route('lhp.show', $request->id_lhp)->with('success', 'Tambah Data Berhasil');
-        // } catch (\Exception $e) {
-        //     echo $e->getMessage();
-        // }
     }
 
 
@@ -184,25 +165,45 @@ class TemuanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data =  $request->validate([
-            'id_lhp' => 'required',
-            'bidang_temuan' => 'required',
-            'no_temuan' => 'required',
-            'judul_temuan' => 'required',
-            'uraian_temuan' => 'required',
-            'kode_temuan' => 'required',
-            "jml_rnd_neg" => 'required',
-            "jml_snd_neg" => 'required',
-            "jml_rnd_drh" => 'required',
-            "jml_snd_drh" => 'required',
-            "keterangan" => 'required',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id_lhp' => 'required',
+                'bidang_temuan' => 'required',
+                'no_temuan' => 'required',
+                'judul_temuan' => 'required',
+                'uraian_temuan' => 'required',
+                'kode_temuan' => 'required',
+                "jml_rnd_neg" => 'required',
+                "jml_snd_neg" => 'required',
+                "jml_rnd_drh" => 'required',
+                "jml_snd_drh" => 'required',
+                "keterangan" => 'required',
+            ],
 
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', $validator->errors()->all(),);
+        }
+
+        $rnd_neg = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_rnd_neg));
+        $snd_neg = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_snd_neg));
+        $rnd_drh = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_rnd_drh));
+        $snd_drh = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_snd_drh));
         try {
-            // dd($request);
-            $temuan = Temuan::find($request->id);
-            $data['id_temuan'] = $request->kode_temuan;
-            $data['urian_temuan'] = $request->uraian_temuan;
+            $data = Temuan::find($request->id);
+            $data->id_lhp = $request->id_lhp;
+            $data->bidang_temuan = $request->bidang_temuan;
+            $data->no_temuan = $request->no_temuan;
+            $data->judul_temuan = $request->judul_temuan;
+            $data->uraian_temuan = $request->uraian_temuan;
+            $data->kode_temuan = $request->kode_temuan;
+            $data->keterangan = $request->keterangan;
+            $data->jml_rnd_neg = $rnd_neg;
+            $data->jml_snd_neg = $snd_neg;
+            $data->jml_rnd_drh = $rnd_drh;
+            $data->jml_snd_drh = $snd_drh;
             $kode = Temuan::find($request->id);
             if (!$kode) {
                 $data['created_by'] = auth()->user()->level;
@@ -210,12 +211,14 @@ class TemuanController extends Controller
             }
             $data['updated_by'] = auth()->user()->name;
             $data['updated_by_id'] = auth()->user()->id;
-            $temuan->update($data);
+
+            $data->update();
+
             return redirect()->route('lhp.show', $request->id_lhp)->with('success', 'Tambah Data Berhasil');
         } catch (\Exception $e) {
             echo $e->getMessage();
             //     // die;
-            return redirect()->route('temuan.edit', $temuan->id)->with('error', 'Terjadi kesalahan saat menyimpan data.');
+            return redirect()->route('temuan.edit', $data->id)->with('error', 'Terjadi kesalahan saat menyimpan data.');
         }
     }
 

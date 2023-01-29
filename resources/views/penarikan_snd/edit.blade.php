@@ -116,32 +116,29 @@
                     </div>
 
                 </div>
-                <form method="POST" action="{{ route('penarikansnd.update', $data_penarikanrnd->id) }}">
+                <form method="POST" action="{{ route('penarikansnd.update', $data_penarikansnd->id) }}">
                     @csrf
                     @method('PATCH')
                     <div class="row">
                         <div class="col-12">
                             <div class="col-md-12 col-lg-12">
                                 <div class="row mb-2">
-                                    <input type="hidden" name="id_temuan" value="{{ $data_penarikanrnd->id_temuan }}"
-                                        class="form-control" readonly>
-                                    <input type="hidden" name="id" value="{{ $data_penarikanrnd->id }}"
+                                    <input type="hidden" name="id_temuan" value="{{ $data_penarikansnd->id_temuan }}"
                                         class="form-control" readonly>
                                     <div class="col-md-2">
                                         <div class="form-group">
                                             <label for="inputName">Tanggal Penarikan</label>
                                             <input type="text"
-                                                value="{{ \Illuminate\Support\Carbon::parse($data_penarikanrnd->tgl_penarikan)->isoFormat('D MMMM Y') }}"
+                                                value="{{ \Illuminate\Support\Carbon::parse($data_penarikansnd->tgl_penarikan)->isoFormat('D MMMM Y') }}"
                                                 readonly class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label class="form-label " for="one-ecom-product-price"><span
-                                                    class="text-danger"><small>
-                                                        Rubah Tanggal Jika Diperlukan</small></span></label>
+                                            <h5 class="mb-2"><span class="text-danger"><small>
+                                                        Rubah Tanggal Jika Diperlukan</small></span></h5>
                                             <input type="date"
-                                                value="{{ date('Y-m-d', strtotime($data_penarikanrnd->tgl_penarikan)) }}"
+                                                value="{{ date('Y-m-d', strtotime($data_penarikansnd->tgl_penarikan)) }}"
                                                 name="tgl_penarikan" class="form-control">
                                             @error('tgl_penarikan')
                                                 <span class="invalid-feedback" role="alert">
@@ -158,7 +155,7 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Rp. </span>
                                                 </div>
-                                                <input type="text" value="{{ $data_penarikanrnd->jml_penarikan_neg }}"
+                                                <input type="text" value="{{ $data_penarikansnd->jml_penarikan_neg }}"
                                                     name="jml_penarikan_neg" class="form-control mask-money">
                                                 @error('jml_penarikan_neg')
                                                     <span class="invalid-feedback" role="alert">
@@ -177,8 +174,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Rp. </span>
                                                 </div>
-                                                <input type="text" value="{{ $data_penarikanrnd->jml_penarikan_drh }}"
-                                                    class="form-control mask-money" name="jml_penarikan_drh">
+                                                <input type="text" class="form-control mask-money"
+                                                    value="{{ $data_penarikansnd->jml_penarikan_drh }}"
+                                                    name="jml_penarikan_drh">
                                                 @error('jml_penarikan_drh')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -194,8 +192,8 @@
                                 <div class="row mb-2">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="form-label " for="one-ecom-product-price">Keterangan</label>
-                                            <textarea class="form-control" name="keterangan">{{ $data_penarikanrnd->keterangan }}</textarea>
+                                            <h5 class="mb-2">Keterangan</h5>
+                                            <textarea class="form-control" name="keterangan">{{ $data_penarikansnd->keterangan }}</textarea>
                                             @error('keterangan')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -211,9 +209,9 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                <a href="{{ route('penarikansnd.index', $data_penarikanrnd->id_temuan) }}"
+                <a href="{{ route('penarikansnd.index', $data_penarikansnd->id_temuan) }}"
                     class="btn btn-secondary">Kembali</a>
-                <button type="submit" class="btn btn-success float-right">Simpan</button>
+                <button type="submit" class="btn btn-success float-right">Update</button>
             </div>
             </form>
             <!-- /.card-footer -->
@@ -256,7 +254,6 @@
             });
         }
     </script>
-
     <script type="text/javascript">
         function confirmDelete() {
             if (!confirm("Are You Sure to delete this"))
@@ -275,17 +272,19 @@
             @endif
         });
     </script>
+
     <script>
         $(function() {
             bsCustomFileInput.init();
         });
     </script>
+
     <script>
         $('form').submit(function(e) {
             e.preventDefault();
             var tgl_penarikan = $('input[name="tgl_penarikan"]').val();
             var jml_penarikan_neg = $('input[name="jml_penarikan_neg"]').val();
-            var jml_penarikan_drh = $('input[name="jml_penarikan_drh	"]').val();
+            var jml_penarikan_drh = $('input[name="jml_penarikan_drh"]').val();
             var keterangan = $('textarea[name="keterangan"]').val();
 
             if (tgl_penarikan == '') {
@@ -298,8 +297,18 @@
                 $('input[name="jml_penarikan_neg"]').focus();
                 return;
             }
+            if (jml_penarikan_neg.length > 18) {
+                toastr.error('Jumlah Penarikan Negara melebihi batas maksimal (18 karakter)');
+                $('input[name="jml_penarikan_neg"]').focus();
+                return;
+            }
             if (jml_penarikan_drh == '') {
                 toastr.error('Jumlah Penarikan Negara harus di isi');
+                $('input[name="jml_penarikan_drh"]').focus();
+                return;
+            }
+            if (jml_penarikan_drh.length > 18) {
+                toastr.error('Jumlah Penarikan Daerah melebihi batas maksimal (18 karakter)');
                 $('input[name="jml_penarikan_drh"]').focus();
                 return;
             }

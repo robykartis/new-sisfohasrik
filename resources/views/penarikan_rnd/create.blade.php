@@ -209,7 +209,7 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                <a href="{{ route('tindaklanjut.index', $data_temuan->id) }}" class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('penarikanrnd.index', $data_temuan->id) }}" class="btn btn-secondary">Kembali</a>
                 <button type="submit" class="btn btn-success float-right">Simpan</button>
             </div>
             </form>

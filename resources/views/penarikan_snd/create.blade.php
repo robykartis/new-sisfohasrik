@@ -108,17 +108,32 @@
                                             <td class="item">Bidang</td>
                                             <td class="text"> {{ $data->bidang_temuan }}</td>
                                         </tr>
+
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-12 d-flex align-items-stretch flex-column">
+                        <div class="card bg-light d-flex flex-fill">
+                            <div class="card-header text-muted border-bottom-0">
+                                Data Penarikan
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="table-responsive">
+                                    <table class="container">
                                         <tr>
-                                            <td class="item"> Nilai</td>
-                                            <td class="text"> {{ $data->snd }}</td>
+                                            <td class="item">Nilai</td>
+                                            <td class="text mask-money"> {{ $total_kerugian }}</td>
                                         </tr>
                                         <tr>
-                                            <td class="item">Jumlah Ditarik</td>
-                                            <td class="text"> {{ $tarik_neg }}</td>
+                                            <td class="item">Telah Ditarik</td>
+                                            <td class="text mask-money"> {{ $total_penarikan }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Sisa</td>
-                                            <td class="text"> {{ $sisa_neg }}</td>
+                                            <td class="text mask-money"> {{ $sisa_kerugian }}</td>
                                         </tr>
 
                                     </table>
@@ -130,7 +145,7 @@
                 </div>
                 <form method="POST" action="{{ route('penarikansnd.store') }}">
                     @csrf
-                    <input type="hidden" name="sisa" value="{{ $sisa_neg }}">
+                    <input type="hidden" name="sisa" value="{{ $sisa_kerugian }}">
                     <div class="row">
                         <div class="col-12">
                             <div class="col-md-12 col-lg-12">
@@ -186,7 +201,6 @@
                                             <!-- /input-group -->
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="col-md-12 col-lg-12">
@@ -279,12 +293,13 @@
             bsCustomFileInput.init();
         });
     </script>
+
     <script>
         $('form').submit(function(e) {
             e.preventDefault();
             var tgl_penarikan = $('input[name="tgl_penarikan"]').val();
             var jml_penarikan_neg = $('input[name="jml_penarikan_neg"]').val();
-            var jml_penarikan_drh = $('input[name="jml_penarikan_drh	"]').val();
+            var jml_penarikan_drh = $('input[name="jml_penarikan_drh"]').val();
             var keterangan = $('textarea[name="keterangan"]').val();
 
             if (tgl_penarikan == '') {
@@ -297,8 +312,18 @@
                 $('input[name="jml_penarikan_neg"]').focus();
                 return;
             }
+            if (jml_penarikan_neg.length > 18) {
+                toastr.error('Jumlah Penarikan Negara melebihi batas maksimal (18 karakter)');
+                $('input[name="jml_penarikan_neg"]').focus();
+                return;
+            }
             if (jml_penarikan_drh == '') {
                 toastr.error('Jumlah Penarikan Negara harus di isi');
+                $('input[name="jml_penarikan_drh"]').focus();
+                return;
+            }
+            if (jml_penarikan_drh.length > 18) {
+                toastr.error('Jumlah Penarikan Daerah melebihi batas maksimal (18 karakter)');
                 $('input[name="jml_penarikan_drh"]').focus();
                 return;
             }

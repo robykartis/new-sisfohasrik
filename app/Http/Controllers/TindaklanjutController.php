@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class TindaklanjutController extends Controller
 {
@@ -234,28 +235,36 @@ class TindaklanjutController extends Controller
 
     public function update(Request $request, $id)
     {
-        $rekomendasi = $request->validate([
-            'id_temuan' => 'required',
-            'status_tlhp' => 'required',
-            'tgl_tlhp' => 'required',
-            'kode_tlhp' => 'required',
-            'uraian_tlhp' => 'required',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id_temuan' => 'required',
+                'status_tlhp' => 'required',
+                'tgl_tlhp' => 'required',
+                'kode_tlhp' => 'required',
+                'uraian_tlhp' => 'required',
+            ],
+
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', $validator->errors()->all(),);
+        }
         try {
-            $rekomendasi =  Rekomendasi::findOrFail($id);
-            $rekomendasi->id_temuan = $request->id_temuan;
-            $rekomendasi->status_tlhp = $request->status_tlhp;
-            $rekomendasi->tgl_tlhp = $request->tgl_tlhp;
-            $rekomendasi->kode_tlhp = $request->kode_tlhp;
-            $rekomendasi->uraian_tlhp = $request->uraian_tlhp;
+            $data =  Rekomendasi::findOrFail($id);
+            $data->id_temuan = $request->id_temuan;
+            $data->status_tlhp = $request->status_tlhp;
+            $data->tgl_tlhp = $request->tgl_tlhp;
+            $data->kode_tlhp = $request->kode_tlhp;
+            $data->uraian_tlhp = $request->uraian_tlhp;
             $kode = Rekomendasi::find($request->id);
             if (!$kode) {
-                $rekomendasi['created_by'] = auth()->user()->level;
-                $rekomendasi['created_by_id'] = auth()->user()->id;
+                $data['created_by'] = auth()->user()->level;
+                $data['created_by_id'] = auth()->user()->id;
             }
-            $rekomendasi['updated_by'] = auth()->user()->name;
-            $rekomendasi['updated_by_id'] = auth()->user()->id;
-            $rekomendasi->save();
+            $data['updated_by'] = auth()->user()->name;
+            $data['updated_by_id'] = auth()->user()->id;
+            $data->update();
 
             return redirect()->route('tindaklanjut.index', $request->id_temuan)->with('success', 'Edit Data Berhasil');
         } catch (\Throwable $e) {

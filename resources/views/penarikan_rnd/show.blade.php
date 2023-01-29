@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Tambah Data
+    Detail Data
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -151,7 +151,6 @@
             <div class="card-footer">
                 <a href="{{ route('penarikanrnd.index', $data_penarikanrnd->id_temuan) }}"
                     class="btn btn-secondary">Kembali</a>
-                <button type="submit" class="btn btn-success float-right">Simpan</button>
             </div>
             <!-- /.card-footer -->
         </div>

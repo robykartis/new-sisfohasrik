@@ -156,12 +156,14 @@
                                     <table class="table table-striped table-bordered table-hover">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th colspan="3" style="text-align: center;">Total Kerugian Negara (Rp.)
+                                                <th colspan="3" style="text-align: center;">Total Kewajiban Setor Kepada
+                                                    Negara (Rp.)
                                                 </th>
-                                                <th colspan="3" style="text-align: center;">Total Kerugian Daerah (Rp.)
+                                                <th colspan="3" style="text-align: center;">Total Kewajiban Setor Kepada
+                                                    Daerah (Rp.)
                                                 </th>
-                                                <th colspan="3" style="text-align: center;">Total Kerugian Negara +
-                                                    Daerah (Rp.)</th>
+                                                <th colspan="3" style="text-align: center;">Total Kewajiban Setor Kepada
+                                                    Negara + Daerah (Rp.)</th>
                                             </tr>
                                             <tr>
                                                 <th style="text-align: center;">Nilai</th>
@@ -222,7 +224,7 @@
                                     <table class="table table-striped table-bordered table-hover">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th colspan="7" style="text-align: center;">Rincian Penarikan SND
+                                                <th colspan="7" style="text-align: center;">Rincian Penarikan SND (02)
                                                 </th>
                                             </tr>
                                             <tr>

@@ -133,15 +133,20 @@ class PenarikansndController extends Controller
             ->get();
         $tarik_neg = $data_penarikan->sum('jml_penarikan_neg');
         $tarik_drh = $data_penarikan->sum('jml_penarikan_drh');
-        $tot_tarik = $tarik_neg + $tarik_drh;
+        $total_penarikan = $tarik_neg + $tarik_drh;
 
-        $tarik_neg = $data_penarikan->sum('jml_penarikan_neg');
-        $tarik_drh = $data_penarikan->sum('jml_penarikan_drh');
-
+        // Data Hasil Temuan
         $kerugian_neg = $data_temuan->jml_snd_neg;
-        $sisa_neg = $kerugian_neg - $tarik_neg;
+        // dd($kerugian_neg);
+        $kerugian_drh = $data_temuan->jml_snd_drh;
+        // dd($kerugian_drh);
+        $total_kerugian = $kerugian_neg + $kerugian_drh;
+        // dd($total_kerugian);
+        $sisa_kerugian = $total_kerugian - $total_penarikan;
 
-        // dd($data);
+
+
+
         return view('penarikan_snd.create', compact(
             'data_temuan',
             'data',
@@ -150,26 +155,16 @@ class PenarikansndController extends Controller
             'kod_tlhp',
             'data_tgl_lhp',
             'request',
-            'tot_tarik',
+            'total_penarikan',
             'tarik_neg',
-            'sisa_neg',
+            'total_kerugian',
+            'sisa_kerugian',
         ));
     }
 
 
     public function store(Request $request)
     {
-
-
-
-        // $data = $request->validate([
-        //     'id_temuan' => 'required',
-        //     'tgl_penarikan' => 'required',
-        //     'jml_penarikan_neg' => 'required',
-        //     'jml_penarikan_drh' => 'required',
-        //     'keterangan' => 'required',
-        // ]);
-        // dd($request);
         $validator = Validator::make(
             $request->all(),
             [
@@ -179,26 +174,14 @@ class PenarikansndController extends Controller
                 'jml_penarikan_drh' => 'required',
                 'keterangan' => 'required',
             ],
-
         );
 
         if ($validator->fails()) {
             return redirect()->back()->with('error', $validator->errors()->all(),);
         }
-
-
-
         $rd = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_penarikan_neg));
         $rd1 = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_penarikan_drh));
 
-        if ($rd > $request->sisa) {
-            return redirect()->back()->with('error', 'Melebihi Sisa Yang Ada');
-        }
-        if ($rd1 > $request->sisa) {
-            return redirect()->back()->with('error', 'Melebihi Sisa Yang Ada');
-        }
-
-        // dd($request->jml_penarikan_neg);
         try {
             $data = new Penarikansnd;
             $data->id_temuan = $request->id_temuan;
@@ -260,7 +243,7 @@ class PenarikansndController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $data_penarikanrnd = Penarikansnd::findOrFail($id);
+        $data_penarikansnd = Penarikansnd::findOrFail($id);
         $data = Lhp::join('temuan', 'lhp.id', '=', 'temuan.id_lhp')
             ->join('klarifikasi_obrik', 'lhp.klarifikasi', '=', 'klarifikasi_obrik.id')
             ->join('obrik', 'lhp.obrik', '=', 'obrik.id')
@@ -279,15 +262,38 @@ class PenarikansndController extends Controller
                 'kode_bidang.nama as bidang_temuan',
                 'kode_temuan.nama as kod_temuan',
             )
-            ->where('temuan.id', $data_penarikanrnd->id_temuan)
+            ->where('temuan.id', $data_penarikansnd->id_temuan)
             ->first();
         $data_tgl_lhp = Carbon::parse($data->tgl_lhp)->isoFormat(' D MMMM Y');
 
+        // $data_penarikan = DB::table('penarikan_kerugian')
+        //     ->join('temuan', 'penarikan_kerugian.id_temuan', '=', 'temuan.id')
+        //     ->select(
+        //         'penarikan_kerugian.*',
+        //         'temuan.jml_snd_neg',
+        //         'temuan.jml_snd_drh'
+        //     )
+        //     ->where('penarikan_kerugian.id_temuan', $data_penarikansnd->id_temuan)
+        //     ->first();
+
+        // $tarik_neg = $data_penarikan->sum('jml_penarikan_neg');
+        // $tarik_drh = $data_penarikan->sum('jml_penarikan_drh');
+        // $total_penarikan = $tarik_neg + $tarik_drh;
+
+        // // Data Hasil Temuan
+        // $kerugian_neg = $data_penarikan->jml_snd_neg;
+        // // dd($kerugian_neg);
+        // $kerugian_drh = $data_penarikan->jml_snd_drh;
+        // // dd($kerugian_drh);
+        // $total_kerugian = $kerugian_neg + $kerugian_drh;
+        // // dd($total_kerugian);
+        // $sisa_kerugian = $total_kerugian - $total_penarikan;
         return view('penarikan_snd.edit', compact(
-            'data_penarikanrnd',
+            'data_penarikansnd',
             'data',
             'data_tgl_lhp',
             'request',
+
         ));
     }
 
@@ -296,21 +302,30 @@ class PenarikansndController extends Controller
     {
 
 
-        $data = $request->validate([
-            'id_temuan' => 'required',
-            'tgl_penarikan' => 'required',
-            'jml_penarikan_neg' => 'required',
-            'jml_penarikan_drh' => 'required',
-            'keterangan' => 'required',
-        ]);
-        // dd($data);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id_temuan' => 'required',
+                'tgl_penarikan' => 'required',
+                'jml_penarikan_neg' => 'required',
+                'jml_penarikan_drh' => 'required',
+                'keterangan' => 'required',
+            ],
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', $validator->errors()->all(),);
+        }
+        $rd = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_penarikan_neg));
+        $rd1 = str_replace(',', '.', preg_replace("/[^0-9,]/", "", $request->jml_penarikan_drh));
 
         try {
-            $data = new Penarikansnd;
+
+            $data =  Penarikansnd::findOrFail($id);
             $data->id_temuan = $request->id_temuan;
             $data->tgl_penarikan = $request->tgl_penarikan;
-            $data->jml_penarikan_neg = $request->jml_penarikan_neg;
-            $data->jml_penarikan_drh = $request->jml_penarikan_drh;
+            $data->jml_penarikan_neg = $rd;
+            $data->jml_penarikan_drh = $rd1;
             $data->keterangan = $request->keterangan;
             $kode = Penarikansnd::find($request->id);
             if (!$kode) {
@@ -320,7 +335,7 @@ class PenarikansndController extends Controller
             $data['updated_by'] = auth()->user()->name;
             $data['updated_by_id'] = auth()->user()->id;
             $data['jns_kerugian'] = 'SND';
-            $data->save();
+            $data->update();
 
             return redirect()->route('penarikansnd.index', $request->id_temuan)->with('success', 'Update Data Berhasil');
         } catch (\Throwable $e) {

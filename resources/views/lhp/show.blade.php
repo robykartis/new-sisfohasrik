@@ -145,19 +145,29 @@
     <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
 
     <script>
-        if ($(".mask-money").length) {
-            $(".mask-money").inputmask('decimal', {
-                'rightAlign': false,
-                'alias': 'numeric',
-                'groupSeparator': '.',
-                'autoGroup': true,
-                'digits': 2,
-                'radixPoint': ",",
-                'digitsOptional': true,
-                'allowMinus': false,
-                //'prefix': 'Rp. ',
-                // 'placeholder': ''
-            });
+        var rupiah = document.getElementById(".rupiah");
+        rupiah.addEventListener("keyup", function(e) {
+            // tambahkan 'Rp.' pada saat form di ketik
+            // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+            rupiah.value = formatRupiah(this.value, "Rp. ");
+        });
+
+        /* Fungsi formatRupiah */
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, "").toString(),
+                split = number_string.split(","),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? "." : "";
+                rupiah += separator + ribuan.join(".");
+            }
+
+            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+            return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
         }
     </script>
 
@@ -247,14 +257,19 @@
                         data: 'jml_rnd_neg',
                         name: 'jml_rnd_neg',
                         createdCell: function(td, cellData, rowData, row, col) {
-                            $(td).css('word-break', 'break-all', 'mask-money');
+                            $(td).text(formatRupiah(cellData, "Rp. "));
+                            $(td).addClass("mask-money");
+                            $(td).css('word-break', 'break-all');
+
                         }
                     },
                     {
                         data: 'jml_snd_neg',
                         name: 'jml_snd_neg',
                         createdCell: function(td, cellData, rowData, row, col) {
-                            $(td).css('word-break', 'break-all', 'mask-money');
+                            $(td).text(formatRupiah(cellData, "Rp. "));
+                            $(td).addClass("mask-money");
+                            $(td).css('word-break', 'break-all');
                         }
                     },
                     {

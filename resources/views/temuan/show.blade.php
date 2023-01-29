@@ -94,7 +94,7 @@
                                         </tr>
                                         <tr>
                                             <td class="item">Uraian Temuan</td>
-                                            <td class="text"> {!! $temuan->urian_temuan !!}</td>
+                                            <td class="text"> {!! $temuan->uraian_temuan !!}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Bidang</td>
@@ -106,7 +106,7 @@
                                         </tr>
                                         <tr>
                                             <td class="item">Jumlah Setor Negara</td>
-                                            <td class="text mask-money"> {{ $temuan->jml_snd_neg }}</td>
+                                            <td class="text mask-money" id="rupiah"> {{ $temuan->jml_snd_neg }}</td>
                                         </tr>
                                         <tr>
                                             <td class="item">Jumlah Kerugian Daerah</td>
@@ -169,6 +169,34 @@
 @push('js')
     <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
+
+
+    <script>
+        var rupiah = document.getElementById("rupiah");
+        rupiah.addEventListener("keyup", function(e) {
+            // tambahkan 'Rp.' pada saat form di ketik
+            // gunakan fungsi formatRupiah() untuk mengubah angka yang di ketik menjadi format angka
+            rupiah.value = formatRupiah(this.value, "Rp. ");
+        });
+
+        /* Fungsi formatRupiah */
+        function formatRupiah(angka, prefix) {
+            var number_string = angka.replace(/[^,\d]/g, "").toString(),
+                split = number_string.split(","),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? "." : "";
+                rupiah += separator + ribuan.join(".");
+            }
+
+            rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+            return prefix == undefined ? rupiah : rupiah ? "Rp. " + rupiah : "";
+        }
+    </script>
     <script type="text/javascript">
         if ($(".mask-money").length) {
             $(".mask-money").inputmask('decimal', {
