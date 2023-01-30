@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Tambah Data
+    Tambah Penarikan RND
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -53,7 +53,7 @@
         @endif
         <div class="card card-warning">
             <div class="card-header ">
-                <h3 class="card-title">Edit</h3>
+                <h3 class="card-title">Penarikan Kerugian Negara/Daerah (RND)</h3>
                 <div class="card-tools">
 
                 </div>
@@ -234,7 +234,7 @@
     <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
 
 
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
     <script src="{{ asset('assets/plugins/inputmask/jquery.inputmask.min.js') }}"></script>
 
 
@@ -277,12 +277,12 @@
             bsCustomFileInput.init();
         });
     </script>
-    {{-- <script>
+    <script>
         $('form').submit(function(e) {
             e.preventDefault();
             var tgl_penarikan = $('input[name="tgl_penarikan"]').val();
             var jml_penarikan_neg = $('input[name="jml_penarikan_neg"]').val();
-            var jml_penarikan_drh = $('input[name="jml_penarikan_drh	"]').val();
+            var jml_penarikan_drh = $('input[name="jml_penarikan_drh"]').val();
             var keterangan = $('textarea[name="keterangan"]').val();
 
             if (tgl_penarikan == '') {
@@ -307,5 +307,5 @@
             }
             $(this).unbind('submit').submit();
         });
-    </script> --}}
+    </script>
 @endpush

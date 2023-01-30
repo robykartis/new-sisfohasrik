@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Data
+    Data Rekomendasi
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -39,7 +39,7 @@
         <!-- Default box -->
         <div class="card card-warning">
             <div class="card-header ">
-                <h3 class="card-title">{{ $title }}</h3>
+                <h3 class="card-title">Rekomendasi Penyelesaian</h3>
 
             </div>
             <div class="card-body pb-0">

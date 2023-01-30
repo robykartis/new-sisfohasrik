@@ -227,7 +227,7 @@ Breadcrumbs::for('penarikanrnd.show', function ($trail, $id) {
     $trail->parent('admin');
     $trail->push('Lhp', route('lhp.index'));
     $trail->push('Temuan', route('temuan.show', $id));
-    $trail->push('Edit Penarikan RND', route('penarikanrnd.show', $id));
+    $trail->push('Detail Penarikan RND', route('penarikanrnd.show', $id));
 });
 // Penarikan SND Index
 Breadcrumbs::for('penarikansnd.index', function ($trail, $id) {
@@ -248,8 +248,16 @@ Breadcrumbs::for('penarikansnd.edit', function ($trail, $id) {
     $trail->parent('admin');
     $trail->push('Lhp', route('lhp.index'));
     $trail->push('Temuan', route('temuan.show', $id));
-    $trail->push('Tambah Penarikan SND', route('penarikansnd.edit', $id));
+    $trail->push('Edit Penarikan SND', route('penarikansnd.edit', $id));
 });
+// Penarikan SND Show
+Breadcrumbs::for('penarikansnd.show', function ($trail, $id) {
+    $trail->parent('admin');
+    $trail->push('Lhp', route('lhp.index'));
+    $trail->push('Temuan', route('temuan.show', $id));
+    $trail->push('Detail Penarikan SND', route('penarikansnd.show', $id));
+});
+
 // =======================END HALAMAN ADMIN========================//
 
 

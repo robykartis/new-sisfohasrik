@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Tambah Data
+    Detail Penarikan SND
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -44,7 +44,7 @@
         <!-- Default box -->
         <div class="card card-warning">
             <div class="card-header ">
-                <h3 class="card-title">Edit</h3>
+                <h3 class="card-title">Penarikan Kewajiban Setor Pada Negara/Daerah (SND)</h3>
                 <div class="card-tools">
 
                 </div>
@@ -117,7 +117,7 @@
                     <div class="col-12 col-sm-6 col-md-12 d-flex align-items-stretch flex-column">
                         <div class="card bg-light d-flex flex-fill">
                             <div class="card-header text-muted border-bottom-0">
-                                penarikanrnd - ID = {{ $data->temuan_id }}
+                                Data Penarikan SND
                             </div>
                             <div class="card-body pt-0">
                                 <div class="table-responsive">
@@ -150,7 +150,6 @@
             <div class="card-footer">
                 <a href="{{ route('penarikanrnd.index', $data_penarikanrnd->id_temuan) }}"
                     class="btn btn-secondary">Kembali</a>
-                <button type="submit" class="btn btn-success float-right">Simpan</button>
             </div>
             <!-- /.card-footer -->
         </div>

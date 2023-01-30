@@ -244,6 +244,14 @@ class PenarikansndController extends Controller
     public function edit(Request $request, $id)
     {
         $data_penarikansnd = Penarikansnd::findOrFail($id);
+        $data_temuan = Temuan::findOrFail($id);
+        $data_tgl_tlhp = Carbon::parse($data_temuan->tlhp_tgl)->isoFormat(' D MMMM Y');
+        $temuan = $request->$data_temuan;
+        $status_tlhp = [
+            'S' => 'Selesai',
+            'B' => 'Belum',
+            'D' => 'Dalam Proses'
+        ];
         $data = Lhp::join('temuan', 'lhp.id', '=', 'temuan.id_lhp')
             ->join('klarifikasi_obrik', 'lhp.klarifikasi', '=', 'klarifikasi_obrik.id')
             ->join('obrik', 'lhp.obrik', '=', 'obrik.id')
@@ -259,41 +267,54 @@ class PenarikansndController extends Controller
                 'temuan.id as temuan_id',
                 'temuan.no_temuan as temuan_no',
                 'temuan.judul_temuan as temuan_judul',
+                'temuan.jml_snd_neg as snd',
                 'kode_bidang.nama as bidang_temuan',
                 'kode_temuan.nama as kod_temuan',
             )
-            ->where('temuan.id', $data_penarikansnd->id_temuan)
-            ->first();
+            ->where('temuan.id', $data_temuan->id)->first();
         $data_tgl_lhp = Carbon::parse($data->tgl_lhp)->isoFormat(' D MMMM Y');
 
-        // $data_penarikan = DB::table('penarikan_kerugian')
-        //     ->join('temuan', 'penarikan_kerugian.id_temuan', '=', 'temuan.id')
-        //     ->select(
-        //         'penarikan_kerugian.*',
-        //         'temuan.jml_snd_neg',
-        //         'temuan.jml_snd_drh'
-        //     )
-        //     ->where('penarikan_kerugian.id_temuan', $data_penarikansnd->id_temuan)
-        //     ->first();
+        $kod_tlhp = DB::table('rekomendasi')
+            ->join('kode_tlhp', 'rekomendasi.kode_tlhp', '=', 'kode_tlhp.id')
+            ->select('kode_tlhp.*')
+            ->where('rekomendasi.id', $data_temuan->id)
+            ->get();
+        $kod_tlhp = KodeTlhp::all();
+        // $status_tlhp = ['S' => 'Selesai', 'B' => 'Belum', 'D' => 'Dalam Proses'];
+        $data_penarikan = DB::table('penarikan_kerugian')
+            ->select('penarikan_kerugian.*', 'id', 'jml_penarikan_neg', 'jml_penarikan_drh', 'keterangan', 'tgl_penarikan')
+            ->where('id_temuan', $data_temuan->id)
+            ->where('jns_kerugian', '=', 'SND')
+            ->get();
+        $tarik_neg = $data_penarikan->sum('jml_penarikan_neg');
+        $tarik_drh = $data_penarikan->sum('jml_penarikan_drh');
+        $total_penarikan = $tarik_neg + $tarik_drh;
 
-        // $tarik_neg = $data_penarikan->sum('jml_penarikan_neg');
-        // $tarik_drh = $data_penarikan->sum('jml_penarikan_drh');
-        // $total_penarikan = $tarik_neg + $tarik_drh;
+        // Data Hasil Temuan
+        $kerugian_neg = $data_temuan->jml_snd_neg;
+        // dd($kerugian_neg);
+        $kerugian_drh = $data_temuan->jml_snd_drh;
+        // dd($kerugian_drh);
+        $total_kerugian = $kerugian_neg + $kerugian_drh;
+        // dd($total_kerugian);
+        $sisa_kerugian = $total_kerugian - $total_penarikan;
 
-        // // Data Hasil Temuan
-        // $kerugian_neg = $data_penarikan->jml_snd_neg;
-        // // dd($kerugian_neg);
-        // $kerugian_drh = $data_penarikan->jml_snd_drh;
-        // // dd($kerugian_drh);
-        // $total_kerugian = $kerugian_neg + $kerugian_drh;
-        // // dd($total_kerugian);
-        // $sisa_kerugian = $total_kerugian - $total_penarikan;
+
+
+
         return view('penarikan_snd.edit', compact(
             'data_penarikansnd',
+            'data_temuan',
             'data',
+            'data_tgl_tlhp',
+            'status_tlhp',
+            'kod_tlhp',
             'data_tgl_lhp',
             'request',
-
+            'total_penarikan',
+            'tarik_neg',
+            'total_kerugian',
+            'sisa_kerugian',
         ));
     }
 

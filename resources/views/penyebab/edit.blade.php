@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Data
+    Edit Penyebab
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}

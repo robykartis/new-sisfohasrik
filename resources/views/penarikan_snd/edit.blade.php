@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Tambah Data
+    Edit Penarikan SND
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -44,7 +44,7 @@
         <!-- Default box -->
         <div class="card card-warning">
             <div class="card-header ">
-                <h3 class="card-title">Edit</h3>
+                <h3 class="card-title">Penarikan Kewajiban Setor Pada Negara/Daerah (SND)</h3>
                 <div class="card-tools">
 
                 </div>
@@ -109,6 +109,33 @@
                                             <td class="text"> {{ $data->bidang_temuan }}</td>
                                         </tr>
 
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-12 d-flex align-items-stretch flex-column">
+                        <div class="card bg-light d-flex flex-fill">
+                            <div class="card-header text-muted border-bottom-0">
+                                Data Penarikan
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="table-responsive">
+                                    <table class="container">
+                                        <tr>
+                                            <td class="item">Nilai</td>
+                                            <td class="text mask-money"> {{ $total_kerugian }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="item">Telah Ditarik</td>
+                                            <td class="text mask-money"> {{ $total_penarikan }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="item">Sisa</td>
+                                            <td class="text mask-money"> {{ $sisa_kerugian }}</td>
+                                        </tr>
+
                                     </table>
                                 </div>
                             </div>
@@ -119,18 +146,25 @@
                 <form method="POST" action="{{ route('penarikansnd.update', $data_penarikansnd->id) }}">
                     @csrf
                     @method('PATCH')
+                    <input type="hidden" name="sisa" value="{{ $sisa_kerugian }}">
                     <div class="row">
                         <div class="col-12">
                             <div class="col-md-12 col-lg-12">
                                 <div class="row mb-2">
-                                    <input type="hidden" name="id_temuan" value="{{ $data_penarikansnd->id_temuan }}"
+                                    <input type="hidden" name="id_temuan" value="{{ $data_temuan->id }}"
                                         class="form-control" readonly>
+
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <label for="inputName">Tanggal Penarikan</label>
+                                            <h5 class="mb-2">Tanggal Penarikan</h5>
                                             <input type="text"
                                                 value="{{ \Illuminate\Support\Carbon::parse($data_penarikansnd->tgl_penarikan)->isoFormat('D MMMM Y') }}"
                                                 readonly class="form-control">
+                                            @error('tgl_penarikan')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -174,9 +208,8 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">Rp. </span>
                                                 </div>
-                                                <input type="text" class="form-control mask-money"
-                                                    value="{{ $data_penarikansnd->jml_penarikan_drh }}"
-                                                    name="jml_penarikan_drh">
+                                                <input type="text" value="{{ $data_penarikansnd->jml_penarikan_drh }}"
+                                                    class="form-control mask-money" name="jml_penarikan_drh">
                                                 @error('jml_penarikan_drh')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -206,11 +239,11 @@
                         </div>
                         <!-- /.col -->
                     </div>
+
             </div>
             <!-- /.card-body -->
             <div class="card-footer">
-                <a href="{{ route('penarikansnd.index', $data_penarikansnd->id_temuan) }}"
-                    class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('penarikansnd.index', $data_temuan->id) }}" class="btn btn-secondary">Kembali</a>
                 <button type="submit" class="btn btn-success float-right">Update</button>
             </div>
             </form>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Tambah Data
+    Tambah Penarikan SND
 @endsection
 @section('breadcrumbs')
     {{ Breadcrumbs::render() }}
@@ -44,7 +44,7 @@
         <!-- Default box -->
         <div class="card card-warning">
             <div class="card-header ">
-                <h3 class="card-title">Edit</h3>
+                <h3 class="card-title">Penarikan Kewajiban Setor Pada Negara/Daerah (SND)</h3>
                 <div class="card-tools">
 
                 </div>
