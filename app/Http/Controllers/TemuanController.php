@@ -139,6 +139,7 @@ class TemuanController extends Controller
         $title_lhp = 'Data LHP';
         $title_temuan = 'Data Temuan';
         $title = 'Edit Temuan Hasil Pemeriksaan';
+
         return view('temuan.show', compact('title_lhp', 'title_temuan', 'kode', 'data', 'tgl_lhp', 'title', 'request', 'id', 'temuan'));
     }
 
